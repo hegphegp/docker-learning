@@ -1,6 +1,6 @@
 ## Ubuntu-16.04 sh脚本安装docker,docker-compose,docker-machine
 
-```
+```shell
 #!/bin/bash
 
 # 定义变量
