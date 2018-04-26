@@ -1,5 +1,7 @@
 ## Ubuntu-16.04 sh脚本安装docker,docker-compose,docker-machine
 
+[docker-machine的官方下载地址https://github.com/docker/machine/releases](https://github.com/docker/machine/releases)  
+[docker-compose的官方下载地址https://github.com/docker/compose/releases](https://github.com/docker/compose/releases)
 ```shell
 #!/bin/bash
 
@@ -8,6 +10,7 @@ PASSWD=admin
 DOCKER_VERSION=docker-ce_18.03.0-ce-0-ubuntu_amd64.deb
 DOCKER_USER=hgp
 
+# 安装版本 docker-ce_18.03.0-ce-0-ubuntu_amd64.deb, docker-compose-Linux-x86_64-1.16.1, docker-machine-Linux-x86_64-0.13.0
 # 适用于ubuntu-16.04
 # ubuntu脚本自动输入sudo密码
 # sudo后面都有用到参数 -S
