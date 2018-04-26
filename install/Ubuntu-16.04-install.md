@@ -36,11 +36,11 @@ echo $PASSWD | sudo tee /etc/docker/daemon.json <<-'EOF'
 }
 EOF
 
-# 生产环境一定要加graph选项，指定docker容器和日志的目录为大空间的目录，否则死的时候武眼睇
+# 生产环境一定要加graph选项，指定docker镜像和日志的目录为大空间的目录，否则死的时候武眼睇
 # echo $PASSWD | sudo tee /etc/docker/daemon.json <<-'EOF'
 # {
 #    "registry-mirrors": ["https://1a5q7qx0.mirror.aliyuncs.com"],
-#  　　"graph": "/opt/data/docker"
+#    "graph": "/opt/data/docker"
 # }
 # EOF
 
