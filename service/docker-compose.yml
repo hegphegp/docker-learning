@@ -1,0 +1,32 @@
+nginx:
+  image: nginx:1.13.12-alpine
+  restart: always
+  volumes:
+    - ./conf.d:/etc/nginx/conf.d
+    - ./letsencrypt:/etc/letsencrypt
+  ports:
+    - '443:443'
+    - '80:80'
+  links:
+    - aaa-domain
+    - bbb-domain
+    - ccc-domain
+
+aaa-domain:
+  image: nginx:1.13.12-alpine
+  command: sh -c 'echo "<h1>aaaaaaaaa.domain</h1>" > /usr/share/nginx/html/index.html && nginx -g "daemon off;"'
+  ports:
+    - '8081:80'
+
+bbb-domain:
+  image: nginx:1.13.12-alpine
+  command: sh -c 'echo "<h1>aaaaaaaaa.domain</h1>" > /usr/share/nginx/html/index.html && nginx -g "daemon off;"'
+  ports:
+    - '8082:80'
+
+ccc-domain:
+  image: nginx:1.13.12-alpine
+  command: sh -c 'echo "<h1>aaaaaaaaa.domain</h1>" > /usr/share/nginx/html/index.html && nginx -g "daemon off;"'
+  ports:
+    - '8083:80'
+
