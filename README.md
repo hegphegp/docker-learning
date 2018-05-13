@@ -7,3 +7,5 @@
     * [nginx命令](service/nginx.md)
     * [postgresql命令](DB/SQL/postgresql命令.md)
     * [mysql命令](DB/SQL/mysql命令.md)
+    * [jhipster命令](java/jhipster命令.md)
+    * [etcd命令使用](soft/etcd命令.md)
