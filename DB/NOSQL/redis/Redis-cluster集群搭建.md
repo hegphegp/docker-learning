@@ -1,32 +1,54 @@
 # Redis-cluster集群搭建.md
-> 挺无奈的现实,redis官方没有提供redis-trib的镜像,只能通过下载官方的源码包解压获取redis-trib.rb文件来制作镜像
+> 挺无奈的现实, redis官方没有提供redis-trib的镜像, 只能通过下载官方的源码包解压获取redis-trib.rb文件来制作镜像
+>
+> 在redis的镜像制作redis-trib, 让redis-trib镜像具有redis-cli的功能
+> 
+> 挺无奈的现实, 官方redis的Dockerfile和ruby的Dockerfile文件很复杂
 
-##### 制作redis-trib镜像的Dockerfile文件
+##### 制作带redis-cli功能的redis-trib镜像的Dockerfile文件
+```
+FROM ruby:2.5-alpine3.7
+RUN echo "http://mirrors.aliyun.com/alpine/v3.7/main" > /etc/apk/repositories && \
+    echo "http://mirrors.aliyun.com/alpine/v3.7/community" >> /etc/apk/repositories
+RUN apk add --no-cache --virtual .build-deps curl tar coreutils gcc linux-headers make musl-dev; \
+    gem install redis:4.0.1; \
+    curl http://download.redis.io/releases/redis-4.0.9.tar.gz -s -o /redis-4.0.9.tar.gz; \
+    tar -zxvf /redis-4.0.9.tar.gz -C / ; \
+    make -C /redis-4.0.9 -j "$(nproc)"; \
+    make -C /redis-4.0.9 install; \
+    cp /redis-4.0.9/src/redis-trib.rb /usr/bin; \
+    rm -rf /redis-4.0.9; \
+    rm -rf /redis-4.0.9.tar.gz; \
+    chmod +x /usr/bin/redis-trib.rb; \
+    apk del --virtual .build-deps curl tar coreutils gcc linux-headers make musl-dev
+
+CMD ["sh"]
+```
+
+```
+docker build -t redis-trib:4.0.9 .
+```
+
+##### 制作redis-trib镜像的Dockerfile文件(该镜像只有redis-trib的功能)
 ```
 FROM ruby:2.5-alpine3.7
 RUN echo "http://mirrors.aliyun.com/alpine/v3.7/main" > /etc/apk/repositories && \
     echo "http://mirrors.aliyun.com/alpine/v3.7/community" >> /etc/apk/repositories
 # gem安装制定版本软件的命令  gem install redis -v 4.0.1
 RUN gem install redis:4.0.1; \
-    apk add --no-cache curl; \
-    apk add --no-cache tar; \
+    apk add --no-cache curl tar; \
     curl http://download.redis.io/releases/redis-4.0.9.tar.gz -s -o /redis-4.0.9.tar.gz; \
     tar -zxvf /redis-4.0.9.tar.gz -C / ; \
     cp /redis-4.0.9/src/redis-trib.rb /usr/bin; \
     chmod +x /usr/bin/redis-trib.rb; \
     rm -rf /redis-4.0.9; \
     rm -rf /redis-4.0.9.tar.gz; \
-    apk del tar; \
-    apk del curl
+    apk del tar curl
 
 CMD ["sh"]
 ```
 
-```
-docker build -t redis-trib:4.0.9-alpine .
-```
-
-###启动多个redis实例
+### redis-trib不设置密码的redis-cluster集群启动方式
 ```
 # 用docker加上配置参数跑redis服务时,不能加--daemonize yes, 该参数为yes时, 表示以后台形式运行redis, 但是容器检测不到后台运行的程序的状况, 以为redis挂掉了, 容器就会退出
 docker network rm redis-network
@@ -104,7 +126,7 @@ docker exec -it redis-trib sh
 redis-trib.rb create --replicas 1 10.10.57.101:6379 10.10.57.102:6379 10.10.57.103:6379 10.10.57.104:6379 10.10.57.105:6379 10.10.57.106:6379 
 ```
 
-##### 集群设置密码，那么requirepass和masterauth都需要设置
+##### redis-trib创建带密码的redis-cluster集群，那么requirepass和masterauth都需要设置
 ```
 docker stop redis1
 docker rm redis1
@@ -199,7 +221,7 @@ docker logs redis6
 docker run -itd --name redis-trib --restart always --net redis-network --ip 10.10.57.90 redis-trib:4.0.9 sh
 docker exec -it redis-trib sh
 # 挺无奈的现实,gem提供的官方redis工具,该工具设置redis连接的密码为空,所以集群的机器事先设置了密码的话,必须修改gem的redis的工具类,把密码写到工具类里面
-# sed -i 's:password => nil:password => "admin":g' /usr/local/bundle/gems/redis-4.0.1/lib/redis/client.rb ; 修改后发现不能用
+# sed -i 's:password => nil:password => "admin":g' /usr/local/bundle/gems/redis-4.0.1/lib/redis/client.rb ; 修改后发现创建集群时不起作用
 # 写 Redis.new(:host => @info[:host], :port => @info[:port], :timeout => 60) 这句替换的命令直接死人了,靠,都不知道哪些垃圾字符需要转义
 # 无尽的无奈和死过后的挣扎,命令终于可以了, 在sed命令中需要转义的字段有 . : [
 sed -i 's:Redis\.new(\:host => @info\[\:host], \:port => @info\[\:port], \:timeout => 60):Redis\.new(\:host => @info\[\:host], \:port => @info\[\:port], \:timeout => 60, \:password => "admin"):g' /usr/bin/redis-trib.rb
