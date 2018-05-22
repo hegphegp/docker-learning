@@ -16,3 +16,4 @@
     * [etcd命令使用](soft/etcd命令.md)
     * [node命令](service/node/node命令.md)
     * [easy-mock使用](service/easy-mock/easy-mock使用.md)
+    * [docker搭建Hadoop集群](big-data/hadoop/Hadoop搭建.md)
