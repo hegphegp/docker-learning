@@ -12,3 +12,8 @@ docker ps -a --filter name=redis -q
 docker stop `docker ps -a -q --filter name=redis`
 docker rm `docker ps -a -q --filter name=redis`
 ```
+
+##生存环境的必备参数
+```
+-e TZ=Asia/Shanghai -v /etc/localtime:/etc/localtime:ro
+```
