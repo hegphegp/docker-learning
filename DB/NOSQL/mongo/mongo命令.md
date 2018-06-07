@@ -14,6 +14,19 @@ mongorestore -h localhost -p 27017 --dir /mongo-backup
 mongorestore -h localhost -p 27017 --dir /mongo-backup --drop
 ```
 
+##### 全库备份
+```
+mongodump -h localhost -d local -p 27017 -o /mongo-backup
+```
+
+##### 全库还原
+```
+# 还原命令 mongorestore -h IP地址 --dir 目录，若数据库已存在辉抛错
+mongorestore -h localhost -p 27017 --dir /mongo-backup
+# 还原时，若数据库存在，加上 --drop　选项，删除旧数据库再导入
+mongorestore -h localhost -p 27017 --dir /mongo-backup --drop
+```
+
 ##### 单表数据的导出
 ```
 mongoexport --host localhost --port 27017 --username quicktest --password quicktest --collection news --db editor --out /news.json
