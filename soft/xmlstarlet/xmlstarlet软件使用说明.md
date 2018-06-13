@@ -4,6 +4,10 @@
 
 
 * alpine没有xmlstarlet安装包，debian有xmlstarlet安装包，因此用bebian镜像
+```
+# 构建命令
+docker build -t xmlstarlet .
+```
 
 #####样例xml文件
 ```xml
