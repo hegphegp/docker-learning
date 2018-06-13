@@ -2,6 +2,9 @@
 
 * xmlstarlet在shell命令中直接可以格式化xml, xpath查询xml
 
+
+* alpine没有xmlstarlet安装包，debian有xmlstarlet安装包，因此用bebian镜像
+
 #####样例xml文件
 ```xml
 <?xml version="1.0"?>
