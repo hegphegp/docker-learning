@@ -15,7 +15,8 @@ ENV PATH=$PATH:$TOMCAT_HOME/bin
 
 ADD ./drawio-8.7.6.tar.gz /
 
-RUN wget http://mirrors.aliyun.com/apache/ant/binaries/apache-ant-${ANT_VERSION}-bin.tar.gz ; \
+RUN cd / ; \
+    wget http://mirrors.aliyun.com/apache/ant/binaries/apache-ant-${ANT_VERSION}-bin.tar.gz ; \
     wget http://mirrors.aliyun.com/apache/tomcat/tomcat-8/v8.5.31/bin/apache-tomcat-${TOMCAT_VERSION}.tar.gz ; \
     mkdir -p /opt ; \
     tar -zvxf apache-ant-${ANT_VERSION}-bin.tar.gz -C /opt/ ; \
