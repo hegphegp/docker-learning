@@ -83,7 +83,7 @@ xmlstarlet ed -d xml/table[1]/rec[1] test.xml
 
 # 通过xpath修改节点的值
 xmlstarlet ed -u xml/table[1]/rec[1]/numField -v ======================= test.xml
-# 通过xpath修改节点的值(内容有xml标签，会被转义掉)
+# 通过xpath修改节点的值(内容有xml标签，会被转义掉，然后将文本替换回去)
 xmlstarlet ed -u xml/table[1]/rec[1]/numField -v "<a>00000000000000000</a>" test.xml
 
 # 通过xpath给节点添加上属性的名称和属性的值
