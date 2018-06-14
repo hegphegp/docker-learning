@@ -1,6 +1,7 @@
 # xmlstarlet软件使用说明
 
 #### xmlstarlet在shell命令中软件使用说明
+* shell命令行操作xml的工具
 * 可以格式化xml
 * 通过xpath对节点进行增删查改
 
