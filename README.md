@@ -13,7 +13,7 @@
     * [nginx命令](service/nginx/nginx.md)
     * [postgresql命令](DB/SQL/postgresql命令.md)
     * [mysql命令](DB/SQL/mysql命令.md)
-    * [jhipster命令](java/jhipster命令.md)
+    * [jhipster命令](service/jhipster/jhipster命令.md)
     * [etcd命令使用](soft/etcd/etcd命令.md)
     * [node命令](service/node/node命令.md)
     * [easy-mock使用](soft/easy-mock/easy-mock使用.md)
