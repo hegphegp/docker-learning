@@ -2,8 +2,8 @@
 
 * [简介]()
     * [各种Linux系统配置国内镜像加速器](https://t.goodrain.com/t/topic/236)
-    * [Centos安装Docker](install/Centos7-install.md)
-    * [Ubuntu-16.04 sh脚本安装docker,docker-compose,docker-machine](install/Ubuntu-16.04-install.md)
+    * [Centos安装Docker](docker,compose,swarm的安装/安装/Centos7-install.md)
+    * [Ubuntu-16.04 sh脚本安装docker,docker-compose,docker-machine](docker,compose,swarm的安装/安装/Ubuntu-16.04-install.md)
     * [mongo命令](DB/NOSQL/mongo/mongo命令.md)
     * [Redis]()
         * [Redis命令](DB/NOSQL/redis/Redis命令.md)
@@ -18,4 +18,4 @@
     * [node命令](service/node/node命令.md)
     * [easy-mock使用](soft/easy-mock/easy-mock使用.md)
     * [docker搭建Hadoop集群](big-data/hadoop/Hadoop搭建.md)
-    * [docker-machine搭建docker-swarm-mode集群](docker-swarm/cluster/docker-machine搭建cluster集群.md)
+    * [docker-machine搭建docker-swarm-mode集群](docker,compose,swarm的安装/docker-swarm集群搭建/cluster/docker-machine搭建cluster集群.md)
