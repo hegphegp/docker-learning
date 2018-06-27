@@ -5,10 +5,12 @@
 
 ##### 阿里云web页面设置二级域名的步骤
 [阿里云后台页面https://home.console.aliyun.com](https://home.console.aliyun.com)  
-步骤01
+步骤01  
 ![avatar](imgs/阿里云设置二级域名的步骤01.png)
-步骤02
+
+步骤02  
 ![avatar](imgs/阿里云设置二级域名的步骤02.png)
+
 ### 在阿里云域名生成,必须关闭防火墙
 ```
 systemctl stop firewalld.service

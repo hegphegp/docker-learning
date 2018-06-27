@@ -19,3 +19,4 @@
     * [easy-mock使用](soft软件镜像制作/easy-mock/easy-mock使用.md)
     * [docker搭建Hadoop集群](大数据/hadoop/Hadoop搭建.md)
     * [docker-machine搭建docker-swarm-mode集群](docker,compose,swarm的安装/docker-swarm集群搭建/cluster/docker-machine搭建cluster集群.md)
+    * [vagrant的使用方法](vagrant/vagrant的使用方法.md)
