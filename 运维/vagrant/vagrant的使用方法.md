@@ -48,7 +48,7 @@ Vagrant.configure("2") do |config|
     vb.name = "centos-7.3-swarm" #指定虚拟机的名称
     vb.gui = true
     vb.memory = "1024"
-    v.cpus = 2
+    vb.cpus = 2
   end
 end
 ```
