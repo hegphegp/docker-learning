@@ -23,7 +23,7 @@ vagrant init
 # config.vm.boot_timeout = 360
 # config.ssh.username = "root"
 # config.ssh.password = "root"
-# config..gui = true
+# vb.gui = true
 ```
 
 #### 所有官方提供的vagrant镜像都应该有 账号密码 vagrant和vgrant root和vagrant， 默认情况下root和vagrant用户都不允许远程登录的
@@ -40,8 +40,16 @@ systemctl restart sshd
 ```
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
+# Linux下，没指定目录的话，vagrant默认创建的虚拟机目录在当前Linux用户的home目录的VirtualBox VMs文件夹
 
 Vagrant.configure("2") do |config|
+#  官方提供的镜像的账号都是不允许远程登录的，所有配官方镜像的congfig不应该添加config.ssh.username参数，否则创建虚拟机时多次尝试ssh登录，都会失败，浪费大量时间
+#  个人镜像设置远程登录了，可以使用username和password参数
+#  config.ssh.username="vagrant"
+#  config.ssh.password="vagrant"
+#  将镜像的目录挂载到宿主机
+#  config.vm.synced_folder 宿主机目录, 镜像里面的目录
+  config.vm.synced_folder ".", "/vagrant", disabled: true
   config.vm.box = "centos-7.3"
   config.vm.network "private_network", ip: "192.168.33.10"
   config.vm.provider "virtualbox" do |vb|
@@ -52,3 +60,4 @@ Vagrant.configure("2") do |config|
   end
 end
 ```
+
