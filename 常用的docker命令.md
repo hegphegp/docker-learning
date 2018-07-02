@@ -49,7 +49,13 @@ docker stop `docker ps -a -q --filter name=redis`
 docker rm `docker ps -a -q --filter name=redis`
 ```
 
-##生存环境的必备参数
+#### 生存环境的必备参数
 ```
 -e TZ=Asia/Shanghai -v /etc/localtime:/etc/localtime:ro
+```
+
+#### 导出和导入docker镜像
+```
+docker save mysql:5.7.21 > mysql-5.7.21.tar.gz
+docker load < mysql-5.7.21.tar.gz
 ```

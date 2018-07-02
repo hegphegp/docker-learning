@@ -1,4 +1,4 @@
-## postgresql命令
+## mysql命令
 
 ```shell
 # 单独用docker跑mysql时,不能加sh -c执行多条命令,后面只能加一条命令,用docker-compose应该也不行,应该是MySQL镜像导致的
@@ -14,4 +14,11 @@ docker rm mysql
 # docker run -itd --restart always -e MYSQL_ROOT_PASSWORD=root -v /etc/localtime:/etc/localtime:ro -p 3306:3306 --name mysql mysql:8.0.11 --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --init-connect='SET NAMES utf8mb4;' --default-time-zone='+8:00' --log-timestamps=SYSTEM --sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'
 docker run -itd --restart always -e MYSQL_ROOT_PASSWORD=root -v /etc/localtime:/etc/localtime:ro -p 3306:3306 --name mysql mysql:8.0.11 --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --init-connect='SET NAMES utf8mb4;' --default-time-zone='+8:00' --log-timestamps=SYSTEM --sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' --default_authentication_plugin=mysql_native_password
 docker logs mysql
+```
+
+#### 不登录数据库，直接在命令行执行SQL语句
+```
+# 加多一个 -e 参数
+mysql -u root -proot -e "show databases";
+mysql -u root -proot -e "DROP DATABASE IF EXISTS walle; CREATE DATABASE walle DEFAULT character set utf8 collate utf8_general_ci;"
 ```
