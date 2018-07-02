@@ -9,3 +9,5 @@
 4) /etc/ansible/ansible.cfg      # 在/etc/ansible/ansible.cfg
 ## 看了一个大型项目，发现ansible.cfg只配了4个参数
 ```
+
+### 无论是ansible脚本客户端还是被操控的服务器，都要配置Python环境
