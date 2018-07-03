@@ -1,6 +1,10 @@
 # docker-swarm集群创建的讲解
 
-* 关闭防火墙
+#### 可能线上没有节点名称，只能用节点的标识ID
+
+```
+因为swarm使用的是raft集群管理方式所以集群内节点分为三种角色：头目（leader）,被选举者（Reachable），小弟（worker）。头目和被选举者其实都是manager，根据下图可以看出swarn集群中至少得有2个可用的被选举节点才能选举主节点出来，否则集群将无法执行操作。
+```
 
 ##### 开启防火墙后却没有开放端口，映射容器端口可能会抛错
 ```
@@ -33,7 +37,7 @@ firewall-cmd --list-ports
 ```
 
 #### 防火墙的内容
-* 无论防火墙是否开启，都不需要在防火墙开放22端口，ssh登录22端口都是可以通讯的
+* 无论防火墙是否开启，都不需要在防火墙开放22端口，ssh都可以访问到22端口
 ```
 # firewall-cmd --zone=public(作用域) --add-port=80/tcp(端口和访问类型) --permanent(永久生效)
 查看所有打开的端口： firewall-cmd --zone=public --list-ports
@@ -50,76 +54,92 @@ firewall-cmd --list-ports
 删除：firewall-cmd --zone= public --remove-port=80/tcp --permanent
 ```
 
-
-##### 初始化swarm manager并制定网卡地址(虚拟机是单网卡的不需要指定网卡地址)
+##### docker-machine查看节点的各种信息
+```
+docker-machine env 节点名称
+```
+##### 在其中一台manager节点初始化swarm manager并指定网卡地址(虚拟机是单网卡的不需要指定网卡地址)
 ```
 docker swarm init --advertise-addr 192.168.10.117
 ```
-##### 强制删除集群，如果是manager，需要加 --force
+##### 查看连接令牌
 ```
-docker swarm leave --force
-docker node rm docker-118
-```
-##### 查看swarm worker的连接令牌
-```
+# 查看worker节点加入的令牌
 docker swarm join-token worker
-```
-##### 查看swarm manager的连接令牌
-```
+# 查看manager节点加入的令牌
 docker swarm join-token manager
-```
-##### 使旧令牌无效并生成新令牌
-```
+# 使旧令牌无效并生成新令牌
 docker swarm join-token --rotate
 ```
-##### 加入docker swarm集群
+##### 加入节点
 ```
-docker swarm join --token SWMTKN-1-5d2ipwo8jqdsiesv6ixze20w2toclys76gyu4zdoiaf038voxj-8sbxe79rx5qt14ol14gxxa3wf 192.168.10.117:2377
+docker swarm join --token SWMTKN-1-5d2xxxxxxxxxxxxxxxxxx 192.168.10.117:2377
 ```
 ##### 查看集群中的节点
 ```
+# 查看集群中的节点
 docker node ls
+# 查看集群中节点信息
+docker node inspect 节点名称 --pretty
+# 查看集群中节点信息
+docker node inspect 节点名称 --pretty
 ```
-##### 查看集群中节点信息
+##### 删除节点(集群不能直接删除manger节点，集群先将manager降级为node节点才可以删除)
 ```
-docker node inspect docker-117 --pretty
+# 集群不可以删除
+# 因为之前节点是主动离开集群的，所以集群内还有本节点信息，但是本节点已经不再主动加入集群，所以需要从集群删除本管理节点才能重新加入到集群，因为manager节点不能删除，所以需要先降级为worker才能删除。
+# manger节点自动离开集群。该manger节点是主动离开集群的，所以集群内还有本节点信息，该manager节点在集群还显示，只是状态为down，但是这条记录是没用的了，所以集群要将这条记录降级为worker，然后移除该记录。在这个节点再执行docker swarm join --token manager-token-xxxxxxxxx命令，还可以加入集群。但是再加入集群时，旧的那条记录还是显示为down，同时会新加一条信息。所以节点执行离开集群的命令后，集群也要执行删除那个节点的命令
+docker swarm leave --force
+# 集群将该节点对应的记录降级为worker，然后删除
+docker node demote 节点名称
+docker node rm 节点的标识ID
+docker node demote 节点的标识ID
+docker node rm 节点名称
+
+# worker节点自动离开集群。该worker节点执行离开集群的命令后，在集群的管理节点查看，该worker节点在集群还显示，只是状态为down。在这个节点再执行docker swarm join --token worker-token-xxxxxxxxx命令，还可以加入集群。但是再加入集群时，旧的那条记录还是显示为down，同时会新加一条信息。所以节点执行离开集群的命令后，集群也要执行删除那个节点的命令
+docker swarm leave
+
+# 集群删除manger节点(应先在集群的管理节点执行命令(docker node update --availability drain 要删除的节点名称)把这个节点容器迁移到其他节点，然后再把节点从集群中去掉)
 ```
-##### 调度程序可以将任务分配给节点
+##### 设置集群可以将任务分配给某个节点
 ```
-docker node update --availability active docker-118
+docker node update --availability active 节点名称
 ```
-##### 调度程序不向节点分配新任务，但是现有任务仍然保持运行
+##### 设置集群不给某个节点分配新任务，但是现有任务仍然保持运行
 ```
-docker node update --availability pause docker-118
+docker node update --availability pause 节点名称
 ```
-##### 调度程序不会将新任务分配给节点。调度程序关闭任何现有任务并在可用节点上安排它们
+##### 设置集群不给某个节点分配新任务，把该节点现有的所有任务自动迁移到其他节点，并清空该节点的所有服务
 ```
-docker node update --availability drain docker-118
+docker node update --availability drain 节点名称
+# 该节点可以用 docker node update --availability active 节点名称 命令恢复该节点
 ```
-##### 添加节点标签
+##### 节点标签
 ```
-docker node update --label-add label1 --label-add bar=label2 docker-117
+# 添加节点标签
+docker node update --label-add label1 --label-add bar=label2 节点名称
+# 删除节点标签
+docker node update --label-rm label1 节点名称
 ```
-##### 删除节点标签
+##### worker与manager相互切换
 ```
-docker node update --label-rm label1 docker-117
+# worker节点升级为manager节点
+docker node promote 节点名称
+# manager节点降级为worker节点
+docker node demote 节点名称
 ```
-##### 将节点升级为manager
+##### 查看服务
 ```
-docker node promote docker-118
-```
-##### 将节点降级为worker
-```
-docker node demote docker-118
-```
-##### 查看服务列表
-```
+# 查看服务列表
 docker service ls
-```
-##### 查看服务的具体信息
-```
+# 查看服务的具体信息
 docker service ps redis
 ```
+
+
+
+# 到这里了
+
 ##### 创建一个不定义name，不定义replicas的服务
 ```
 docker service create nginx
