@@ -101,18 +101,14 @@ docker node rm 节点的标识ID
 docker node rm 节点名称
 # 集群删除manger节点(应先在集群的管理节点执行命令(docker node update --availability drain 要删除的节点名称)把这个节点容器迁移到其他节点，然后再把节点从集群中去掉)
 ```
-##### 设置集群可以将任务分配给某个节点
+##### 设置集群对节点任务的分配
 ```
-docker node update --availability active 节点名称
-```
-##### 设置集群不给某个节点分配新任务，但是现有任务仍然保持运行
-```
-docker node update --availability pause 节点名称
-```
-##### 设置集群不给某个节点分配新任务，把该节点现有的所有任务自动迁移到其他节点，并清空该节点的所有服务
-```
+# 设置集群不给某个节点分配新任务，把该节点现有的所有任务自动迁移到其他节点，并清空该节点的所有服务
 docker node update --availability drain 节点名称
-# 该节点可以用 docker node update --availability active 节点名称 命令恢复该节点
+# 可以给drain或者pause的节点重新分配任务
+docker node update --availability active 节点名称
+# 设置集群不给某个节点分配新任务，但是现有任务仍然保持运行
+docker node update --availability pause 节点名称
 ```
 ##### 节点标签
 ```
