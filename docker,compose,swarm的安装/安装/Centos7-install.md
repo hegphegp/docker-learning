@@ -30,9 +30,10 @@ yum remove docker docker-common docker-selinux docker-engine
 > #### 2.更换yum源
 
 ```
-yum install -y wget
 mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
-wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
+curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
+echo "export LC_ALL=en_US.UTF-8"  >>  /etc/profile
+source /etc/profile
 yum clean all
 yum makecache
 ```
@@ -69,12 +70,12 @@ sudo systemctl restart docker
 
 > #### 5.安装docker-compose
 ```
-curl -L https://mirrors.aliyun.com/docker-toolbox/linux/compose/1.16.1/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
+curl -L https://mirrors.aliyun.com/docker-toolbox/linux/compose/1.21.2/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
 chmod +x /usr/local/bin/docker-compose
 ```
 
 > #### 6.安装docker-machine
 ```
-curl -L https://mirrors.aliyun.com/docker-toolbox/linux/machine/0.13.0/docker-machine-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
+curl -L https://mirrors.aliyun.com/docker-toolbox/linux/machine/0.15.0/docker-machine-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
 chmod +x /usr/local/bin/docker-machine
 ```

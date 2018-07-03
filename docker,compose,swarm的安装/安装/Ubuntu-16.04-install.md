@@ -1,7 +1,10 @@
 ## Ubuntu-16.04 sh脚本安装docker,docker-compose,docker-machine
-
-[docker-machine的官方下载地址https://github.com/docker/machine/releases](https://github.com/docker/machine/releases)  
+  
 [docker-compose的官方下载地址https://github.com/docker/compose/releases](https://github.com/docker/compose/releases)
+[docker-compose的官方下载地址ttps://mirrors.aliyun.com/docker-toolbox/linux/compose](ttps://mirrors.aliyun.com/docker-toolbox/linux/compose)
+[docker-machine的官方下载地址https://github.com/docker/machine/releases](https://github.com/docker/machine/releases)
+[docker-machine的官方下载地址https://mirrors.aliyun.com/docker-toolbox/linux/machine](https://mirrors.aliyun.com/docker-toolbox/linux/machine)
+
 
 ```shell
 #!/bin/bash
