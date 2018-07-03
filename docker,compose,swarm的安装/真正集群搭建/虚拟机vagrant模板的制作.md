@@ -1,13 +1,13 @@
 # 虚拟机vagrant模板的制作
 
-* 账号密码 vagrant:vagrant和root:vagrant
-* docker的下载页面 https://mirrors.aliyun.com/docker-ce/linux/centos/7/x86_64/stable/Packages/ ,下载的链接 https://mirrors.aliyun.com/docker-ce/linux/centos/7/x86_64/stable/Packages/docker-ce-18.03.1.ce-1.el7.centos.x86_64.rpm
-* vagrant的下载页面 http://cloud.centos.org/centos/7/vagrant/x86_64/images/ ,下载的链接 http://cloud.centos.org/centos/7/vagrant/x86_64/images/CentOS-7-x86_64-Vagrant-1805_01.VirtualBox.box
-* 用vagrant ssh登录服务器，修改配置文件允许账号远程登录
-* 换成阿里的yum源
-* 安装docker，并指定加速仓库
-* 导出虚拟机前先清空网络配置
-* 用vagrant package 导出虚拟机
+* #### 账号密码 vagrant:vagrant和root:vagrant
+* #### docker的下载页面 https://mirrors.aliyun.com/docker-ce/linux/centos/7/x86_64/stable/Packages/ ,下载的链接 https://mirrors.aliyun.com/docker-ce/linux/centos/7/x86_64/stable/Packages/docker-ce-18.03.1.ce-1.el7.centos.x86_64.rpm
+* #### vagrant的下载页面 http://cloud.centos.org/centos/7/vagrant/x86_64/images/ ,下载的链接 http://cloud.centos.org/centos/7/vagrant/x86_64/images/CentOS-7-x86_64-Vagrant-1805_01.VirtualBox.box
+* #### 用vagrant ssh登录服务器，修改配置文件允许账号远程登录
+* #### 换成阿里的yum源
+* #### 安装docker，并指定加速仓库
+* #### 导出虚拟机前先清空网络配置
+* #### 用vagrant package 导出虚拟机
 
 ##### 导入vagrant官方的centos7虚拟机模板
 ```
@@ -110,14 +110,15 @@ vagrant box add centos7-1805-docker centos7-1805-docker.VirtualBox.box
 # vi: set ft=ruby :
 
 Vagrant.configure("2") do |config|
-  config.vm.synced_folder ".", "/vagrant", disabled: true
-  config.vm.box = "centos-7.3"
-  config.vm.network "private_network", ip: "192.168.33.10"
-  config.vm.provider "virtualbox" do |vb|
-    vb.name = "centos-7.3"
-    vb.gui = true
-    vb.memory = "1024"
-    vb.cpus = "2"
+  config.vm.define :template do |manager|
+    template.vm.boot_timeout = 1
+    template.vm.box = "centos-7.3"
+    template.vm.hostname = "centos-7.3"
+    template.vm.synced_folder ".", "/vagrant", disabled: true
+    template.vm.network :private_network, ip: "192.168.35.11"
+    template.vm.provider "virtualbox" do |v|
+      v.customize [ "modifyvm", :id, "--name", "manager", "--memory", "1024", "--cpus", "1" ]
+    end
   end
 end
 ```
