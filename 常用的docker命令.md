@@ -12,7 +12,7 @@ minio启动命令
 docker run -it -p 9000:9000 --restart always --name minio -e MINIO_ACCESS_KEY=minio -e MINIO_SECRET_KEY=ascs.tech minio/minio server /export
 
 redis启动命令
-docker run -itd --restart always --name redis -p 6379:6379 redis
+docker run -itd --restart always --name redis -p 6379:6379 redis:4.0.9-alpine
 
 rebbitMQ启动命令
 docker run -itd --restart always --name rabbitmq -p 4369:4369 -p 5671:5671 -p 5672:5672 -p 25672:25672 -p 15671:15671 -p 15672:15672 rabbitmq:3.6.10-management-alpine

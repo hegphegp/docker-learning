@@ -1,0 +1,84 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  config.vm.define :manager1 do |manager1|
+    manager1.vm.box = "centos7-1805-docker"
+    manager1.vm.hostname = "manager1"
+    manager1.vm.synced_folder ".", "/vagrant", disabled: true
+    manager1.vm.network :private_network, ip: "192.168.35.11"
+    manager1.ssh.username = "root"
+    manager1.ssh.password = "vagrant"
+#   config.vm.network "public_network", ip: "192.168.66.32", bridge: "en0: Wi-Fi (Airport)", bootproto: "static", gateway: "192.168.66.1", dns: "114.114.114.114"
+    manager1.vm.provider "virtualbox" do |v|
+#       查看所有参数  VBoxManage modifyvm --help
+      v.customize [ "modifyvm", :id, "--name", "manager1", "--memory", "1024", "--cpus", "1" ]
+    end
+  end
+
+
+  config.vm.define :manager2 do |manager2|
+    manager2.vm.box = "centos7-1805-docker"
+    manager2.vm.hostname = "manager2"
+    manager2.vm.synced_folder ".", "/vagrant", disabled: true
+    manager2.vm.network :private_network, ip: "192.168.35.12"
+    manager2.ssh.username = "root"
+    manager2.ssh.password = "vagrant"
+    manager2.vm.provider "virtualbox" do |v|
+      v.customize [ "modifyvm", :id, "--name", "manager2", "--memory", "1024", "--cpus", "1" ]
+    end
+  end
+
+
+  config.vm.define :manager3 do |manager3|
+    manager3.vm.box = "centos7-1805-docker"
+    manager3.vm.hostname = "manager3"
+    manager3.vm.synced_folder ".", "/vagrant", disabled: true
+    manager3.vm.network :private_network, ip: "192.168.35.13"
+    manager3.ssh.username = "root"
+    manager3.ssh.password = "vagrant"
+    manager3.vm.provider "virtualbox" do |v|
+      v.customize [ "modifyvm", :id, "--name", "manager3", "--memory", "1024", "--cpus", "1" ]
+    end
+  end
+
+
+  config.vm.define :worker1 do |worker1|
+    worker1.vm.box = "centos7-1805-docker"
+    worker1.vm.hostname = "worker1"
+    worker1.vm.synced_folder ".", "/vagrant", disabled: true
+    worker1.vm.network :private_network, ip: "192.168.35.14"
+    worker1.ssh.username = "root"
+    worker1.ssh.password = "vagrant"
+    worker1.vm.provider "virtualbox" do |v|
+      v.customize [ "modifyvm", :id, "--name", "worker1", "--memory", "1024", "--cpus", "1" ]
+    end
+  end
+
+
+  config.vm.define :worker2 do |worker2|
+    worker2.vm.box = "centos7-1805-docker"
+    worker2.vm.hostname = "worker2"
+    worker2.vm.synced_folder ".", "/vagrant", disabled: true
+    worker2.vm.network :private_network, ip: "192.168.35.15"
+    worker2.ssh.username = "root"
+    worker2.ssh.password = "vagrant"
+    worker2.vm.provider "virtualbox" do |v|
+      v.customize [ "modifyvm", :id, "--name", "worker2", "--memory", "1024", "--cpus", "1" ]
+    end
+  end
+
+
+  config.vm.define :worker3 do |worker3|
+    worker3.vm.box = "centos7-1805-docker"
+    worker3.vm.hostname = "worker3"
+    worker3.vm.synced_folder ".", "/vagrant", disabled: true
+    worker3.vm.network :private_network, ip: "192.168.35.16"
+    worker3.ssh.username = "root"
+    worker3.ssh.password = "vagrant"
+    worker3.vm.provider "virtualbox" do |v|
+      v.customize [ "modifyvm", :id, "--name", "worker3", "--memory", "1024", "--cpus", "1" ]
+    end
+  end
+
+end
