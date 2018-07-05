@@ -36,14 +36,14 @@ fi
 
 echo $PASSWD | sudo tee /etc/docker/daemon.json <<-'EOF'
 {
-  "registry-mirrors": ["https://1a5q7qx0.mirror.aliyuncs.com"]
+  "registry-mirrors": ["https://docker.mirrors.ustc.edu.cn"]
 }
 EOF
 
 # 生产环境一定要加graph选项，指定docker镜像和日志的目录为大空间的目录，否则死的时候武眼睇
 # echo $PASSWD | sudo tee /etc/docker/daemon.json <<-'EOF'
 # {
-#    "registry-mirrors": ["https://1a5q7qx0.mirror.aliyuncs.com"],
+#    "registry-mirrors": ["https://docker.mirrors.ustc.edu.cn"],
 #    "graph": "/opt/data/docker"
 # }
 # EOF

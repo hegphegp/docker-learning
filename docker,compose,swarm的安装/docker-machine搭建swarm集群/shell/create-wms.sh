@@ -1,11 +1,15 @@
 #!/bin/bash
 
+# docker-machine批量创建boot2docker虚拟机
+# 在Ubuntu先安装号virtualbox虚拟机
+# 然后在脚本的目录下建个iso文件夹，把boot2docker-17.11.0-ce-rc2.iso放到文件夹目录
+
 # >>>>>>>>>>>>定义开始变量
 manager1=manager1
 manager=(manager2 manager3)
 worker=(worker1 worker2 worker3)
 iso_relative_path=iso/boot2docker-17.11.0-ce-rc2.iso
-mirror_addr=https://0i912uv5.mirror.aliyuncs.com
+mirror_addr=https://docker.mirrors.ustc.edu.cn
 # <<<<<<<<<<<<<定义开始变量
 
 

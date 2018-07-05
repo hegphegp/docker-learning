@@ -1,13 +1,13 @@
 ## Centos7安装docker
 
 [docker-machine的官方下载地址https://github.com/docker/machine/releases](https://github.com/docker/machine/releases)  
-[docker-compose的官方下载地址https://github.com/docker/compose/releases](https://github.com/docker/compose/releases)
-[香港内核仓库http://hkg.mirror.rackspace.com/elrepo/kernel/el7/x86_64/RPMS/](http://hkg.mirror.rackspace.com/elrepo/kernel/el7/x86_64/RPMS/)
-[清华大学内核仓库https://mirrors.tuna.tsinghua.edu.cn/elrepo/kernel/el7/x86_64/RPMS/](https://mirrors.tuna.tsinghua.edu.cn/elrepo/kernel/el7/x86_64/RPMS/)
-[中国科技大学内核仓库http://mirrors.ustc.edu.cn/elrepo/kernel/el7/x86_64/RPMS/](http://mirrors.ustc.edu.cn/elrepo/kernel/el7/x86_64/RPMS/)
-[内核仓库http://elrepo.reloumirrors.net/kernel/el7/x86_64/RPMS/](http://elrepo.reloumirrors.net/kernel/el7/x86_64/RPMS/)
-[内核仓库http://elrepo.org/linux/kernel/el7/x86_64/RPMS/](http://elrepo.org/linux/kernel/el7/x86_64/RPMS/)
-[内核仓库http://ftp.colocall.net/pub/elrepo/archive/kernel/el6/x86_64/RPMS/](http://ftp.colocall.net/pub/elrepo/archive/kernel/el6/x86_64/RPMS/)
+[docker-compose的官方下载地址https://github.com/docker/compose/releases](https://github.com/docker/compose/releases)  
+[香港内核仓库http://hkg.mirror.rackspace.com/elrepo/kernel/el7/x86_64/RPMS/](http://hkg.mirror.rackspace.com/elrepo/kernel/el7/x86_64/RPMS/)  
+[清华大学内核仓库https://mirrors.tuna.tsinghua.edu.cn/elrepo/kernel/el7/x86_64/RPMS/](https://mirrors.tuna.tsinghua.edu.cn/elrepo/kernel/el7/x86_64/RPMS/)  
+[中国科技大学内核仓库http://mirrors.ustc.edu.cn/elrepo/kernel/el7/x86_64/RPMS/](http://mirrors.ustc.edu.cn/elrepo/kernel/el7/x86_64/RPMS/)  
+[内核仓库http://elrepo.reloumirrors.net/kernel/el7/x86_64/RPMS/](http://elrepo.reloumirrors.net/kernel/el7/x86_64/RPMS/)  
+[内核仓库http://elrepo.org/linux/kernel/el7/x86_64/RPMS/](http://elrepo.org/linux/kernel/el7/x86_64/RPMS/)  
+[内核仓库http://ftp.colocall.net/pub/elrepo/archive/kernel/el6/x86_64/RPMS/](http://ftp.colocall.net/pub/elrepo/archive/kernel/el6/x86_64/RPMS/)  
 
 > 1.卸载自带的docker服务
 >
@@ -55,7 +55,7 @@ yum install -y https://mirrors.aliyun.com/docker-ce/linux/centos/7/x86_64/stable
 mkdir -p /etc/docker
 tee /etc/docker/daemon.json <<-'EOF'
 {
-  "registry-mirrors": ["https://1a5q7qx0.mirror.aliyuncs.com"]
+  "registry-mirrors": ["https://docker.mirrors.ustc.edu.cn"]
 }
 EOF
 systemctl enable docker #设置docker服务开机自启动
@@ -64,7 +64,7 @@ sudo systemctl restart docker
 # 生产环境一定要加graph选项，指定docker镜像和日志的目录为大空间的目录，否则死的时候武眼睇
 # echo $PASSWD | sudo tee /etc/docker/daemon.json <<-'EOF'
 # {
-#    "registry-mirrors": ["https://1a5q7qx0.mirror.aliyuncs.com"],
+#    "registry-mirrors": ["https://docker.mirrors.ustc.edu.cn"],
 #    "graph": "/opt/data/docker"
 # }
 # EOF

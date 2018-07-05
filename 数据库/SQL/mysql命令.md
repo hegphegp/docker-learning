@@ -1,7 +1,7 @@
 ## mysql命令
 
 ```shell
-# 单独用docker跑mysql时,不能加sh -c执行多条命令,后面只能加一条命令,用docker-compose应该也不行,应该是MySQL镜像导致的
+# 单独用docker跑mysql时,不能加sh -c执行多条命令,后面只能加一条命令,用docker-compose应该也不行,docker要监测容器里面运行的进程来判断服务是否存活，应该是MySQL容器监测不了sh -c的命令的服务存活情况
 # 镜像后面直接加mysqld的参数就可以了
 # docker run -d -e MYSQL_ROOT_PASSWORD=root mysql:5.7.21 --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --init-connect='SET NAMES utf8mb4;' --default-time-zone='+8:00' --innodb-flush-log-at-trx-commit=0 --log-timestamps=SYSTEM
 # 查看所有参数  docker run -it --rm mysql:5.7.16 --verbose --help

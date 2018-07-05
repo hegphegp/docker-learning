@@ -87,7 +87,7 @@ yum install -y https://mirrors.aliyun.com/docker-ce/linux/centos/7/x86_64/stable
 mkdir -p /etc/docker
 tee /etc/docker/daemon.json <<-'EOF'
 {
-  "registry-mirrors": ["https://1a5q7qx0.mirror.aliyuncs.com"]
+  "registry-mirrors": ["https://docker.mirrors.ustc.edu.cn"]
 }
 EOF
 systemctl enable docker #设置docker服务开机自启动
