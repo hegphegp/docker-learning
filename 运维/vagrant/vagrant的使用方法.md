@@ -3,7 +3,7 @@
 #### 必须先安装virtualbox
 #### [vagrant软件下载地址https://releases.hashicorp.com/vagrant](https://releases.hashicorp.com/vagrant)
 #### [vagrant镜像下载地址http://cloud.centos.org/centos/7/vagrant/x86_64/images/](http://cloud.centos.org/centos/7/vagrant/x86_64/images/)
-#### 建议：直接下载vagrant_2.1.1_x86_64.deb，用 sudo dpkg -i vagrant_2.1.1_x86_64.deb 命令安装，不要下载vagrant_2.1.1_linux_amd64.zip解压放到/usr/bin/目录，亲测解压发到目录，用vagrant命令有问题
+#### 建议：直接下载vagrant_2.1.1_x86_64.deb，用 sudo dpkg -i vagrant_2.1.1_x86_64.deb 命令安装，该安装包会配置好环境并给用户添加该软件的执行权限，而下载vagrant_2.1.1_linux_amd64.zip解压放到/usr/bin/目录，发现只有root和sudo命令才可以调用vagrant命令
 
 ### 添加本地仓库的镜像
 ```
