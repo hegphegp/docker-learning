@@ -49,7 +49,9 @@ grub2-set-default 0
 
 > #### 4.安装docker，并设置阿里docker加速器
 ```
-yum install -y http://mirrors.aliyun.com/docker-engine/yum/repo/main/centos/7/Packages/docker-engine-17.03.1.ce-1.el7.centos.x86_64.rpm  #安装docker
+# 旧的阿里云URL的仓库好像不更新了
+# yum install -y https://mirrors.aliyun.com/docker-engine/yum/repo/main/centos/7/Packages/docker-engine-17.03.1.ce-1.el7.centos.x86_64.rpm  #安装docker
+yum install -y https://mirrors.aliyun.com/docker-ce/linux/centos/7/x86_64/stable/Packages/docker-ce-18.03.1.ce-1.el7.centos.x86_64.rpm
 mkdir -p /etc/docker
 tee /etc/docker/daemon.json <<-'EOF'
 {

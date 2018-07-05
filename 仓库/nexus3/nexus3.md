@@ -75,8 +75,9 @@ tee ~/.m2/settings.xml <<-'EOF'
   <mirrors>
     <mirror>
       <id>local_repo11</id>
-      <mirrorOf>*</mirrorOf>
-      <!--<mirrorOf>aliyun,central</mirrorOf> -->
+      <!--<mirrorOf>*</mirrorOf>-->
+      <!--<mirrorOf>aliyun,central</mirrorOf>-->
+      <mirrorOf>aliyun</mirrorOf>
   　　  <url>http://192.168.4.8:18081/repository/maven-central/</url>
     </mirror>
   </mirrors>

@@ -9,9 +9,11 @@ mirror_addr=https://0i912uv5.mirror.aliyuncs.com
 # <<<<<<<<<<<<<定义开始变量
 
 
+
 all=(manager1 ${manager[*]} ${worker[*]})
 file_path=$(cd "$(dirname "$0")"; pwd)
 iso_path=file:${file_path}/${iso_relative_path}
+
 
 
 # >>>>>>>>>>>>找出所有存在的docker虚拟机以及运行状态
@@ -24,6 +26,7 @@ data=$(docker-machine ls | awk -F ' ' '{if(NR>1){print $4}}')
 status=($data)
 echo -e "\033[31m\n 步骤一:结束:找出所有存在的docker虚拟机以及运行状态 \n\033[0m"
 # <<<<<<<<<<<<<找出所有存在的docker虚拟机以及运行状态
+
 
 
 # >>>>>>>>>>>>停止并删除运行的docker虚拟机
@@ -47,6 +50,7 @@ do
 done
 echo -e "\033[31m\n 步骤二:结束:停止并删除名称相同的docker虚拟机 \n\033[0m"
 # <<<<<<<<<<<<<停止并删除运行的docker虚拟机
+
 
 
 # >>>>>>>>>>>>创建所有的docker虚拟机
