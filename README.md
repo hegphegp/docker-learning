@@ -5,6 +5,7 @@
         * [Linux通用脚本在线安装最新版的docker](/docker,compose,swarm的安装/安装/Centos7通过安装包安装docker.md)
         * [Centos7通过安装包安装docker](/docker,compose,swarm的安装/安装/Centos7通过安装包安装docker.md)
         * [Ubuntu16.04通过安装包安装docker](/docker,compose,swarm的安装/安装/Ubuntu16.04通过安装包安装docker.md)
+        * [docker镜像搭建docker集群](/docker,compose,swarm的安装/docker镜像搭建docker集群/docker镜像搭建docker集群.md)
         * [docker-machine批量创建boot2docker虚拟机](/docker,compose,swarm的安装/docker-machine搭建swarm集群/shell/create-wms.sh)
         * [docker-machine创建docker-swarm集群的脚本](/docker,compose,swarm的安装/docker-machine搭建swarm集群/shell/docker-swarm.sh)
         * [vagrant制作docker的虚拟机模板](/docker,compose,swarm的安装/真正集群搭建/制作vagrant系统镜像/虚拟机vagrant模板的制作.md)
