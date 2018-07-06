@@ -7,11 +7,23 @@ sudo echo "deb http://mirrors.aliyun.com/ubuntu/ xenial main restricted universe
 sudo echo "deb http://mirrors.aliyun.com/ubuntu/ xenial-security main restricted universe multiverse" >> /etc/apt/sources.list
 sudo echo "deb http://mirrors.aliyun.com/ubuntu/ xenial-updates main restricted universe multiverse" >> /etc/apt/sources.list
 sudo echo "deb http://mirrors.aliyun.com/ubuntu/ xenial-backports main restricted universe multiverse" >> /etc/apt/sources.list
-sudo apk-get update
+sudo apt-get update
 sudo apt-get clean
 sudo apt-get autoclean   # 清理旧版本的软件缓存
 sudo apt-get clean       # 清理所有软件缓存
 sudo apt-get autoremove  # 删除系统不再使用的孤立软件
+
+### 不用sudo执行的命令
+cp /etc/apt/sources.list /etc/apt/sources.list.bak
+echo "deb http://mirrors.aliyun.com/ubuntu/ xenial main restricted universe multiverse" > /etc/apt/sources.list
+echo "deb http://mirrors.aliyun.com/ubuntu/ xenial-security main restricted universe multiverse" >> /etc/apt/sources.list
+echo "deb http://mirrors.aliyun.com/ubuntu/ xenial-updates main restricted universe multiverse" >> /etc/apt/sources.list
+echo "deb http://mirrors.aliyun.com/ubuntu/ xenial-backports main restricted universe multiverse" >> /etc/apt/sources.list
+apt-get update
+apt-get clean
+apt-get autoclean   # 清理旧版本的软件缓存
+apt-get clean       # 清理所有软件缓存
+apt-get autoremove  # 删除系统不再使用的孤立软件
 ```
 
 #### ubuntu最近版本
