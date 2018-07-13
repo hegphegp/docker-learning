@@ -29,6 +29,8 @@
         * [nexus3仓库的配置](/仓库/搭建本地仓库/nexus3/nexus3.md)
         * [docker搭建真正的Hadoop集群](/大数据/hadoop/Hadoop搭建.md)
         * [jhipster命令](service/jhipster/jhipster命令.md)
+        * [zookeeper](/常用软件和一些镜像制作/zookeeper/README.md)
+            * [单节点](/常用软件和一些镜像制作/zookeeper/singleNode/README.md)
         * [vagrant]()
             * [vagrant的使用技巧](/常用软件和一些镜像制作/vagrant/vagrant的使用方法.md)
             * [单个虚拟机的Vagrantfile脚本](/常用软件和一些镜像制作/vagrant/single/Vagrantfile)
