@@ -1,7 +1,14 @@
 ## Centos7安装docker
 
-[docker-machine的官方下载地址https://github.com/docker/machine/releases](https://github.com/docker/machine/releases)  
+[16.04-Xenial的阿里云docker安装包下载地址https://mirrors.aliyun.com/docker-ce/linux/ubuntu/dists/xenial/pool/edge/amd64/](https://mirrors.aliyun.com/docker-ce/linux/ubuntu/dists/xenial/pool/edge/amd64/)  
+[16.10-Yakkety的阿里云docker安装包下载地址https://mirrors.aliyun.com/docker-ce/linux/ubuntu/dists/yakkety/pool/edge/amd64/](https://mirrors.aliyun.com/docker-ce/linux/ubuntu/dists/yakkety/pool/edge/amd64/)  
+[17.04-Zesty的阿里云docker安装包下载地址https://mirrors.aliyun.com/docker-ce/linux/ubuntu/dists/zesty/pool/edge/amd64/](https://mirrors.aliyun.com/docker-ce/linux/ubuntu/dists/zesty/pool/edge/amd64/)  
+[17.10-Artful的阿里云docker安装包下载地址https://mirrors.aliyun.com/docker-ce/linux/ubuntu/dists/artful/pool/edge/amd64/](https://mirrors.aliyun.com/docker-ce/linux/ubuntu/dists/artful/pool/edge/amd64/)  
+[18.04-Bionic的阿里云docker安装包下载地址https://mirrors.aliyun.com/docker-ce/linux/ubuntu/dists/bionic/pool/edge/amd64/](https://mirrors.aliyun.com/docker-ce/linux/ubuntu/dists/bionic/pool/edge/amd64/)  
 [docker-compose的官方下载地址https://github.com/docker/compose/releases](https://github.com/docker/compose/releases)  
+[docker-compose的官方下载地址https://mirrors.aliyun.com/docker-toolbox/linux/compose](https://mirrors.aliyun.com/docker-toolbox/linux/compose)  
+[docker-machine的官方下载地址https://github.com/docker/machine/releases](https://github.com/docker/machine/releases)  
+[docker-machine的官方下载地址https://mirrors.aliyun.com/docker-toolbox/linux/machine](https://mirrors.aliyun.com/docker-toolbox/linux/machine)  
 [香港内核仓库http://hkg.mirror.rackspace.com/elrepo/kernel/el7/x86_64/RPMS/](http://hkg.mirror.rackspace.com/elrepo/kernel/el7/x86_64/RPMS/)  
 [清华大学内核仓库https://mirrors.tuna.tsinghua.edu.cn/elrepo/kernel/el7/x86_64/RPMS/](https://mirrors.tuna.tsinghua.edu.cn/elrepo/kernel/el7/x86_64/RPMS/)  
 [中国科技大学内核仓库http://mirrors.ustc.edu.cn/elrepo/kernel/el7/x86_64/RPMS/](http://mirrors.ustc.edu.cn/elrepo/kernel/el7/x86_64/RPMS/)  
