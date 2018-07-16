@@ -75,6 +75,7 @@ tee ~/.m2/settings.xml <<-'EOF'
   <mirrors>
     <mirror>
       <id>local_repo11</id>
+      <!--绝对不能用*，用*出现了无数次错误，有些文件还是要从中央仓库下载，不能用*-->
       <!--<mirrorOf>*</mirrorOf>-->
       <!--<mirrorOf>aliyun,central</mirrorOf>-->
       <mirrorOf>aliyun</mirrorOf>

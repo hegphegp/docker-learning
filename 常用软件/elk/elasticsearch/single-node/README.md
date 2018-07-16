@@ -1,5 +1,14 @@
 # elasticsearch单节点
 
+### elasticsearch:5.6.10-alpine镜像的参数说明
+```
+# elasticsearch:5.6.10-alpine这个版本的镜像的数据保存目录和日志目录是
+# 数据目录
+/usr/share/elasticsearch/data
+# 日志目录
+/usr/share/elasticsearch/logs
+```
+
 ### elasticsearch的5.6.10版本的内存设置参数ES_JAVA_OPTS或者jvm.options
 ```
 docker run -it --rm -e ES_JAVA_OPTS="-Xms256m -Xmx256m" elasticsearch:5.6.10-alpine
