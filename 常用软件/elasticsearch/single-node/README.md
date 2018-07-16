@@ -3,6 +3,8 @@
 ### elasticsearch的5.6.10版本的内存设置参数ES_JAVA_OPTS或者jvm.options
 ```
 docker run -it --rm -e ES_JAVA_OPTS="-Xms256m -Xmx256m" elasticsearch:5.6.10-alpine
+# 用 -e 在docker设置 -e JVM_OPTIONS="-Xms256m -Xmx256m" 没效果
+# docker run -it --rm -e JVM_OPTIONS="-Xms256m -Xmx256m" elasticsearch:5.6.10-alpine
 ```
 
 ```
