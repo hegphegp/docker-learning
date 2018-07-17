@@ -1,5 +1,5 @@
 ### 自己划分nginx常用配置参数为三类
-![avatar](../imgs/nginx.conf参数自定义划分的三部分.png)
+![avatar](imgs/nginx.conf常用参数自定义划分的三部分.png)
 * 最外围部分
 * event部分
 * http部分
