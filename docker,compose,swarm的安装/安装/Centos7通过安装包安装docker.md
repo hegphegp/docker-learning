@@ -39,7 +39,7 @@ yum remove docker docker-common docker-selinux docker-engine
 ```
 mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
 curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
-echo "export LC_ALL=en_US.UTF-8"  >>  /etc/profile
+echo "export LC_ALL=en_US.UTF-8" >> /etc/profile
 source /etc/profile
 yum clean all
 yum makecache
