@@ -1,20 +1,21 @@
 #!/bin/bash
 
-# docker-machine批量创建boot2docker虚拟机
-# 在Ubuntu先安装号virtualbox虚拟机
-# 然后在脚本的目录下建个iso文件夹，把boot2docker-17.11.0-ce-rc2.iso放到文件夹目录
+# docker-machine创建docker-swarm集群的脚本
+# 环境准备，先安装好virtualbox虚拟机, docker-ce，docker-machine(是可执行的单个二进制文件，下载后放到环境变量目录就可以使用了)
+# curl -L https://mirrors.aliyun.com/docker-toolbox/linux/machine/0.15.0/docker-machine-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
+# chmod +x /usr/local/bin/docker-machine
+# 然后在脚本的当前路径下建个iso文件夹，把boot2docker-17.11.0-ce-rc2.iso放到文件夹目录
 
 # >>>>>>>>>>>>定义开始变量
-manager1=manager1
-manager=(manager2 manager3)
+manager=(manager1 manager2 manager3)
 worker=(worker1 worker2 worker3)
 iso_relative_path=iso/boot2docker-17.11.0-ce-rc2.iso
 mirror_addr=https://docker.mirrors.ustc.edu.cn
 # <<<<<<<<<<<<<定义开始变量
 
 
-
 all=(manager1 ${manager[*]} ${worker[*]})
+manager1=${manager[0]}
 file_path=$(cd "$(dirname "$0")"; pwd)
 iso_path=file:${file_path}/${iso_relative_path}
 

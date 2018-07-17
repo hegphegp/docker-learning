@@ -1,5 +1,9 @@
 ## Docker学习文档
 
+```
+虽然我知道，大部分人都是来了直接下载源代码后就潇洒的离开，并且只有等到要用的时候才突然想到“我的天~~我得去学学docker”的时候才会重新来到这儿，写得不好，希望大家多多包含
+```
+
 * 简介
     * Linux系统安装docker
         * [Linux通用脚本在线安装最新版的docker](/docker,compose,swarm的安装/安装/Centos7通过安装包安装docker.md)
@@ -7,7 +11,7 @@
         * [Ubuntu16.04通过安装包安装docker](/docker,compose,swarm的安装/安装/Ubuntu16.04通过安装包安装docker.md)
         * [docker镜像搭建docker集群](/docker,compose,swarm的安装/docker镜像搭建docker集群/docker镜像搭建docker集群.md)
         * [docker-machine批量创建boot2docker虚拟机](/docker,compose,swarm的安装/docker-machine搭建swarm集群/shell/create-wms.sh)
-        * [docker-machine创建docker-swarm集群的脚本](/docker,compose,swarm的安装/docker-machine搭建swarm集群/shell/docker-swarm.sh)
+        * [docker-machine创建docker-swarm集群](/docker,compose,swarm的安装/docker-machine搭建swarm集群/docker-machine创建docker-swarm集群.md)
         * [vagrant制作docker的虚拟机模板](/docker,compose,swarm的安装/vagrant真正集群搭建/制作vagrant系统镜像/虚拟机vagrant模板的制作.md)
         * [vagrant批量创建虚拟机的Vagrantfile脚本](/docker,compose,swarm的安装/vagrant真正集群搭建/multi/Vagrantfile)
         * [docker-swarm集群的讲解](/docker,compose,swarm的安装/docker-swarm集群的讲解.md)
