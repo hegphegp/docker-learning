@@ -54,13 +54,13 @@ curl -X DELETE http://10.101.57.101:9200/school
 ```
 
 ### elasticsearch知识点
-```
-# elasticsearch不需要手动创建索引，Everything is indexed，需要手动设置索引类型
-# 在关系型数据库中，需要先创建database和tablea后才可以插入数据。而在es可以直接插入数据，系统会自动建立缺失的index和doc type，并对字段建立mapping。因为半结构化数据的数据结构通常是动态变化的，无法预知某个文档中是否有哪些字段，如果每次插入数据都需要提前建立index、type、mapping，那就失去了其作为NoSQL的优势了。
-```
+* elasticsearch不需要手动创建索引，Everything is indexed，需要手动设置索引类型
+* 在关系型数据库中，需要先创建database和table后才可以插入数据。而在es可以直接插入数据，系统会自动建立缺失的index和doc type，并对字段建立mapping。因为半结构化数据的数据结构通常是动态变化的，无法预知某个文档中是否有哪些字段，如果每次插入数据都需要提前建立index、type、mapping，那就失去了其作为NoSQL的优势了。
+* 但是es自动创建的mapping不是万能的，有时候需要根据实际情况自定义Mapping。例如，es默认的中文分词是一个字一个字分的，因此要建立引入第三方的es中文分词插件，自定义中文分词的Mapping
+* es默认的Mapping不是万能的，因为有些字段是不需要索引的，es默认给每个字段创建索引，会消耗CPU，内存和硬盘空间
 
-### elasticsearch与MySQL的对比
-MySQL | elasticsearch
+### elasticsearch与PostgreSQL的对比
+PostgreSQL | elasticsearch
 :---:|:---:
 Database | Index
 Table | Type
