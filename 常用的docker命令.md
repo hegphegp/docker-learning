@@ -35,6 +35,17 @@ Swagger-ui启动命令
 docker run --restart always --name swagger-ui -itd -p 80:8080 swaggerapi/swagger-editor:v3.5.3
 ```
 
+#### 通过docker inspect常用名命令
+```
+# 查看容器IP(下面三条命令查看不了自定义网卡的容器IP)
+docker inspect --format '{{ .NetworkSettings.IPAddress }}' 容器名
+docker inspect 容器名
+docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' 容器名
+docker inspect 容器名 | grep "IPAddress" -n
+
+# 要获取所有容器名称及其IP地址只需一个命令
+docker inspect -f '{{.Name}} - {{.NetworkSettings.IPAddress }}' $(docker ps -aq)
+```
 
 #### 通过docker创建网段，分配容器IP
 ```

@@ -22,3 +22,33 @@ docker logs mysql
 mysql -u root -proot -e "show databases";
 mysql -u root -proot -e "DROP DATABASE IF EXISTS walle; CREATE DATABASE walle DEFAULT character set utf8 collate utf8_general_ci;"
 ```
+
+#### 数据库备份恢复
+```
+# 备份命令 mysqldump
+# mysqldump数据库备份的命令格式  mysqldump -h localhost -u [uname] -p[pass] --databases [dbname][dbname2] > backupfile.sql
+# 备份所有数据库
+mysqldump -h localhost -uroot -proot --all-databases > backupfile.sql
+# 备份多个数据库
+mysqldump -h localhost -uroot -proot --databases test mysql > backupfile.sql
+# 备份指定的表
+mysqldump -h localhost -user=root –password=root databasename table1 table2 > tables_file.sql
+# 只导出DDL建表语句
+mysqldump -h localhost -uroot -proot --all-databases --no-data > backupfile.sql
+# 备份到压缩文件
+mysqldump -u root -proot --all-databases | gzip > aaaa.sql.gz
+
+# 跨主机备份，将数据直接备份到另外一台MySQL主机的数据库(前提是另外一台的MySQL主机的数据库一定要存在)
+# 使用下面的命令可以将host1上的sourceDb复制到host2的targetDb，前提是host2主机上已经创建targetDb数据库，会覆盖掉目标数据库同名的数据表
+# mysqldump --host=host1 --opt sourceDb | mysql --host=host2 -C targetDb
+mysqldump -h localhost -uroot -proot mysql | mysql -h localhost -uroot -proot -C test
+mysqldump -h localhost -uroot -proot mysql | mysql -h localhost -uroot -proot test
+
+# 恢复命令 mysql
+mysqldump -h localhost -uroot -proot --databases test > test.sql
+mysql -uroot -proot -S /run/mysqld/mysqld.sock test < test.sql
+
+# 从压缩备份文件恢复
+mysqldump -h localhost -uroot -proot --databases test | gzip > test.sql.gz
+gunzip < test.sql.gz | mysql -uroot -proot -S /run/mysqld/mysqld.sock test
+```
