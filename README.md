@@ -36,7 +36,9 @@
             * [单节点](/常用软件/zookeeper/singleNode/README.md)
         * [ELK]
             * [elasticsearch]
-                * [elasticsearch单节点部署情况]()
+                * [elasticsearch单节点部署情况](/常用软件/elk/elasticsearch/single-node/README.md)
+                * [elasticsearch的restful接口讲解](/常用软件/elk/elasticsearch/各种restful接口命令讲解/README.md)
+                * [elasticsearch备份工具](常用软件/elk/elasticsearch/elasticsearch备份工具.md)
         * [vagrant]
             * [vagrant的使用技巧](/常用软件/vagrant/vagrant的使用方法.md)
             * [单个虚拟机的Vagrantfile脚本](/常用软件/vagrant/single/Vagrantfile)
