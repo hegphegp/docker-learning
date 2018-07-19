@@ -17,8 +17,7 @@ curl http://localhost:9200
 ```
 # 创建索引时，不传参数不会抛异常
 curl -X PUT http://localhost:9200/school
-# 创建索引时，传任意json会抛错，例如  curl -X PUT http://localhost:9200/student -d ’{"username":"username","age":12}‘
-# 可以通过很多种方式来自定义索引行为，Elasticsearch提供了优化好的默认配置。最重要的参数是：number_of_shards和number_of_replicas
+# 创建索引时，可以通过很多参数来自定义索引行为，Elasticsearch提供了优化好的默认配置。最重要的参数是：number_of_shards和number_of_replicas
 # number_of_shards：定义一个索引的主分片个数，默认值是5。这个配置在索引创建后不能修改。
 # number_of_replicas：每个主分片的复制分片个数，默认是1。这个配置可以随时在活跃的索引上修改。
 # 5.6.10版本用这条命令命令创建索引，但是其他版本用这条命令创建时，会抛参数不正确的异常信息
@@ -92,18 +91,68 @@ curl -X PUT http://localhost:9200/title -d '
 '
 ```
 
-##### 
+##### 同一索引下的同一doc_type可以插入文档字段结构不同的json对象，网上那些人写的博客"同一索引的同一doc_type下的文档字段结构都一样"是废话的 
 ```
+# 插入文档时指定id的话，id是随机生成的
+curl -X POST http://localhost:9200/school/student -d '{"username":"username","age":12}'
+curl -X POST http://localhost:9200/school/student -d '{"username1":"username","age1":12}'
+curl -X POST http://localhost:9200/school/student/1 -d '{"username":"username","age":12}'
+curl -X POST http://localhost:9200/school/student/2 -d '{"username1":"username","age1":12}'
+# 查看某个doc_type的文档列表
+curl -X GET http://localhost:9200/school/student/_search
+# 查看某个index索引的文档列表
+curl -X GET http://localhost:9200/school/_search
+# 查看具体id的文档
+curl -X GET http://localhost:9200/school/student/1
+curl -X GET http://localhost:9200/school/student/2
 ```
 
-##### 
+##### PUT 和 POST 都可以插入json文档，区别是
 ```
+# PUT插入json文档时，URL必须指定id，若id存在，则覆盖当前id的json文档，该文档的版本号加1，若id不存在，则新增一个json文档
+curl -X PUT http://localhost:9200/school/student/1 -d '{"username":"username","age":12}'
+curl -X GET http://localhost:9200/school/student/1
+# PUT插入json文档时，URL加不加id都可以，若URL有id且该id在es有存在的json文档，则覆盖当前id的json文档，该文档的版本号加1；若URL有id但该id记录不存在，则新增一个json文档。若URL不存在id，则插入新的json对象
+curl -X POST http://localhost:9200/school/student -d '{"username":"username","age":12}'
+curl -X POST http://localhost:9200/school/student -d '{"username1":"username","age1":12}'
+curl -X POST http://localhost:9200/school/student/11 -d '{"username":"username","age":12}'
+curl -X POST http://localhost:9200/school/student/12 -d '{"username1":"username","age1":12}'
 ```
 
-##### 
+##### 查询搜索文档
 ```
+# 不装插件，只能用POST请求批量删除某个doc type的所有文档
+curl -X POST http://localhost:9200/school/student/_delete_by_query?conflicts=proceed -d '{"query":{"match_all":{}}}'
+curl -X POST http://localhost:9200/school/student -d '{"username":"username", "age":12}'
+curl -X POST http://localhost:9200/school/student -d '{"username":"username", "age":13}'
+curl -X POST http://localhost:9200/school/student -d '{"username":"username", "age":14}'
+curl -X POST http://localhost:9200/school/student -d '{"username":"user name user name", "age":121}'
+curl -X POST http://localhost:9200/school/student -d '{"username":"user name user name", "age":120}'
+curl -X POST http://localhost:9200/school/student -d '{"username":"user name user name", "age":122}'
+# 
+curl -X GET http://localhost:9200/school/student/_search?pretty -d '{"query":{"match_all":{}}}'
+# {
+#    "query": { "match_all": {} }
+# }
+# 分页搜索查询
+curl -X GET http://localhost:9200/school/student/_search?pretty -d '{"query":{"match_all":{}}, "from":1, "size":100}'
+# {
+#    "query": { "match_all": {} },
+#    "from": 0,
+#    "size" 1000 
+# }
+curl -X GET http://localhost:9200/school/student/_search?from=0&size=100 -d '{"query":{"match_all":{}}}'
+curl -X POST http://localhost:9200/school/student/_search -d '{"from":1, "size":100}'
+curl -X GET http://localhost:9200/school/student/_search?pretty -d '{"query":{"match_all":{}}, "from":1, "size":100}'
+curl -X GET http://localhost:9200/school/student/_search?pretty -d '{"query":{"match":{"username":"name"}}}'
+# {
+#     "query": {
+#         "match": {
+#             "username":"name"
+#         }
+#     }
+# }
 ```
-
 ##### 
 ```
 ```

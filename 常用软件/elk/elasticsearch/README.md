@@ -41,17 +41,15 @@ docker run -it --rm -e ES_JAVA_OPTS="-Xms256m -Xmx256m" elasticsearch:5.6.10-alp
 
 # curl的设置请求格式的参数 -H "accept: application/xml" -H "Content-Type: application/json"
  
-# 不带请求体
-curl -X PUT http://10.101.57.101:9200/school
-# 带请求体的
-curl -X PUT http://10.101.57.101:9200/student -d '{"username":"username","age":12}'
-curl -X GET http://10.101.57.101:9200/school
-# curl -X POST http://10.101.57.101:9200/school/person -H "accept: application/xml" -H "Content-Type: application/json" -d '{"username":"username","age":12}'
-curl -X POST http://10.101.57.101:9200/school/person -d '{"username":"username","age":12}'
+# 不带请求体创建索引
+curl -X PUT http://localhost:9200/school
+curl -X GET http://localhost:9200/school
+# curl -X POST http://localhost:9200/school/person -H "accept: application/xml" -H "Content-Type: application/json" -d '{"username":"username","age":12}'
+curl -X POST http://localhost:9200/school/person -d '{"username":"username","age":12}'
 # HEAD请求是没有响应体，用下面这条命令，客户端会卡住等待读取请求体的内容
-# curl -X HEAD http://10.101.57.101:9200/school
-curl -X -I/--head http://10.101.57.101:9200/school
-curl -X DELETE http://10.101.57.101:9200/school
+# curl -X HEAD http://localhost:9200/school
+curl -X -I/--head http://localhost:9200/school
+curl -X DELETE http://localhost:9200/school
 ```
 
 ### elasticsearch知识点
@@ -60,15 +58,11 @@ curl -X DELETE http://10.101.57.101:9200/school
 * 但是es自动创建的mapping不是万能的，有时候需要根据实际情况自定义Mapping。例如，es默认的中文分词是一个字一个字分的，因此要建立引入第三方的es中文分词插件，自定义中文分词的Mapping
 * es默认的Mapping不是万能的，因为有些字段是不需要索引的，es默认给每个字段创建索引，会消耗CPU，内存和硬盘空间
 
-### elasticsearch与PostgreSQL的对比
-PostgreSQL | elasticsearch
-:---:|:---:
-Database | Index
-Table | Type
-Row | Document
-Column | Field
-Schema | Mapping
-Index | Everything is indexed
-SQL | Query DSL
-SELECT * FROM table ... | GET http://...
-UPDATE table SET ... | PUT http://...
+```
+# 查看集群的健康状态
+curl -X GET http://localhost:9200/_cat/health
+curl -X GET http://localhost:9200/_cat/health?v
+
+# 查看集群的所有所引
+curl -X GET http://localhost:9200/_cat/index
+```
