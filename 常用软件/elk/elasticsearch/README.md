@@ -44,10 +44,10 @@ docker run -it --rm -e ES_JAVA_OPTS="-Xms256m -Xmx256m" elasticsearch:5.6.10-alp
 # 不带请求体
 curl -X PUT http://10.101.57.101:9200/school
 # 带请求体的
-curl -X PUT http://10.101.57.101:9200/student -d "{\"username\":\"username\",\"age\":12}"
+curl -X PUT http://10.101.57.101:9200/student -d '{"username":"username","age":12}'
 curl -X GET http://10.101.57.101:9200/school
-# curl -X POST http://10.101.57.101:9200/school/person -H "accept: application/xml" -H "Content-Type: application/json" -d "{\"username\":\"username\",\"age\":12}"
-curl -X POST http://10.101.57.101:9200/school/person -d "{\"username\":\"username\",\"age\":12}"
+# curl -X POST http://10.101.57.101:9200/school/person -H "accept: application/xml" -H "Content-Type: application/json" -d '{"username":"username","age":12}'
+curl -X POST http://10.101.57.101:9200/school/person -d '{"username":"username","age":12}'
 # HEAD请求是没有响应体，用下面这条命令，客户端会卡住等待读取请求体的内容
 # curl -X HEAD http://10.101.57.101:9200/school
 curl -X -I/--head http://10.101.57.101:9200/school
