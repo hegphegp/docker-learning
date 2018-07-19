@@ -1,6 +1,6 @@
 ## Docker学习文档
 
-* ##### 虽然我知道，大部分人都是来了直接下载源代码后就潇洒的离开，并且只有等到要用的时候才突然想到“我的天~~我得去学学docker”的时候才会重新来到这儿，写得不好，希望大家多多包含
+* #### 虽然我知道，大部分人都是来了直接下载笔记后就潇洒的离开，并且只有等到要用的时候才突然想到“我的天~~我得去学学docker”的时候才会重新来到这儿，写得不好，希望大家多多包含
 
 
 * [简介]
@@ -27,8 +27,8 @@
         * [draw.io镜像制作的Dockerfile文件](/常用软件/draw.io/dockerfile/Dockerfile)
         * [easy-mock镜像制作的Dockerfile文件](/常用软件/easy-mock/Dockerfile/Dockerfile)
         * [etcd软件使用的命令](/常用软件/etcd/etcd命令.md)
-        * [jq-shell命令行操作json的工具](/常用软件/jq-shell命令行操作json的工具/使用说明.md)
-        * [xmlstarlet-shell命令行操作xml的工具](/常用软件/xmlstarlet-shell命令行操作xml的工具)
+        * [shell命令行操作json的工具-jq](/常用软件/shell命令行操作json的工具-jq/使用说明.md)
+        * [shell命令行操作xml的工具-xmlstarlet](/常用软件/shell命令行操作xml的工具-xmlstarlet)
         * [nexus3仓库的配置](/仓库/搭建本地仓库/nexus3/nexus3.md)
         * [docker搭建真正的Hadoop集群](/大数据/hadoop/Hadoop搭建.md)
         * [jhipster命令](service/jhipster/jhipster命令.md)
