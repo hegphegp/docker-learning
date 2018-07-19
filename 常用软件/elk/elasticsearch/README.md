@@ -11,6 +11,7 @@
 ```
 
 ### elasticsearch:5.6.10-alpine镜像的配置文件参数说明(/usr/share/elasticsearch/config/elasticsearch.yml)
+#### elasticsearch高版本支持json和yml格式的配置文件，将config/elasticsearch.yml改成config/elasticsearch.json或者config/elasticsearch.json改成config/elasticsearch.yml就可以了
 ```
 cluster.name: TEST 表示集群名称，同一集群的节点会协同来保存与检索数据
 node.name: test1 表示节点名称
