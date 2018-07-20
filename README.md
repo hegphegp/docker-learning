@@ -5,15 +5,18 @@
 
 * [简介]
     * [Linux系统安装docker]
-        * [Linux通用脚本在线安装最新版的docker](/docker,compose,swarm的安装/安装/Centos7通过安装包安装docker.md)
-        * [Centos7通过安装包安装docker](/docker,compose,swarm的安装/安装/Centos7通过安装包安装docker.md)
-        * [Ubuntu16.04通过安装包安装docker](/docker,compose,swarm的安装/安装/Ubuntu16.04通过安装包安装docker.md)
-        * [docker镜像搭建docker集群](/docker,compose,swarm的安装/docker镜像搭建docker集群/docker镜像搭建docker集群.md)
-        * [docker-machine批量创建boot2docker虚拟机](/docker,compose,swarm的安装/docker-machine搭建swarm集群/shell/create-wms.sh)
-        * [docker-machine创建docker-swarm集群](/docker,compose,swarm的安装/docker-machine搭建swarm集群/docker-machine创建docker-swarm集群.md)
-        * [vagrant制作docker的虚拟机模板](/docker,compose,swarm的安装/vagrant真正集群搭建/制作vagrant系统镜像/虚拟机vagrant模板的制作.md)
-        * [vagrant批量创建虚拟机的Vagrantfile脚本](/docker,compose,swarm的安装/vagrant真正集群搭建/multi/Vagrantfile)
-        * [docker-swarm集群的讲解](/docker,compose,swarm的安装/docker-swarm集群的讲解.md)
+        * [Linux安装docker]
+            * [Linux通用脚本在线安装最新版的docker](/docker,compose,swarm的安装/linux安装docker/Linux通用脚本在线安装.md)
+            * [Centos7通过安装包安装docker](/docker,compose,swarm的安装/linux安装docker/Centos7通过安装包安装docker.md)
+            * [Ubuntu16.04通过安装包安装docker](/docker,compose,swarm的安装/linux安装docker/Ubuntu16.04通过安装包安装docker.md)
+        * [批量创建虚拟机]
+            * [docker-machine批量创建boot2docker虚拟机](/docker,compose,swarm的安装/docker-machine搭建swarm集群/shell/create-wms.sh)
+            * [vagrant批量创建虚拟机的Vagrantfile脚本](/docker,compose,swarm的安装/vagrant真实虚拟机搭建swarm集群/multi/Vagrantfile)
+        * [docker-swarm集群搭建]
+            * [docker镜像搭建docker集群](/docker,compose,swarm的安装/docker镜像搭建docker集群/docker镜像搭建docker集群.md)
+            * [docker-machine创建docker-swarm集群](/docker,compose,swarm的安装/docker-machine搭建swarm集群/docker-machine创建docker-swarm集群.md)
+            * [vagrant制作docker的虚拟机模板](/docker,compose,swarm的安装/vagrant真实虚拟机搭建swarm集群/制作vagrant系统镜像/虚拟机vagrant模板的制作.md)
+            * [docker-swarm集群的讲解](/docker,compose,swarm的安装/docker-swarm集群的讲解.md)
     * [各种Linux系统配置国内软件源加速器](https://t.goodrain.com/t/topic/236)
         * [alpine国内软件源仓库配置](/仓库/各种Linux系统的国内软件源仓库/alpine.md)
         * [debian国内软件源仓库配置](/仓库/各种Linux系统的国内软件源仓库/debian.md)

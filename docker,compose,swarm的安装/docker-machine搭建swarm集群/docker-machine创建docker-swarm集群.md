@@ -5,8 +5,8 @@
 * 2) docker-ce(版本号必须大于1.12版本)
 * 3) docker-machine(是可执行的单个二进制文件，下载后直接放到环境变量路径就可以了)
 
-[centos7系统的docker-ce的下载安装介绍](../安装/Centos7通过安装包安装docker.md)  
-[ubuntu16.04系统的docker-ce的安装介绍](../安装/Ubuntu16.04通过安装包安装docker.md)  
+[centos7系统的docker-ce的下载安装介绍](../linux安装docker/Centos7通过安装包安装docker.md)  
+[ubuntu16.04系统的docker-ce的安装介绍](../linux安装docker/Ubuntu16.04通过安装包安装docker.md)  
 [docker-machine的阿里云下载地址https://mirrors.aliyun.com/docker-toolbox/linux/machine/](https://mirrors.aliyun.com/docker-toolbox/linux/machine/)  
  
 #### docker-machine的下载安装，直接把下载的单个二进制文件重命名放到环境路径中去
