@@ -30,7 +30,6 @@
         * [shell命令行操作json的工具-jq](/常用软件/shell命令行操作json的工具-jq/使用说明.md)
         * [shell命令行操作xml的工具-xmlstarlet](/常用软件/shell命令行操作xml的工具-xmlstarlet)
         * [nexus3仓库的配置](/仓库/搭建本地仓库/nexus3/nexus3.md)
-        * [docker搭建真正的Hadoop集群](/大数据/hadoop/Hadoop搭建.md)
         * [jhipster命令](service/jhipster/jhipster命令.md)
         * [zookeeper](/常用软件/zookeeper/README.md)
             * [单节点](/常用软件/zookeeper/singleNode/README.md)
@@ -59,5 +58,7 @@
             * [ansible线上环境实战任务](/运维/ansible/example01/任务.md)
         * [jenkins]
             * [jenkins的使用](/运维/jenkins/使用说明.md)
-
+    * [预留模块]
+        * [大数据]
+            * [docker搭建真正的Hadoop集群](/预留模块/大数据/hadoop/Hadoop搭建.md)
     
