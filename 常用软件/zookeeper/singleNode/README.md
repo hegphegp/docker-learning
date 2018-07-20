@@ -1,5 +1,6 @@
 # zookeeper单节点部署和使用
 
+##### 先加上各种参数启动zookeeper的docker镜像的命令，后面补加zookeeper的笔记
 ```
 docker stop single-zookeeper
 docker rm single-zookeeper
