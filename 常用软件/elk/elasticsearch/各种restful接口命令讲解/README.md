@@ -433,6 +433,17 @@ curl -X GET http://localhost:9200/author/event/_search -d '
 
 ##### 
 ```
+ES中的Bool查询有三种状态，分别是must，should，must_not。
+1) must 相当于 SQL 的 and条件，比如你用SQL查询价格，你会写出如下sql语句：
+select * from table_name where id = 1000 and price = 50;
+
+2) shoud相当于SQL 的 or条件，例如：
+select * from table_name where id = 1000 or price = 50;
+
+3) must_not 相当于SQL的not in，例如：
+select * from table_name where id not in(1000);
+
+# 对于大于等于，区间值等，官方文档中有详细的说明
 ```
 
 ##### 
