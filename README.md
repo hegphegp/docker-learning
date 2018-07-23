@@ -49,9 +49,11 @@
         * [NOSQL]
             * [mongo命令](/数据库/NOSQL/mongo/mongo命令.md)
             * [Redis]
+                * [redis博客](/数据库/NOSQL/redis/Redis博客.md)
                 * [Redis命令](/数据库/NOSQL/redis/Redis命令.md)
                 * [Redis-cluster集群搭建](/数据库/NOSQL/redis/Redis-cluster集群搭建.md)
                 * [Redis-trib的常用命令](/数据库/NOSQL/redis/Redis-trib的常用命令.md)
+                * [Redis性能压测工具redis-benchmark](/数据库/NOSQL/redis/性能压测工具redis-benchmark.md)
         * [SQL]
             * [postgresql命令](/数据库/SQL/postgresql命令.md)
             * [mysql命令](/数据库/SQL/mysql命令.md)
