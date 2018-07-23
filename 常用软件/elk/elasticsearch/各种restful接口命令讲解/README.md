@@ -40,13 +40,20 @@ Elasticsearch实战系列-RESTful API使用  https://blog.csdn.net/top_code/arti
 ```
 
 
-
 ##### 实验前的准备条件
 ```
 docker stop single-elasticsearch
 docker rm single-elasticsearch
 docker run -itd --restart always -e ES_JAVA_OPTS="-Xms256m -Xmx256m" -p 9200:9200 --name single-elasticsearch elasticsearch:5.6.10-alpine
 # 访问URL http://localhost:9200
+# docker exec -it single-elasticsearch sh -c不能直接粘贴复制多条命令，识别不了
+docker exec -it single-elasticsearch sh
+echo "http.cors.enabled: true" >> config/elasticsearch.yml
+echo 'http.cors.allow-origin: "*"' >> config/elasticsearch.yml
+exit
+# 粘贴到这里，再往下粘贴没用，识别不了
+docker restart single-elasticsearch
+sleep 5
 curl http://localhost:9200
 ```
 
@@ -480,8 +487,11 @@ curl -XPUT http://localhost:9200/_bulk --data-binary @data.json
 curl -XPOST http://localhost:9200/_bulk --data-binary @data.json
 ```
 
-##### 
+##### 怎么集成Head插件
 ```
+# 在elasticsearch 5.x版本以后不再支持直接安装head插件，而是通过访问http://ip:9200获取集群监控信息
+# 使用插件之前，必须在elasticsearch的配置文件(config/elasticsearch.yml)添加允许跨域参数 http.cors.enabled: true 和 http.cors.allow-origin: "*"
+docker run -itd --restart always --name elasticsearch-head -p 9100:9100 mobz/elasticsearch-head:5-alpine
 ```
 
 ##### 
