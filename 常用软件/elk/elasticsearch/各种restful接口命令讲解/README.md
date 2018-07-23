@@ -25,7 +25,7 @@
 11) 集群节点挂断，重启后怎么恢复数据
 12) 怎么集成Head插件
 
-Elasticsearch实战系列-RESTful API使用  https://blog.csdn.net/top_code/article/details/50733257
+Elasticsearch实战系列-restful api使用 https://blog.csdn.net/top_code/article/details/50733257
 {
     "email":      "john@smith.com",
     "first_name": "John",
@@ -38,7 +38,6 @@ Elasticsearch实战系列-RESTful API使用  https://blog.csdn.net/top_code/arti
     "join_date": "2014/05/01",
 }
 ```
-
 
 ##### 实验前的准备条件
 ```
@@ -487,7 +486,7 @@ curl -XPUT http://localhost:9200/_bulk --data-binary @data.json
 curl -XPOST http://localhost:9200/_bulk --data-binary @data.json
 ```
 
-##### 怎么集成Head插件
+##### 集成Head插件
 ```
 # 在elasticsearch 5.x版本以后不再支持直接安装head插件，而是通过访问http://ip:9200获取集群监控信息
 # 使用插件之前，必须在elasticsearch的配置文件(config/elasticsearch.yml)添加允许跨域参数 http.cors.enabled: true 和 http.cors.allow-origin: "*"

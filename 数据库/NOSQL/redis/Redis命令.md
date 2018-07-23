@@ -1,6 +1,9 @@
 ## Redis命令
 
 [Redis配置参数详解http://www.runoob.com/redis/redis-conf.html](http://www.runoob.com/redis/redis-conf.html)
+```
+docker run -itd --restart always --name redis -p 6379:6379 redis:4.0.9-alpine
+```
 
 #### Redis五种数据类型：string(字符串),hash(哈希),list(列表),set(集合)及zset(sorted set：有序集合)
 ##### string(字符串)类型
