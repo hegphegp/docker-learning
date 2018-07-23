@@ -446,8 +446,38 @@ select * from table_name where id not in(1000);
 # 对于大于等于，区间值等，官方文档中有详细的说明
 ```
 
-##### 
+##### 批量操作bulk
 ```
+# Elasticsearch之批量操作bulk：一批一批地操作(添加，查询，删除)数据比一条一个请求要快
+# bulk API可以同时执行多个请求
+# bulk会把将要处理的数据载入内存中，所以数据量是有限制的，一般1000-5000条，视每条数据的大小而定
+# 可以在es的config目录下的elasticsearch.yml配置bulk的大小，配置参数如下
+http.max_content_length: 100mb
+
+# bulk的例子，把多个json数据写到文件
+# 把插入的json数据和条件按顺序写入文件
+# { "index" : { "_index" : "zhouls", "_type" : "type1", "_id" : "1" } }
+# { "field1" : "value1" }
+# { "index" : { "_index" : "zhouls", "_type" : "type1", "_id" : "2" } }
+# { "field1" : "value1" }
+# { "delete" : { "_index" : "zhouls", "_type" : "type1", "_id" : "2" } }  #  (删除操作不需要加request body)
+# { "create" : { "_index" : "zhouls", "_type" : "type1", "_id" : "3" } }
+# { "field1" : "value3" }
+# { "update" : {"_index" : "zhouls", "_type" : "type1","_id" : "1" } }
+# { "doc" : {"field2" : "value2"} }
+
+# bulk通过在请求体中上传文件实现bulk的批量操作
+echo '{"index":{"_index":"zhouls","_type":"emp","_id":"10"}}
+{ "name":"jack", "age" :18}
+{"index":{"_index":"zhouls","_type":"emp","_id":"11"}}
+{"name":"tom", "age":27}
+{"update":{"_index":"zhouls","_type":"emp", "_id":"2"}}
+{"doc":{"age" :22}}
+{"delete":{"_index":"zhouls","_type":"emp","_id":"1"}}' > data.json
+curl -XDELETE http://localhost:9200/zhouls/
+sleep 1
+curl -XPUT http://localhost:9200/_bulk --data-binary @data.json
+curl -XPOST http://localhost:9200/_bulk --data-binary @data.json
 ```
 
 ##### 
