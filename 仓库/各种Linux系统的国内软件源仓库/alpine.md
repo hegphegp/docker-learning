@@ -11,6 +11,15 @@ cat /etc/apk/repositories-back >> /etc/apk/repositories
 apk update
 ```
 
+##### alpine3.8版本
+```
+cp /etc/apk/repositories /etc/apk/repositories-back
+echo "http://mirrors.aliyun.com/alpine/v3.8/main" > /etc/apk/repositories
+echo "http://mirrors.aliyun.com/alpine/v3.8/community" >> /etc/apk/repositories
+cat /etc/apk/repositories-back >> /etc/apk/repositories
+apk update
+```
+
 ##### alpine3.7版本
 ```
 cp /etc/apk/repositories /etc/apk/repositories-back
