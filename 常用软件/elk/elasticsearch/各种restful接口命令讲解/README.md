@@ -43,7 +43,7 @@ Elasticsearch实战系列-restful api使用 https://blog.csdn.net/top_code/artic
 ```
 docker stop single-elasticsearch
 docker rm single-elasticsearch
-docker run -itd --restart always -e ES_JAVA_OPTS="-Xms256m -Xmx256m" -p 9200:9200 --name single-elasticsearch elasticsearch:5.6.10-alpine
+docker run -itd --restart always -e ES_JAVA_OPTS="-Xms384m -Xmx384m" -p 9200:9200 --name single-elasticsearch elasticsearch:5.6.10-alpine
 # 访问URL http://localhost:9200
 # docker exec -it single-elasticsearch sh -c不能直接粘贴复制多条命令，识别不了
 docker exec -it single-elasticsearch sh
