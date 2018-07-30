@@ -31,8 +31,10 @@ docker run -itd --restart always -e MYSQL_ROOT_PASSWORD=root -v /etc/localtime:/
 ### MySQL8设置时区
 docker run -itd --restart always -e MYSQL_ROOT_PASSWORD=root -v /etc/localtime:/etc/localtime:ro -p 3306:3306 --name mysql mysql:8.0.11 --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --init-connect='SET NAMES utf8mb4;' --default-time-zone='+8:00' --log-timestamps=SYSTEM --sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' --default_authentication_plugin=mysql_native_password
 
+Swagger-editor启动命令
+docker run -itd --restart always --name swagger-editor -p 18080:8080 swaggerapi/swagger-editor:v3.5.3
 Swagger-ui启动命令
-docker run --restart always --name swagger-ui -itd -p 80:8080 swaggerapi/swagger-editor:v3.5.3
+docker run -itd --restart always --name swagger-ui -p 18081:8080 swaggerapi/swagger-ui:3.17.6
 ```
 
 #### 通过docker inspect常用名命令
