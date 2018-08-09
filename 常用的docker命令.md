@@ -35,6 +35,7 @@ Swagger-editor启动命令
 docker run -itd --restart always --name swagger-editor -p 18080:8080 swaggerapi/swagger-editor:v3.5.3
 Swagger-ui启动命令
 docker run -itd --restart always --name swagger-ui -p 18081:8080 swaggerapi/swagger-ui:3.17.6
+docker run -itd --restart always --name swagger-ui -p 80:8080 -e API_URL=http://generator.swagger.io/api/swagger.json swaggerapi/swagger-ui:3.17.6
 ```
 
 #### 通过docker inspect常用名命令
