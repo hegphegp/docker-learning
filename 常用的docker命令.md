@@ -18,7 +18,7 @@ rebbitMQ启动命令
 docker run -itd --restart always --name rabbitmq -p 4369:4369 -p 5671:5671 -p 5672:5672 -p 25672:25672 -p 15671:15671 -p 15672:15672 rabbitmq:3.6.10-management-alpine
 
 gitbook启动命令
-docker run -itd --name gitbook --restart always -v /opt/soft/gitbook/soa:/gitbook -p 4000:4000 gitbook sh
+docker run -itd --name gitbook --restart always -v /opt/soft/gitbook/soa:/gitbook -p 4000:4000 fellah/gitbook:3.2 sh
 
 MySQL启动命令
 docker run -itd --name mysql -e MYSQL_ROOT_PASSWORD=root -p 3306:3306 mysql:5.7.3
@@ -79,4 +79,15 @@ docker rm `docker ps -a -q --filter name=redis`
 ```
 docker save mysql:5.7.21 > mysql-5.7.21.tar.gz
 docker load < mysql-5.7.21.tar.gz
+```
+
+#### 后台运行Java服务的脚本命令
+```
+#!/bin/bash
+
+# vi run.sh
+java -Xmx2560m -Xms256m -Xmn128m -Xss1m -jar ureport2-springboot-1.0.0.jar --server.port=9898 >> log.log &
+
+# http://localhost:9898/ureport/designer
+# chmod a+x run.sh
 ```
