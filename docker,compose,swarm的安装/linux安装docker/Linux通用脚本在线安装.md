@@ -2,7 +2,8 @@
 
 ##### 阿里云在线安装脚本
 ```
-curl -sSL http://acs-public-mirror.oss-cn-hangzhou.aliyuncs.com/docker-engine/internet | sh
+# 在2018-08-15-1709时测试阿里在线安装脚本，发现有严重问题，阿里云私自更换了下载地址，导致原地址的docker路径不存在
+# curl -sSL http://acs-public-mirror.oss-cn-hangzhou.aliyuncs.com/docker-engine/internet | sh
 ```
 
 ##### 国内daocloud在线安装脚本
