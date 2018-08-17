@@ -11,6 +11,7 @@
     * [查看指定端口服务的PID](#查看指定端口服务的PID)
     * [关掉指定端口的服务](#关掉指定端口的服务)
     * [Linux搜索指定路径下的文件内容](#Linux搜索指定路径下的文件内容)
+    * [查看前面n行或者最后n行数据](#查看前面n行或者最后n行数据)
 ##### 查看Ubuntu版本
 ```
 lsb_release -a
@@ -53,4 +54,12 @@ grep -rn -i "netty" /opt/soft
 # grep指定搜索指定的后缀名
 grep -R -n -i --include="*.java" "netty" .
 grep -R -n -i --include="*.java" "netty" /opt/soft
+```
+
+##### 查看前面n行或者最后n行数据
+```
+tail -n 1000 /aa.txt  # 打印文件最后1000行的数据
+tail -n +1000 /aa.txt # 打印文件第1000行开始以后的内容
+head -n 1000 /aa.txt  # 打印前1000的内容
+sed -n '1000,3000p' filename  # 显示1000到300行的数据
 ```
