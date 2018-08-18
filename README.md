@@ -50,6 +50,7 @@
     * [数据库]
         * [NOSQL]
             * [mongo命令](/数据库/NOSQL/mongo/mongo命令.md)
+            * [neo4j的学习](/数据库/NOSQL/neo4j/neo4j学习.md)
             * [Redis]
                 * [redis博客](/数据库/NOSQL/redis/Redis博客.md)
                 * [Redis命令](/数据库/NOSQL/redis/Redis命令.md)
