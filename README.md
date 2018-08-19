@@ -65,6 +65,8 @@
             * [ansible线上环境实战任务](/运维/ansible/example01/任务.md)
         * [jenkins]
             * [jenkins的使用](/运维/jenkins/使用说明.md)
+    * [linux]
+        * [alpine安装.md]
     * [预留模块]
         * [大数据]
             * [docker搭建真正的Hadoop集群](/预留模块/大数据/hadoop/Hadoop搭建.md)
