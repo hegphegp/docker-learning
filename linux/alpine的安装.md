@@ -1,7 +1,6 @@
 # alpine安装
-## 在alpine系统安装的过程中，死过几次，可能以后都按以下步骤，否则死了怪不了别人
-### 无尽的痛苦和死亡，得出的结论是alpine官方根本不可信
-* 死过无数次，按setup-alpine的步骤配置完后，我查看/etc/network/interfaces文件是存在的，此时hostname为设置的名称，按官方的提示，配置完重启后，再进入系统，一切的配置都消失了，hostname变成了localhost，配置/etc/network/interfaces不见了，还可以相信世界吗？
+
+## 世纪巨坑，要设置virtualbox的alpine虚拟机的启动顺序硬盘排第一
 
 * 安装版本a lpine-standard-3.8.0-x86_64.iso
 * 虚拟机工具virtualbox
@@ -85,8 +84,33 @@ WARNING: Erase the above disk(s) and continue? [y/N]
 # Proceed anyway(y,N)
 # 输入"y"继续啦...
 
-# 因为配置完虚拟机后，直接poweroff而不知reboot，在这里死过一次，后面再启动机器时，发现之前的/etc/network/interfaces不存在了
-# 配置完之后，必须手动输入reboot重启虚拟机，
+# 因为配置完虚拟机后，直接poweroff，然后在virtualbox设置界面再添加一张网卡，重启后设置网卡
+
 ```
 
-#### 给虚拟机添加一张网卡
+#### 给虚拟机添加一张网卡，修改/etc/network/interfaces配置文件
+##### /etc/network/interfaces配置文件的原内容如下
+```
+auto lo
+iface lo inet loopback
+
+auto eth0
+iface eth0 inet dhcp
+        hostname localhost
+```
+##### 新增一张eth1的网卡内容
+```
+auto lo
+iface lo inet loopback
+
+auto eth0
+iface eth0 inet dhcp
+auto eth1
+iface eth1 inet static
+        
+        hostname localhost
+```
+##### 重启网络
+```
+service networking restart
+```
