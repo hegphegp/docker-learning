@@ -19,13 +19,17 @@ docker run -itd --net ansible-network --ip 10.10.58.103 --name web2 --restart al
 
 docker exec -it ansible sh
 cd /ansible
-echo '[web]' > host1
-echo '10.10.58.102 ansible_ssh_user=root ansible_ssh_pass=root ansible_ssh_port=22' >> host1
-echo '10.10.58.103 ansible_ssh_user=root ansible_ssh_pass=root ansible_ssh_port=22' >> host1
-echo '[defaults]' > ansible.cfg
-echo 'host_key_checking = False' >> ansible.cfg
-echo 'inventory = ./host1' >> ansible.cfg
-cp host1 host
+cat > host <<EOF
+[web]
+10.10.58.102 ansible_ssh_user=root ansible_ssh_pass=root ansible_ssh_port=22
+10.10.58.103 ansible_ssh_user=root ansible_ssh_pass=root ansible_ssh_port=22
+EOF
+cat > ansible.cfg <<EOF
+[defaults]
+host_key_checking = False
+inventory = ./host
+EOF
+
 # 在执行命令的时候指定host文件
 # ansible -i /ansible/host web -u root -m command -a 'ls /etc' -k (-k表示手动输入密码)
 ansible -i /ansible/host web -u root -m command -a 'ls /etc'
@@ -40,7 +44,7 @@ ansible web -u root -m command -a 'ls /etc'
    |-----------ansible.cfg的内容-------------------------
    | [defaults]
    | host_key_checking = False
-   | inventory = ./host1
+   | inventory = ./host
    |----------------------------------------------------
 ├── host
    |-----------host的内容--------------------------------

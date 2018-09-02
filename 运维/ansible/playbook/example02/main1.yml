@@ -1,0 +1,10 @@
+---
+- hosts: 10.10.58.102,10.10.58.103
+  remote_user: root
+  gather_facts: false
+  tasks:
+    - name: test_playbook
+      shell: mkdir -p /tmo && touch /tmp/test.txt
+
+    - name: see_folder
+      shell: ls /tmp

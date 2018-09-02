@@ -1,0 +1,10 @@
+---
+- hosts: web
+  remote_user: root
+  gather_facts: no
+  tasks:
+    - name: test_playbook
+      shell: mkdir -p /tmo && touch /tmp/test.txt
+
+    - name: see_folder
+      shell: ls /tmp

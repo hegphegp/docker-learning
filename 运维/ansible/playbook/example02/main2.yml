@@ -1,0 +1,14 @@
+---
+## 测试在同一个yml文件定义变量
+- name: test vars
+  hosts: web
+  remote_user: root
+  gather_facts: false
+  vars:
+    - filename: "filename.txt"
+  tasks:
+    - name: test_playbook
+      shell: mkdir -p /tmo && touch /tmp/"{{ filename }}"
+
+    - name: see_folder
+      command: ls /etc

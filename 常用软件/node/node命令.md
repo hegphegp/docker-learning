@@ -12,3 +12,6 @@ npm run build -verbose
 npm install -g cnpm --registry=https://registry.npm.taobao.org
 npm install --production -verbose 
 ```
+
+npm install -g cnpm --registry=https://registry.npm.taobao.org
+npm run dev
