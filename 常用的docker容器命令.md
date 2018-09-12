@@ -1,26 +1,26 @@
-## 常用的docker服务启动命令
+## 常用的docker容器命令
 
 ```
-postgre启动命令
+# postgre启动命令，并且设置连接数
 docker run -itd --name postgresql --restart always -v /opt/data/postgresql:/var/lib/postgresql/data -p 5432:5432 -e POSTGRES_USER=sde -e POSTGRES_PASSWORD=postgres postgres:9.6.1 postgres -c max_connections=500
 docker run -itd --restart always -p 5432:5432 -v /cityworks/postgresql:/var/lib/postgresql/data --name postgres -e POSTGRES_USER=sde -e POSTGRES_PASSWORD=postgres postgres:9.6.1
 
-mongo启动命令
+# mongo启动命令
 docker run --name mongo --restart always -v /opt/data/mongo/data:/data/db -p 27017:27017 -d mongo:3.4.5
 
-minio启动命令
+# minio启动命令
 docker run -it -p 9000:9000 --restart always --name minio -e MINIO_ACCESS_KEY=minio -e MINIO_SECRET_KEY=minio.minio minio/minio server /export
 
-redis启动命令
+# redis启动命令
 docker run -itd --restart always --name redis -p 6379:6379 redis:4.0.9-alpine
 
-rebbitMQ启动命令
+# rebbitMQ启动命令
 docker run -itd --restart always --name rabbitmq -p 4369:4369 -p 5671:5671 -p 5672:5672 -p 25672:25672 -p 15671:15671 -p 15672:15672 rabbitmq:3.6.10-management-alpine
 
-gitbook启动命令
+# gitbook启动命令
 docker run -itd --name gitbook --restart always -v /opt/soft/gitbook/soa:/gitbook -p 4000:4000 fellah/gitbook:3.2 sh
 
-MySQL启动命令
+# MySQL启动命令
 docker run -itd --name mysql -e MYSQL_ROOT_PASSWORD=root -p 3306:3306 mysql:5.7.3
 
 ### MySQL5.7设置时区
@@ -31,11 +31,22 @@ docker run -itd --restart always -e MYSQL_ROOT_PASSWORD=root -v /etc/localtime:/
 ### MySQL8设置时区
 docker run -itd --restart always -e MYSQL_ROOT_PASSWORD=root -v /etc/localtime:/etc/localtime:ro -p 3306:3306 --name mysql mysql:8.0.11 --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --init-connect='SET NAMES utf8mb4;' --default-time-zone='+8:00' --log-timestamps=SYSTEM --sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' --default_authentication_plugin=mysql_native_password
 
-Swagger-editor启动命令
+# Swagger-editor启动命令
 docker run -itd --restart always --name swagger-editor -p 18080:8080 swaggerapi/swagger-editor:v3.5.3
-Swagger-ui启动命令
+# Swagger-ui启动命令
 docker run -itd --restart always --name swagger-ui -p 18081:8080 swaggerapi/swagger-ui:3.17.6
 docker run -itd --restart always --name swagger-ui -p 80:8080 -e API_URL=http://generator.swagger.io/api/swagger.json swaggerapi/swagger-ui:3.17.6
+
+# neo4j容器命令
+docker run -itd --restart always \
+--name neo4j \
+-e NEO4j_AUTH=neo4j/admin123 \
+-e NEO4J_dbms_tx__log_rotation_retention__policy=true \
+-e NEO4J_dbms_memory_pagecache_size=128M \
+-e NEO4J_dbms_memory_heap_initial__size=128M \
+-e NEO4J_dbms_memory_heap_max__size=256M \
+-p 7474:7474 -p 7473:7473 -p 7687:7687 \
+neo4j:3.4.5
 ```
 
 #### 通过docker inspect常用名命令
@@ -70,7 +81,7 @@ docker stop `docker ps -a -q --filter name=redis`
 docker rm `docker ps -a -q --filter name=redis`
 ```
 
-#### 生存环境的必备参数
+#### 容器环境的必备参数
 ```
 -e TZ=Asia/Shanghai -v /etc/localtime:/etc/localtime:ro
 ```
@@ -79,15 +90,4 @@ docker rm `docker ps -a -q --filter name=redis`
 ```
 docker save mysql:5.7.21 > mysql-5.7.21.tar.gz
 docker load < mysql-5.7.21.tar.gz
-```
-
-#### 后台运行Java服务的脚本命令
-```
-#!/bin/bash
-
-# vi run.sh
-java -Xmx2560m -Xms256m -Xmn128m -Xss1m -jar ureport2-springboot-1.0.0.jar --server.port=9898 >> log.log &
-
-# http://localhost:9898/ureport/designer
-# chmod a+x run.sh
 ```

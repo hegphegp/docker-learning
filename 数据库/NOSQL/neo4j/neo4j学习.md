@@ -8,7 +8,7 @@ docker rm neo4j
 docker run -itd --restart always \
 --name neo4j \
 -e NEO4j_AUTH=neo4j/admin123 \
--e NEO4J_dbms_tx__log_rotation_retention__policy="100M size" \
+-e NEO4J_dbms_tx__log_rotation_retention__policy=true \
 -e NEO4J_dbms_memory_pagecache_size=128M \
 -e NEO4J_dbms_memory_heap_initial__size=128M \
 -e NEO4J_dbms_memory_heap_max__size=256M \
