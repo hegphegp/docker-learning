@@ -16,3 +16,17 @@ echo "deb http://mirrors.aliyun.com/debian/ jessie-backports main non-free contr
 apt-get clean all
 apt-get update
 ```
+
+```
+Debian 9（stretch） — 当前的稳定版
+Debian 8（jessie） — 被淘汰的稳定版
+Debian 7（wheezy） — 被淘汰的稳定版
+Debian 6.0（squeeze） — 被淘汰的稳定版
+Debian GNU/Linux 5.0（lenny） — 被淘汰的稳定版
+Debian GNU/Linux 4.0（etch） — 被淘汰的稳定版
+Debian GNU/Linux 3.1（sarge） — 被淘汰的稳定版
+Debian GNU/Linux 3.0（woody） — 被淘汰的稳定版
+Debian GNU/Linux 2.2（potato） — 被淘汰的稳定版
+Debian GNU/Linux 2.1（slink） — 被淘汰的稳定版
+Debian GNU/Linux 2.0（hamm） — 被淘汰的稳定版
+```
