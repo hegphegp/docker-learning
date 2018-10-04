@@ -1,129 +1,29 @@
-# cfssl参数的讲解
-#### 网上没有任何关于cfssl的视频教程，完全不知道cfssl配置文件可以配什么参数，学习成本太高了
-#### 网上博客完全没有说json配置文件的哪些字段是必须的，只能在哪些范文内取值，搞得头痛几天，搞编程最怕的是那些自定义参数，没任何说明的参数
-
-## 相关证书类型
-```
-client certificate： 用于服务端认证客户端,例如etcdctl、etcd proxy、fleetctl、docker客户端
-server certificate: 服务端使用，客户端以此验证服务端身份,例如docker服务端、kube-apiserver
-peer certificate: 双向证书，用于etcd集群成员间通信
-```
-
+# cfssl生成证书
 ### 步骤一：下载相关软件，共3个软件
 ```
 curl -L https://pkg.cfssl.org/R1.2/cfssl_linux-amd64 > /usr/local/bin/cfssl
-chmod +x /usr/local/bin/cfssl
 curl -L https://pkg.cfssl.org/R1.2/cfssljson_linux-amd64 > /usr/local/bin/cfssljson
-chmod +x /usr/local/bin/cfssljson
 curl -L https://pkg.cfssl.org/R1.2/cfssl-certinfo_linux-amd64 > /usr/local/bin/cfssl-certinfo
-chmod +x /usr/local/bin/cfssl-certinfo
+chmod +x /usr/local/bin/cfssl /usr/local/bin/cfssljson /usr/local/bin/cfssl-certinfo
+# chmod +x /usr/local/bin/cfssl
+# chmod +x /usr/local/bin/cfssljson
+# chmod +x /usr/local/bin/cfssl-certinfo
 
-# 创建生成证书的目录
-mkdir /root/ssl
-cd /root/ssl
+# 创建生成证书的配置目录
+cfssl_config_path=cfssl-`date '+%Y%m%d-%H%M%S'`
+mkdir -p $cfssl_config_path
+cd $cfssl_config_path
 ```
 
-### 步骤二：通过ca-csr.json配置文件参数生成CA证书和私钥
-###### 用下面命令生成ca-csr.json配置文件的模板
+### 步骤二：添加ca-csr.json配置文件，然后生成CA证书和私钥
+#### 添加ca-csr.json配置文件(其实可以用 cfssl print-defaults csr > ca-csr.json 命令生成模板，然后修改，还不如把修改后的文件一步生成)
 ```
-cfssl print-defaults csr > ca-csr.json
-```
-###### 修改内容ca-csr.json配置文件模板的内容
-```json
+cat > ca-csr.json <<EOF
 {
-    "CN": "kubernetes",  # CN 这个字段key的名称是只能取名是 CN, CN的key对应的value取值可以任意，可以是域名，也可以是任意内容
-                         # CN:Common Name，kube-apiserver 从证书中提取该字段作为请求的用户名 (User Name); 浏览器使用该字段验证网站是否合法
+    "CN": "kubernetes",  
     "key": {
         "algo": "rsa",
         "size": 2048
-    },
-    "names": [
-        {
-            "C": "CN",
-            "L": "BeiJing",
-            "ST": "BeiJing",
-            "O": "k8s",  # O:Organization ，kube-apiserver 从证书中提取该字段作为请求用户所属的组 (Group)；
-            "OU": "System"
-        }
-    ]
-}
-```
-##### 执行下面命令生成CA证书和私钥
-```
- cfssl gencert -initca ca-csr.json | cfssljson -bare ca 
-```
-
-### 步骤三：通过ca-config.json文件来配置证书生成策略
-###### 配置证书生成策略，让CA软件知道颁发什么样的证书
-###### cfssl证书有三种类型
-```
-client certificate： 用于服务端认证客户端,例如etcdctl、etcd proxy、fleetctl、docker客户端
-server certificate: 服务端使用，客户端以此验证服务端身份,例如docker服务端、kube-apiserver
-peer certificate: 双向证书，用于etcd集群成员间通信
-```
-###### 用下面命令生成ca-config.json配置文件的模板
-```
-cfssl print-defaults config > ca-config.json
-```
-###### 修改ca-config.json, 分别配置针对三种不同证书类型的profile, 其中有效期43800h为5年
-```json
-{
-    "signing": {
-        "default": {
-            "expiry": "43800h"
-        },
-        "profiles": {    # ca-config.jso: 可以定义多个profiles, 分别指定不同的过期时间， 使用场景等参数，下面
-            "server": {  # 这个字段名称任意，把server字段改成 aaa, bbb, ccc都可以，但是网上没有一篇博客有说这个字段任意
-                "expiry": "43800h",
-                "usages": [
-                    "signing",  # signing : 表示该证书可用于签名其它证书，生成的ca.pem证书中  CA=TRUE
-                    "key encipherment",
-                    "server auth" # server auth : 表示client可以使用该CA对server提供的证书进行验证
-                ]
-            },
-            "client": {
-                "expiry": "43800h",
-                "usages": [
-                    "signing",
-                    "key encipherment",
-                    "client auth"  # client auth : 表示server 可以用该CA对client提供的证书进行验证
-                ]
-            },
-            "peer": {
-                "expiry": "43800h",
-                "usages": [
-                    "signing",
-                    "key encipherment",
-                    "server auth",   # server auth : 表示client可以使用该CA对server提供的证书进行验证
-                    "client auth"    # client auth : 表示server 可以用该CA对client提供的证书进行验证
-                ]
-            }
-        }
-    }
-}
-```
-
-### 步骤四：证书生成与签名
-###### 截止目前，基于CFSSL的CA已经配置完成，该CA如何颁发证书呢？CFSSL提供了两个命令：gencert和sign。gencert将自动处理整个证书生成过程。该过程需要两个文件，一个告诉CFSSL本地客户端CA的位置以及如何验证请求，即config文件，另一个为CSR配置信息，用于填充CSR 即csr文件。
-###### 举例：创建 kubernetes 证书签名请求文件 kubernetes-csr.json （config文件采用之前的ca-config.json）
-```
-{
-    "CN": "kubernetes",
-    "hosts": [
-        "127.0.0.1",
-        "10.116.137.196",
-        "10.116.82.28",
-        "10.116.36.57",
-        "10.254.0.1",
-        "kubernetes",
-        "kubernetes.default",
-        "kubernetes.default.svc",
-        "kubernetes.default.svc.cluster",
-        "kubernetes.default.svc.cluster.local"
-    ],
-    "key": {
-    "algo":"rsa",
-    "size":2048
     },
     "names": [
         {
@@ -135,62 +35,10 @@ cfssl print-defaults config > ca-config.json
         }
     ]
 }
+EOF
 ```
-###### 如果 hosts 字段不为空则需要指定授权使用该证书的 IP 或域名列表，由于该证书后续被 etcd 集群和 kubernetes master 集群使用，所以上面分别指定了 etcd 集群、 kubernetes master 集群的主机 IP 和 kubernetes 服务的服务 IP（一般是 kube-apiserver 指定的 service-cluster-ip-range 网段的第一个IP，如 10.254.0.1。
-###### hosts 中的内容可以为空，即使按照上面的配置，向集群中增加新节点后也不需要重新生成证书。
-
-###### 执行下面命令, 生成 kubernetes.csr, kubernetes-key.pem, kubernetes.pem 文件
+> 此时该目录只有 <strong><b>1</b></strong> 个文件  ca-csr.json  
+> <font color=#0099ff size=6 face="黑体">color=#0099ff size=72 face="黑体"</font>
+#### 生成CA证书和私钥
 ```
-cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=kubernetes kubernetes-csr.json | cfssljson -bare kubernetes
-```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-###### 一些术语
-```
-# 密钥用法：
-数字签名 Digital Signature
-认可签名 Non Repudiation
-密钥加密 key Encipherment
-数据加密 Data Encipherment
-密钥协商 key Agreement
-证书签名 Key CertSign
-CRL 签名 Crl Sign
-仅仅加密 Encipher Only
-仅仅解密 Decipher Only
-
-# OpenSSL密钥用法：
-数字签名 digitalSignature
-认可签名 nonRepudiation
-密钥加密 keyEncipherment
-数据加密 dataEncipherment
-密钥协商 keyAgreement
-证书签名 keyCertSign
-CRL 签名 cRLSign
-仅仅加密 encipherOnly
-仅仅解密 decipherOnly
 ```
