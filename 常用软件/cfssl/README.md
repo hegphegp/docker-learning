@@ -13,6 +13,7 @@ chmod +x /usr/local/bin/cfssl /usr/local/bin/cfssljson /usr/local/bin/cfssl-cert
 cfssl_config_path=cfssl-`date '+%Y%m%d-%H%M%S'`
 mkdir -p $cfssl_config_path
 cd $cfssl_config_path
+
 ```
 
 ### 步骤二：添加ca-csr.json配置文件，然后生成CA证书和私钥
@@ -36,9 +37,8 @@ cat > ca-csr.json <<EOF
     ]
 }
 EOF
+
 ```
-> 此时该目录只有 <strong><b>1</b></strong> 个文件  ca-csr.json  
-> <font color=#0099ff size=60 face="黑体">color=#0099ff size=72 face="黑体"</font>
-#### 生成CA证书和私钥
+> 此时该目录文件个数 <b>1个  ca-csr.json </b>
 ```
 ```
