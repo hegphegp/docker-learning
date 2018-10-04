@@ -32,6 +32,11 @@ Vagrant.configure("2") do |config|
   config.vm.define :template do |template|
     template.vm.box = "centos-7.3"
     template.vm.hostname = "template"
+# vagrant发神经病的两个参数template.ssh.username和template.ssh.password
+# 绝世大坑，Vagrantfile文件不能配置template.ssh.username和template.ssh.password，配置的账号密码即使是正确的也不行
+# 配了上面两个参数，vagrant就会发神经病，不停地用配置的账号密码尝试登录，正确账号密码不停尝试都登录不了
+#    template.ssh.username = "vagrant"
+#    template.ssh.password = "vagrant"
     template.vm.synced_folder ".", "/vagrant", disabled: true
     template.vm.network :private_network, ip: "192.168.35.11"
     template.vm.provider "virtualbox" do |v|
