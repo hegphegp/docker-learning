@@ -38,7 +38,7 @@ cat > ca-csr.json <<EOF
 EOF
 ```
 > 此时该目录只有 <strong><b>1</b></strong> 个文件  ca-csr.json  
-> <font color=#0099ff size=6 face="黑体">color=#0099ff size=72 face="黑体"</font>
+> <font color=#0099ff size=60 face="黑体">color=#0099ff size=72 face="黑体"</font>
 #### 生成CA证书和私钥
 ```
 ```
