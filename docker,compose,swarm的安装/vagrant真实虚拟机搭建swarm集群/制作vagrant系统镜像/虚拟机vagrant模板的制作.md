@@ -113,6 +113,8 @@ rm -rf /var/cache/yum
 sed -i '/HWADDR/d' /etc/sysconfig/network-scripts/ifcfg-eth0
 sed -i '/UUID/d' /etc/sysconfig/network-scripts/ifcfg-eth0
 rm -rf /etc/sysconfig/network-scripts/ifcfg-eth1
+rm -rf /home/vagrant/.ssh/authorized_keys
+rm -rf ~/.ssh/authorized_keys
 shutdown -h now
 ```
 
@@ -121,6 +123,7 @@ shutdown -h now
 vagrant package --base=template --output=centos7-1805-docker.VirtualBox.box
 vagrant box add centos7-1805-docker centos7-1805-docker.VirtualBox.box
 ```
+
 
 ### Vagrantfile文件
 ```
