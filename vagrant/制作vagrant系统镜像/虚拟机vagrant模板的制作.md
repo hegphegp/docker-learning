@@ -99,13 +99,6 @@ yum clean all
 rm -rf /var/cache/yum
 ```
 
-### 删掉authorized_keys
-```
-rm -rf ~/.ssh/authorized_keys
-rm -rf /home/vagrant/.ssh/authorized_keys
-rm -rf /root/.ssh/authorized_keys
-```
-
 ### 导出虚拟机前先清空网络配置
 ```
 # 网上说，要删除 /etc/udev/rules.d/70-persistent-net.rules ，用官方的CentOS-7-x86_64-Vagrant-1805_01.VirtualBox.box创建虚拟机，/etc/udev/rules.d目录下面没有任何文件
