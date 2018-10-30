@@ -1,4 +1,4 @@
-# Ubuntu的vagrant模板的制作
+# Ubuntu的vagrant模板的制作, Ubuntu的vagrant镜像启动要十几分钟，果断放弃
 
 ### 注意点
 * Ubuntu-16.04版本以上的全新系统，默认root是没有密码的，必须在某个用户的命令行给root设置密码 sudo passwd root  
@@ -24,7 +24,6 @@ Vagrant.configure("2") do |config|
     template.vm.network :private_network, ip: "192.168.35.11"
     template.vm.provider "virtualbox" do |vb|
       vb.name = "template"
-      vb.gui = true
       vb.memory = "1024"
       vb.cpus = "1"
     end
