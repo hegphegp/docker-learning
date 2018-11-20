@@ -1,4 +1,4 @@
-# 虚拟机vagrant模板的制作
+# Centos的vagrant模板的制作
 
 * *账号密码 vagrant:vagrant和root:vagrant*
 * *docker的下载页面 https://mirrors.aliyun.com/docker-ce/linux/centos/7/x86_64/stable/Packages/ ,下载的链接 https://mirrors.aliyun.com/docker-ce/linux/centos/7/x86_64/stable/Packages/docker-ce-18.03.1.ce-1.el7.centos.x86_64.rpm*
@@ -9,8 +9,7 @@
 * *安装docker，并指定加速仓库*
 * *导出虚拟机前先清空网络配置*
 * *用vagrant package 导出虚拟机*
-  
-  
+
   
 ### 导入vagrant官方的centos7虚拟机模板
 ```
@@ -36,8 +35,10 @@ Vagrant.configure("2") do |config|
 # 官方镜像都不能设置账号密码登录，因为镜像的/etc/ssh/sshd_config文件配置都是不允许任何账号远程登录的
     template.vm.synced_folder ".", "/vagrant", disabled: true
     template.vm.network :private_network, ip: "192.168.35.11"
-    template.vm.provider "virtualbox" do |v|
-      v.customize [ "modifyvm", :id, "--name", "template", "--memory", "1024", "--cpus", "1" ]
+    template.vm.provider "virtualbox" do |vb|
+      vb.name = "template"
+      vb.memory = "768"
+      vb.cpus = "1"
     end
   end
 end

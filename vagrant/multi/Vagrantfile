@@ -9,6 +9,7 @@ Vagrant.configure("2") do |config|
     manager1.vm.network :private_network, ip: "192.168.35.11"
     manager1.ssh.username = "vagrant"
     manager1.ssh.password = "vagrant"
+    manager1.ssh.insert_key = false
 #   config.vm.network "public_network", ip: "192.168.66.32", bridge: "en0: Wi-Fi (Airport)", bootproto: "static", gateway: "192.168.66.1", dns: "114.114.114.114"
     manager1.vm.provider "virtualbox" do |v|
 #       查看所有参数  VBoxManage modifyvm --help
@@ -24,8 +25,12 @@ Vagrant.configure("2") do |config|
     manager2.vm.network :private_network, ip: "192.168.35.12"
     manager2.ssh.username = "vagrant"
     manager2.ssh.password = "vagrant"
+    manager2.ssh.insert_key = false
     manager2.vm.provider "virtualbox" do |v|
-      v.customize [ "modifyvm", :id, "--name", "manager2", "--memory", "1024", "--cpus", "1" ]
+      v.name = "manager2"
+      v.gui = false
+      v.memory = "1024"
+      v.cpus = "1"
     end
   end
 
@@ -37,6 +42,7 @@ Vagrant.configure("2") do |config|
     manager3.vm.network :private_network, ip: "192.168.35.13"
     manager3.ssh.username = "vagrant"
     manager3.ssh.password = "vagrant"
+    manager3.ssh.insert_key = false
     manager3.vm.provider "virtualbox" do |v|
       v.customize [ "modifyvm", :id, "--name", "manager3", "--memory", "1024", "--cpus", "1" ]
     end
@@ -50,6 +56,7 @@ Vagrant.configure("2") do |config|
     worker1.vm.network :private_network, ip: "192.168.35.14"
     worker1.ssh.username = "vagrant"
     worker1.ssh.password = "vagrant"
+    worker1.ssh.insert_key = false
     worker1.vm.provider "virtualbox" do |v|
       v.customize [ "modifyvm", :id, "--name", "worker1", "--memory", "1024", "--cpus", "1" ]
     end
@@ -63,6 +70,7 @@ Vagrant.configure("2") do |config|
     worker2.vm.network :private_network, ip: "192.168.35.15"
     worker2.ssh.username = "vagrant"
     worker2.ssh.password = "vagrant"
+    worker2.ssh.insert_key = false
     worker2.vm.provider "virtualbox" do |v|
       v.customize [ "modifyvm", :id, "--name", "worker2", "--memory", "1024", "--cpus", "1" ]
     end
@@ -76,6 +84,7 @@ Vagrant.configure("2") do |config|
     worker3.vm.network :private_network, ip: "192.168.35.16"
     worker3.ssh.username = "vagrant"
     worker3.ssh.password = "vagrant"
+    worker3.ssh.insert_key = false
     worker3.vm.provider "virtualbox" do |v|
       v.customize [ "modifyvm", :id, "--name", "worker3", "--memory", "1024", "--cpus", "1" ]
     end
