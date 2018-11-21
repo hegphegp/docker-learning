@@ -3,6 +3,7 @@
 
 ### npm命令的正确使用方法,必须加 - verbose 参数, 显示进度, 例如
 ```
+docker run -itd --restart always --name sshop-web -p 8888:80 -v /home/hgp/shop-admin-web:/node node:8.11.4-alpine sh
 npm config set registry https://registry.npm.taobao.org
 npm install -verbose
 npm run build -verbose

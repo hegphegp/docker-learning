@@ -27,7 +27,10 @@ CREATE DATABASE walle DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 ```
 # 加多一个 -e 参数
 mysql -u root -proot -e "show databases";
-mysql -u root -proot -e "DROP DATABASE IF EXISTS walle; CREATE DATABASE walle DEFAULT character set utf8 collate utf8_general_ci;"
+mysql -u root -proot -e "DROP DATABASE IF EXISTS walle; CREATE DATABASE walle DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci; SHOW DATABASES;"
+docker exec -it mysql sh -c 'mysql -u root -proot -e "DROP DATABASE IF EXISTS walle; CREATE DATABASE walle DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci; SHOW DATABASES;"'
+# 用source命令导入SQL脚本
+docker exec -it mysql sh -c 'mysql -u root -proot -e "DROP DATABASE IF EXISTS walle; CREATE DATABASE walle DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci; SHOW DATABASES;"'
 ```
 
 #### 数据库备份恢复

@@ -2,7 +2,8 @@
 
 * *账号密码 vagrant:vagrant和root:vagrant*
 * *docker的下载页面 https://mirrors.aliyun.com/docker-ce/linux/centos/7/x86_64/stable/Packages/ ,下载的链接 https://mirrors.aliyun.com/docker-ce/linux/centos/7/x86_64/stable/Packages/docker-ce-18.03.1.ce-1.el7.centos.x86_64.rpm*
-* *vagrant的下载页面 http://cloud.centos.org/centos/7/vagrant/x86_64/images/ ,下载的链接 http://cloud.centos.org/centos/7/vagrant/x86_64/images/CentOS-7-x86_64-Vagrant-1805_01.VirtualBox.box*
+* *Centos的vagrant镜像的下载页面 http://cloud.centos.org/centos/7/vagrant/x86_64/images/ ,下载的链接 http://cloud.centos.org/centos/7/vagrant/x86_64/images/CentOS-7-x86_64-Vagrant-1805_01.VirtualBox.box*
+* *Ubuntu的vagrant镜像的下载页面 https://cloud-images.ubuntu.com/  
 * *用vagrant ssh登录服务器，修改配置文件允许账号远程登录*
 * *换成阿里的yum源*
 * *安装docker，并指定加速仓库*
