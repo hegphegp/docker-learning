@@ -1,5 +1,6 @@
 # node命令
 
+
 ### npm命令的正确使用方法,必须加 - verbose 参数, 显示进度, 例如
 ```
 npm config set registry https://registry.npm.taobao.org

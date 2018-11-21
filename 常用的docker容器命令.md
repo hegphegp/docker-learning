@@ -91,3 +91,20 @@ docker rm `docker ps -a -q --filter name=redis`
 docker save mysql:5.7.21 > mysql-5.7.21.tar.gz
 docker load < mysql-5.7.21.tar.gz
 ```
+
+### maven仓库的网页查看地址[http://maven.aliyun.com/mvn/view]()
+仓库|仓库类型|仓库存储策略|阿里云的映射地址|
+:---:|:---:|:---:|:---:
+Repository | Type | Policy | Path
+apache snapshots | proxy | SNAPSHOT | https://maven.aliyun.com/repository/apache-snapshots
+central | proxy | RELEASE | https://maven.aliyun.com/repository/central
+google  |proxy | RELEASE | https://maven.aliyun.com/repository/google
+gradle-plugin | proxy | RELEASE	| https://maven.aliyun.com/repository/gradle-plugin
+jcenter	| proxy	| RELEASE | https://maven.aliyun.com/repository/jcenter
+spring | proxy | RELEASE | https://maven.aliyun.com/repository/spring
+spring-plugin | proxy | RELEASE	| https://maven.aliyun.com/repository/spring-plugin
+public | group | RELEASE | https://maven.aliyun.com/repository/public
+releases | hosted | RELEASE | https://maven.aliyun.com/repository/releases
+snapshots | hosted | SNAPSHOT | https://maven.aliyun.com/repository/snapshots
+grails-core | proxy | RELEASE |https://maven.aliyun.com/repository/grails-core
+
