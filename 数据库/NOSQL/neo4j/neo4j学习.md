@@ -41,7 +41,9 @@ docker cp apoc-3.4.0.3-all.jar neo4j:/var/lib/neo4j/plugins
 
 docker restart neo4j
 
-# 在浏览器运行下面的命令，可以备份数据到cypher语句，不要去看网上的教程，网上教程都是废物的，亲测浪费了很多生命
+# 在neo4j的浏览器界面的运行下面的命令，可以备份数据到cypher语句，网上的教程全是坑
 CALL apoc.export.cypher.all("exported.cypher",{})
 CALL apoc.export.cypherAll("exported.cypher",{})
+
+# 备份时，先关掉本地的neo4j进程
 ```
