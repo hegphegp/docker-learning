@@ -1,6 +1,13 @@
 ## 常用的docker容器命令
 
 ```
+# 列出所有容器对应的名称，ip以及端口
+docker inspect -f '{{.Name}} {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $(docker ps -aq)
+docker inspect -f '{{.Name}} {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}} {{.Config.ExposedPorts}}' $(docker ps -aq)
+docker inspect -f '{{.Name}} {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}} {{.HostConfig.PortBindings}}' $(docker ps -aq)
+docker inspect -f='{{.Name}} {{.NetworkSettings.IPAddress}} {{.HostConfig.PortBindings}}' $(docker ps -aq)
+```
+```
 # postgre启动命令，并且设置连接数
 docker run -itd --name postgresql --restart always -v /opt/data/postgresql:/var/lib/postgresql/data -p 5432:5432 -e POSTGRES_USER=sde -e POSTGRES_PASSWORD=postgres postgres:9.6.1 postgres -c max_connections=500
 docker run -itd --restart always -p 5432:5432 -v /cityworks/postgresql:/var/lib/postgresql/data --name postgres -e POSTGRES_USER=sde -e POSTGRES_PASSWORD=postgres postgres:9.6.1

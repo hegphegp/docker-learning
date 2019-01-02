@@ -1,5 +1,21 @@
 # ubuntu软件源仓库源
 
+#### Ubuntu-18.04
+```
+cp /etc/apt/sources.list /etc/apt/sources.list.bak
+echo "deb http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse" > /etc/apt/sources.list
+echo "deb http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse" >> /etc/apt/sources.list
+echo "deb http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse" >> /etc/apt/sources.list
+echo "deb http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiverse" >> /etc/apt/sources.list
+echo "deb http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse" >> /etc/apt/sources.list
+apt-get update
+apt-get clean
+apt-get autoclean   # 清理旧版本的软件缓存
+apt-get clean       # 清理所有软件缓存
+apt-get autoremove  # 删除系统不再使用的孤立软件
+```
+
+
 #### Ubuntu-16.04
 ```
 sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
