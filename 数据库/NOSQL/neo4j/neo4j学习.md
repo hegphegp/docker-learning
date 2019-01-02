@@ -37,11 +37,16 @@ neo4j:3.4.5
 
 # 前往 https://github.com/neo4j-contrib/neo4j-apoc-procedures/releases/3.4.0.3 下载 apoc-3.4.0.3-all.jar
 
-docker cp apoc-3.4.0.3-all.jar neo4j:/var/lib/neo4j/plugins
+docker cp apoc-3.4.0.4-all.jar neo4j:/var/lib/neo4j/plugins
 
 docker restart neo4j
 
 # 在浏览器运行下面的命令，可以备份数据到cypher语句，不要去看网上的教程，网上教程都是废物的，亲测浪费了很多生命
 CALL apoc.export.cypher.all("exported.cypher",{})
 CALL apoc.export.cypherAll("exported.cypher",{})
+
+docker cp neo4j:/var/lib/neo4j/exported.cypher .
+
+# 导入本地数据库
+neo4j-shell -file exported.cypher -path /data/databases/graph.db
 ```

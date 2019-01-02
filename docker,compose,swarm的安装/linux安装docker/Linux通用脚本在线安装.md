@@ -13,8 +13,9 @@ curl -sSL https://get.daocloud.io/docker | sh
 
 ##### 官方脚本在线安装
 ```
-curl -sSL https://get.daocloud.io/docker | sh
+curl -sSL https://get.docker.com/ | sh
 ```
+
 
 ##### 阿里云在线安装docker-compose
 ```
