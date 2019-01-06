@@ -45,18 +45,42 @@ yum makecache
 
 ```
 rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
-yum install -y http://hkg.mirror.rackspace.com/elrepo/kernel/el7/x86_64/RPMS/kernel-lt-4.4.127-1.el7.elrepo.x86_64.rpm    //香港镜像仓库
+yum install -y http://hkg.mirror.rackspace.com/elrepo/kernel/el7/x86_64/RPMS/kernel-lt-4.4.169-1.el7.elrepo.x86_64.rpm    //香港镜像仓库
 awk -F\' '$1=="menuentry " {print $2}' /etc/grub2.cfg
 grub2-set-default 0
 ```
 
-> #### 4.安装docker，并设置阿里docker加速器
+> #### 4.安装18.03版本docker，并设置阿里docker加速器
 ```
 yum install -y https://mirrors.aliyun.com/docker-ce/linux/centos/7/x86_64/stable/Packages/docker-ce-18.03.1.ce-1.el7.centos.x86_64.rpm
 mkdir -p /etc/docker
 tee /etc/docker/daemon.json <<-'EOF'
 {
   "registry-mirrors": ["https://docker.mirrors.ustc.edu.cn"]
+}
+EOF
+systemctl enable docker #设置docker服务开机自启动
+sudo systemctl restart docker
+
+# 生产环境一定要加graph选项，指定docker镜像和日志的目录为大空间的目录，否则死的时候武眼睇
+# echo $PASSWD | sudo tee /etc/docker/daemon.json <<-'EOF'
+# {
+#    "registry-mirrors": ["https://docker.mirrors.ustc.edu.cn"],
+#    "graph": "/opt/data/docker"
+# }
+# EOF
+```
+
+##### 安装18.09版本docker
+```
+# yun安装软件的顺序不能乱
+yum install -y https://mirrors.aliyun.com/docker-ce/linux/centos/7/x86_64/stable/Packages/containerd.io-1.2.0-3.el7.x86_64.rpm
+yum install -y https://mirrors.aliyun.com/docker-ce/linux/centos/7/x86_64/stable/Packages/docker-ce-cli-18.09.0-3.el7.x86_64.rpm 
+yum install -y https://mirrors.aliyun.com/docker-ce/linux/centos/7/x86_64/stable/Packages/docker-ce-18.09.0-3.el7.x86_64.rpm 
+mkdir -p /etc/docker
+tee /etc/docker/daemon.json <<-'EOF'
+{
+  "registry-mirrors": ["https://1a5q7qx0.mirror.aliyuncs.com"]
 }
 EOF
 systemctl enable docker #设置docker服务开机自启动

@@ -1,4 +1,4 @@
-## Ubuntu-16.04 sh脚本安装docker,docker-compose,docker-machine
+## Ubuntu sh脚本安装docker,docker-compose,docker-machine
 
 [16.04-Xenial的阿里云docker安装包下载地址https://mirrors.aliyun.com/docker-ce/linux/ubuntu/dists/xenial/pool/edge/amd64/](https://mirrors.aliyun.com/docker-ce/linux/ubuntu/dists/xenial/pool/edge/amd64/)  
 [16.10-Yakkety的阿里云docker安装包下载地址https://mirrors.aliyun.com/docker-ce/linux/ubuntu/dists/yakkety/pool/edge/amd64/](https://mirrors.aliyun.com/docker-ce/linux/ubuntu/dists/yakkety/pool/edge/amd64/)  
@@ -10,7 +10,7 @@
 [docker-machine的官方下载地址https://github.com/docker/machine/releases/](https://github.com/docker/machine/releases)  
 [docker-machine的阿里云下载地址https://mirrors.aliyun.com/docker-toolbox/linux/machine/](https://mirrors.aliyun.com/docker-toolbox/linux/machine/)  
 
-
+#### Ubuntu-16.04安装docker-ce_18.03.0-ce-0-ubuntu_amd64.deb
 ```shell
 #!/bin/bash
 
@@ -76,4 +76,26 @@ echo $PASSWD | docker-machine version
 newgrp - docker
 
 
+```
+
+### Ubuntu18.04安装docker-ce_18.09.0~3-0~ubuntu-bionic_amd64.deb
+```
+cp /etc/apt/sources.list /etc/apt/sources.list.bak
+echo "deb http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse" > /etc/apt/sources.list
+echo "deb http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse" >> /etc/apt/sources.list
+echo "deb http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse" >> /etc/apt/sources.list
+echo "deb http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiverse" >> /etc/apt/sources.list
+echo "deb http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse" >> /etc/apt/sources.list
+apt-get update
+apt-get clean
+apt-get autoclean   # 清理旧版本的软件缓存
+apt-get clean       # 清理所有软件缓存
+apt-get autoremove  # 删除系统不再使用的孤立软件
+
+curl https://mirrors.aliyun.com/docker-ce/linux/ubuntu/dists/bionic/pool/stable/amd64/containerd.io_1.2.0-1_amd64.deb > containerd.io_1.2.0-1_amd64.deb 
+curl https://mirrors.aliyun.com/docker-ce/linux/ubuntu/dists/bionic/pool/stable/amd64/docker-ce_18.09.0~3-0~ubuntu-bionic_amd64.deb > docker-ce_18.09.0~3-0~ubuntu-bionic_amd64.deb
+curl https://mirrors.aliyun.com/docker-ce/linux/ubuntu/dists/bionic/pool/stable/amd64/docker-ce-cli_18.09.0~3-0~ubuntu-bionic_amd64.deb > docker-ce-cli_18.09.0~3-0~ubuntu-bionic_amd64.deb
+sudo dpkg -i containerd.io_1.2.0-1_amd64.deb
+sudo dpkg -i docker-ce-cli_18.09.0~3-0~ubuntu-bionic_amd64.deb
+sudo dpkg -i docker-ce_18.09.0~3-0~ubuntu-bionic_amd64.deb
 ```
