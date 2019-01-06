@@ -80,6 +80,7 @@ newgrp - docker
 
 ### Ubuntu18.04安装docker-ce_18.09.0~3-0~ubuntu-bionic_amd64.deb
 ```
+# 用root用户安装
 cp /etc/apt/sources.list /etc/apt/sources.list.bak
 echo "deb http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse" > /etc/apt/sources.list
 echo "deb http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse" >> /etc/apt/sources.list
@@ -98,4 +99,8 @@ curl https://mirrors.aliyun.com/docker-ce/linux/ubuntu/dists/bionic/pool/stable/
 sudo dpkg -i containerd.io_1.2.0-1_amd64.deb
 sudo dpkg -i docker-ce-cli_18.09.0~3-0~ubuntu-bionic_amd64.deb
 sudo dpkg -i docker-ce_18.09.0~3-0~ubuntu-bionic_amd64.deb
+
+# groupadd docker
+# usermod -aG docker hgp
+# newgrp - docker
 ```
