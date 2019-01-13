@@ -39,7 +39,7 @@ mongoexport --host localhost --port 27017 --username quicktest --password quickt
 --out : 要导出的文件路径(默认为当前文件夹)
 ```
 
-##### 
+##### 数据备份恢复
 ```
 mongoimport --host localhost --port 27019 --username quicktest --password quicktest --collection news --db editor --file /news.json
 --host : 要导入的数据库 ip
