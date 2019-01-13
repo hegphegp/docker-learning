@@ -13,7 +13,31 @@ npm run build -verbose
 ```
 npm config set registry https://registry.npm.taobao.org -verbose
 npm install --production -verbose 
-```
+
 
 npm config set registry https://registry.npm.taobao.org -verbose
 npm run dev -verbose
+```
+
+## Yarn是一个新的快速安全可信赖的可以替代NPM的依赖管理工具
+```
+# 快速安装, 在NPM中安装
+npm install -g yarn
+
+# 1.查询NPM当前配置的镜像
+npm get registry
+# 输出结果 https://registry.npmjs.org/
+# npm config get registry
+# npm config --help
+# npm config list --json
+# 设置成淘宝镜像
+npm config set registry http://registry.npm.taobao.org/
+
+# 1.查询Yarn当前配置的镜像
+yarn config get registry
+# 输出结果 https://registry.yarnpkg.com
+# yarn config --help
+# yarn config list
+# 设置成淘宝镜像
+yarn config set registry http://registry.npm.taobao.org/
+```
