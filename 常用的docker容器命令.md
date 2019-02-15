@@ -13,10 +13,10 @@ docker run -itd --name postgresql --restart always -v /opt/data/postgresql:/var/
 docker run -itd --restart always -p 5432:5432 -v /cityworks/postgresql:/var/lib/postgresql/data --name postgres -e POSTGRES_USER=sde -e POSTGRES_PASSWORD=postgres postgres:9.6.1
 
 # mongo启动命令
-docker run --name mongo --restart always -v /opt/data/mongo/data:/data/db -p 27017:27017 -d mongo:3.4.5
+docker run -itd --restart always --name mongo -v /opt/data/mongo/data:/data/db -p 27017:27017 -d mongo:3.4.5
 
 # minio启动命令
-docker run -it -p 9000:9000 --restart always --name minio -e MINIO_ACCESS_KEY=minio -e MINIO_SECRET_KEY=minio.minio minio/minio server /export
+docker run -itd --restart always --name minio -p 9000:9000 -e MINIO_ACCESS_KEY=minio -e MINIO_SECRET_KEY=minio.minio minio/minio:RELEASE.2019-01-16T21-44-08Z server /export
 
 # redis启动命令
 docker run -itd --restart always --name redis -p 6379:6379 redis:4.0.9-alpine
