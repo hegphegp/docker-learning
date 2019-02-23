@@ -52,7 +52,9 @@
                 * [elasticsearch备份工具](常用软件/elk/elasticsearch/elasticsearch备份工具.md)
     * [数据库]
         * [NOSQL]
-            * [mongo命令](/数据库/NOSQL/mongo/mongo命令.md)
+            * [mongo]
+                * [mongo常用命令](/数据库/NOSQL/mongo/mongo常用命令.md)
+                * [mongo备份还原](/数据库/NOSQL/mongo/mongo备份还原.md)
             * [neo4j的学习](/数据库/NOSQL/neo4j/neo4j学习.md)
             * [Redis]
                 * [redis博客](/数据库/NOSQL/redis/Redis博客.md)
