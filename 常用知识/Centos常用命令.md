@@ -1,4 +1,4 @@
-# 常用命令
+# Centos常用命令
 
 ```
 # 打包命令，参数z是压缩
@@ -15,12 +15,9 @@ tar -czvf postgres-idc.tar.gz postgres
 
 # tar解压到指定文件夹
 tar -zxvf dapeng.tar.gz -C /data/nginx/html
-
-# alpine apk 安装指定版本的软件
-apk add python2=2.7.14-r2
 ```
 
-# yum下载相关依赖包
+### yum下载相关依赖包
 ```
 mkdir -p /opt/packages/dockerRepo/18.06.1
 yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
@@ -34,7 +31,7 @@ cd /opt/packages/mysqlRepo
 ls
 ```
 
-# Linux查看服务监听的端口
+### Linux查看服务监听的端口
 ```
 yum install net-tools
 netstat -antu
@@ -45,21 +42,26 @@ netstat -antu | grep LISTEN
 
 netstat -ntpl # 等同于 netstat -antu | grep LISTEN  或者等同于  netstat -tunlp | grep LISTEN 
 # Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
-# tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      1557/sshd       
-# tcp        0      0 127.0.0.1:6942          0.0.0.0:*               LISTEN      6211/java       
-# tcp        0      0 127.0.0.1:38731         0.0.0.0:*               LISTEN      6211/java       
-# tcp6       0      0 :::22                   :::*                    LISTEN      1557/sshd       
-# tcp6       0      0 127.0.0.1:52057         :::*                    LISTEN      7648/java       
-# tcp6       0      0 :::4000                 :::*                    LISTEN      19611/docker-proxy
-# tcp6       0      0 :::37161                :::*                    LISTEN      24856/java      
-# tcp6       0      0 :::35145                :::*                    LISTEN      24856/java      
-# tcp6       0      0 :::3306                 :::*                    LISTEN      4542/docker-proxy
-# tcp6       0      0 :::34699                :::*                    LISTEN      7648/java       
-# 关掉3306端口数据库的服务进程
+# tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      1557/sshd
+# tcp        0      0 127.0.0.1:6942          0.0.0.0:*               LISTEN      6211/java
+# tcp6       0      0 :::22                   :::*                    LISTEN      1557/sshd
+# tcp6       0      0 127.0.0.1:52057         :::*                    LISTEN      7648/java
+# tcp6       0      0 :::3306                 :::*                    LISTEN      4542/mysql
+# tcp6       0      0 :::34699                :::*                    LISTEN      7648/java
+
+# 关掉3306端口的服务进程
 kill -9 4542
 ```
 
-# Linux搜索指定路径下的文件内容
+### Linux查看java进程开启的线程以及数量
+```
+# Linux查看java进程开启的线程
+top -H -p {pid}
+# Linux查看java进程开启的线程数量
+ps huH p  {pid}  | wc -l
+```
+
+### Linux搜索指定路径下的文件内容
 ```
 # grep加-i参数不区分大小写
 grep -rni "netty" .
@@ -71,25 +73,7 @@ ssh-add id_rsa
 ssh root@121.201.65.133lude="*.java" "netty" /opt/soft
 ```
 
-#### gradle打包要添加的groovy脚本
-```groovy
-buildscript {
-    ext {
-        springBootVersion = '1.5.13.RELEASE'
-    }
-    repositories {
-        mavenLocal()
-        maven{ url "http://maven.aliyun.com/nexus/content/groups/public/"}
-        mavenCentral()
-    }
-    dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-    }
-}
-apply plugin: 'org.springframework.boot'
-```
-
-# 被坑死过的命令
+### 被坑死过的命令
 ```
 # sed要覆盖替换文件，必须加 -ri 参数
 # -i表示替换，       -i[SUFFIX], --in-place[=SUFFIX] edit files in place (makes backup if SUFFIX supplied)
@@ -97,7 +81,12 @@ apply plugin: 'org.springframework.boot'
 sed -ri 's/^#?PermitRootLogin\s+.*/PermitRootLogin yes/' /etc/ssh/sshd_config ;
 ```
 
-##### shell脚本关闭指定端口的服务
+#### 释放centos7 缓存
+```
+echo 3 > /proc/sys/vm/drop_caches
+```
+
+#### shell脚本关闭指定端口的服务
 ```
 #!/bin/bash
 
@@ -117,13 +106,7 @@ java -Xmx2560m -Xms256m -Xmn128m -Xss1m -jar ${currentPath}/icity-admin-service-
 
 ```
 
-#### 后台运行Java服务的脚本命令
+# alpine apk 安装指定版本的软件
 ```
-#!/bin/bash
-
-# vi run.sh
-java -Xmx2560m -Xms256m -Xmn128m -Xss1m -jar ureport2-springboot-1.0.0.jar --server.port=9898 >> log.log &
-
-# http://localhost:9898/ureport/designer
-# chmod a+x run.sh
+apk add python2=2.7.14-r2
 ```
