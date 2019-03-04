@@ -21,7 +21,7 @@ certbot certonly --webroot -w /var/www/example -d example.com -d www.example.com
 ```
 - 这条命令的意思是为 以/var/www/example为根目录 的两个域名example.com和www.example.com申请证书
 
-* 命令带--standalone参数的方式(常用的方式)
+* 命令带--standalone参数的方式(常用的方式，当内网的服务器无法被letsencrypt的服务器访问到时，当不知道网站的根目录在哪里或者是网站根目录不在当前机器时)
 > * 如果网站没有根目录或者是你不知道你的网站根目录在哪里，可以通过下面的语句来实现
 ```
 certbot certonly --standalone -d example.com -d www.example.com
