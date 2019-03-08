@@ -4,8 +4,8 @@
 
 
 * [简介]
-    * [常用的docker容器命令](常用知识/Docker常用容器命令.md)
-    * [Centos常用知识](常用知识/Centos常用命令.md)
+    * [常用的docker容器命令](Docker常用容器命令.md)
+    * [Centos常用知识](Centos常用命令.md)
     * [Java常用知识](常用知识/Java常用知识.md)
     * [Linux系统安装docker]
         * [Linux安装docker]
