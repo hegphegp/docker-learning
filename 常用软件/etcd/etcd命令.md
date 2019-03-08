@@ -1,5 +1,28 @@
 # etcd命令.md
 
+#### 二进制安装
+```
+ETCD_VER=v3.3.12
+# ETCD_VER=v3.3.11
+# ETCD_VER=v3.3.10
+rm -rf hgp/etcd/${ETCD_VER}
+mkdir -p hgp/etcd/${ETCD_VER}
+cd hgp/etcd/${ETCD_VER}
+curl -L https://github.com/coreos/etcd/releases/download/${ETCD_VER}/etcd-${ETCD_VER}-linux-amd64.tar.gz -o etcd-${ETCD_VER}-linux-amd64.tar.gz
+tar xzvf etcd-${ETCD_VER}-linux-amd64.tar.gz -C . --strip-components=1
+
+# 因为docker-compose的放置路径是  /usr/local/bin  ，所以etcd也放到该目录
+\cp -rf etcd /usr/local/bin/etcd
+\cp -rf etcdctl /usr/local/bin/etcdctl
+cd ..
+rm -rf ${ETCD_VER}
+etcd --version
+etcdctl --version
+# 查看版本
+ETCDCTL_API=3 ./etcdctl version
+```
+
+
 #### 介绍
 ```
 Etcd本质上与一个NoSQL的数据库系统也有几分神似，但更准确的说法说是一个高可用的键值存储系统。
