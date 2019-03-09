@@ -1,5 +1,12 @@
 # Centos常用命令
 
+#### 查看具体的Centos版本(下面任意一条命令)
+```
+cat /etc/redhat-release
+rpm -q centos-release
+lsb_release -a   # 事先必须先安装好 lsb_release 这个工具
+```
+
 ```
 # 打包命令，参数z是压缩
 

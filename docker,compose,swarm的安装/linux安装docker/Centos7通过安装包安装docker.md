@@ -1,5 +1,59 @@
 ## Centos7安装docker
 
+
+#### 配置docker的yum源
+```
+mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
+curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
+echo "export LC_ALL=en_US.UTF-8" >> /etc/profile
+source /etc/profile
+yum clean all
+
+yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+```
+#### 列出docker的软件安装包版本
+```
+yum list docker-ce --showduplicates | sort -r
+#  * updates: mirrors.aliyun.com
+# Loading mirror speeds from cached hostfile
+# Loaded plugins: fastestmirror
+#  * extras: mirrors.aliyun.com
+# docker-ce.x86_64            3:18.09.3-3.el7                     docker-ce-stable
+# docker-ce.x86_64            3:18.09.2-3.el7                     docker-ce-stable
+# docker-ce.x86_64            3:18.09.1-3.el7                     docker-ce-stable
+# docker-ce.x86_64            3:18.09.0-3.el7                     docker-ce-stable
+# docker-ce.x86_64            18.06.3.ce-3.el7                    docker-ce-stable
+# docker-ce.x86_64            18.06.2.ce-3.el7                    docker-ce-stable
+# docker-ce.x86_64            18.06.1.ce-3.el7                    docker-ce-stable
+# docker-ce.x86_64            18.06.0.ce-3.el7                    docker-ce-stable
+# docker-ce.x86_64            18.03.1.ce-1.el7.centos             docker-ce-stable
+# docker-ce.x86_64            18.03.0.ce-1.el7.centos             docker-ce-stable
+# docker-ce.x86_64            17.12.1.ce-1.el7.centos             docker-ce-stable
+# docker-ce.x86_64            17.12.0.ce-1.el7.centos             docker-ce-stable
+# docker-ce.x86_64            17.09.1.ce-1.el7.centos             docker-ce-stable
+# docker-ce.x86_64            17.09.0.ce-1.el7.centos             docker-ce-stable
+# docker-ce.x86_64            17.06.2.ce-1.el7.centos             docker-ce-stable
+# docker-ce.x86_64            17.06.1.ce-1.el7.centos             docker-ce-stable
+# docker-ce.x86_64            17.06.0.ce-1.el7.centos             docker-ce-stable
+# docker-ce.x86_64            17.03.3.ce-1.el7                    docker-ce-stable
+# docker-ce.x86_64            17.03.2.ce-1.el7.centos             docker-ce-stable
+# docker-ce.x86_64            17.03.1.ce-1.el7.centos             docker-ce-stable
+# docker-ce.x86_64            17.03.0.ce-1.el7.centos             docker-ce-stable
+#  * base: mirrors.aliyun.com
+```
+#### 下载相应的docker版本软件到指定目录
+```
+mkdir -p hgp/docker-install-packages/18.09
+yum install --downloadonly --downloaddir=hgp/docker-install-packages/18.09 docker-ce-18.09.3
+# cd hgp/docker-install-packages/18.09
+# yum install -y *.rpm
+
+mkdir -p hgp/docker-install-packages/18.06
+yum install --downloadonly --downloaddir=hgp/docker-install-packages/18.06 docker-ce-18.06.ce
+# cd hgp/docker-install-packages/18.06
+# yum install -y *.rpm
+```
+
 [Centos7的阿里云docker安装包下载地址https://mirrors.aliyun.com/docker-engine/yum/repo/main/centos/7/Packages/](https://mirrors.aliyun.com/docker-engine/yum/repo/main/centos/7/Packages/)  
 [docker-compose的官方下载地址https://github.com/docker/compose/releases/](https://github.com/docker/compose/releases/)  
 [docker-compose的阿里云下载地址https://mirrors.aliyun.com/docker-toolbox/linux/compose/](https://mirrors.aliyun.com/docker-toolbox/linux/compose/)  
@@ -12,17 +66,12 @@
 [内核仓库http://elrepo.org/linux/kernel/el7/x86_64/RPMS/](http://elrepo.org/linux/kernel/el7/x86_64/RPMS/)  
 [内核仓库http://ftp.colocall.net/pub/elrepo/archive/kernel/el6/x86_64/RPMS/](http://ftp.colocall.net/pub/elrepo/archive/kernel/el6/x86_64/RPMS/)  
 
-> 1.卸载自带的docker服务
->
-> 2.切换成阿里的yum源
->
-> 3.升级内核，并把该内核启动顺序设置为第一
->
-> 4.安装docker，并设置阿里docker加速器
->
-> 5.安装docker-compose
->
-> 6.安装docker-machine
+* 1.卸载自带的docker服务
+* 2.切换成阿里的yum源
+* 3.升级内核，并把该内核启动顺序设置为第一
+* 4.安装docker，并设置阿里docker加速器
+* 5.安装docker-compose
+* 6.安装docker-machine
 
 > #### 1.卸载自带的docker服务
 
