@@ -29,10 +29,10 @@ apt-cache madison docker-ce
 # docker-ce | 18.06.1~ce~3-0~ubuntu | http://mirrors.aliyun.com/docker-ce/linux/ubuntu bionic/stable amd64 Packages
 # docker-ce | 18.06.0~ce~3-0~ubuntu | http://mirrors.aliyun.com/docker-ce/linux/ubuntu bionic/stable amd64 Packages
 # docker-ce | 18.03.1~ce~3-0~ubuntu | http://mirrors.aliyun.com/docker-ce/linux/ubuntu bionic/stable amd64 Packages
-apt-get install -d docker-ce=5:18.09.3~3-0~ubuntu-bionic
+
 cd /var/cache/apt/archives
 rm -rf *.deb
-apt-get install -d docker-ce=5:18.09.3~3-0~ubuntu-bionic
+apt-get install -y -d docker-ce=5:18.09.3~3-0~ubuntu-bionic
 mkdir -p /root/hgp/docker-ce/18.09
 cp -r /var/cache/apt/archives/* /root/hgp/docker-ce/18.09/
 rm -rf /root/hgp/docker-ce/18.09/lock
@@ -52,7 +52,8 @@ apt-cache madison docker-ce
 # docker-ce | 18.06.1~ce~3-0~ubuntu | http://mirrors.aliyun.com/docker-ce/linux/ubuntu bionic/stable amd64 Packages
 # docker-ce | 18.06.0~ce~3-0~ubuntu | http://mirrors.aliyun.com/docker-ce/linux/ubuntu bionic/stable amd64 Packages
 # docker-ce | 18.03.1~ce~3-0~ubuntu | http://mirrors.aliyun.com/docker-ce/linux/ubuntu bionic/stable amd64 Packages
-apt-get install -d docker-ce=18.06.3~ce~3-0~ubuntu
+
+# apt-get install -y -d docker-ce=18.06.3~ce~3-0~ubuntu
 # apt-get install -d docker-ce=5:18.09.2~3-0~ubuntu-bionic
 # apt-get install -d docker-ce=5:18.09.1~3-0~ubuntu-bionic
 # apt-get install -d docker-ce=5:18.09.0~3-0~ubuntu-bionic
@@ -66,8 +67,9 @@ rm -rf *.deb
 apt-get install -d docker-ce=5:18.09.3~3-0~ubuntu-bionic
 mkdir -p /root/hgp/docker-ce/18.09
 cp -r /var/cache/apt/archives/* /root/hgp/docker-ce/18.09/
-rm -rf /root/hgp/docker-ce/18.09/lock
-rm -rf /root/hgp/docker-ce/18.09/partial
+rm -rf /root/hgp/docker-ce/18.09/lock /root/hgp/docker-ce/18.09/partial
+cd /root/hgp/docker-ce/18.09
+# dpkg -i *.deb
 ```
 
 

@@ -1,9 +1,9 @@
-# Ubuntu的vagrant模板的制作, Ubuntu的vagrant镜像启动要十几分钟，果断放弃
+# Ubuntu的vagrant模板的制作
 
 ### 注意点
 * Ubuntu-16.04版本以上的全新系统，默认root是没有密码的，必须在某个用户的命令行给root设置密码 sudo passwd root  
 * Vagrant提供的Ubuntu镜像，vagrant和root用户是不允许远程登录的，修改的/etc/ssh/sshd_config的参数有四个
-* Centos的vagrant镜像下载地址 https://cloud-images.ubuntu.com/ , 下载链接https://cloud-images.ubuntu.com/bionic/20181004/bionic-server-cloudimg-amd64-vagrant.box
+* Ubuntu的vagrant镜像下载地址 https://cloud-images.ubuntu.com/ , 下载链接 http://cloud-images.ubuntu.com/bionic/20190306/bionic-server-cloudimg-amd64-vagrant.box
 
 ### 导入vagrant官方的centos7虚拟机模板
 ```
@@ -36,7 +36,7 @@ end
 # 用vagrant ssh登录服务器，修改配置文件允许账号远程登录，修改/etc/ssh/sshd_config
 vagrant ssh template
 # 给root用户设置密码
-sudo passwd root  
+sudo passwd root
 # 切换到root用户
 su root
 
