@@ -1,8 +1,11 @@
 ## Centos7安装docker
 
+#### 全部用centos7的镜像测试纯净centos7安装各种docker版本的软件依赖
+
 #### Centos下载指定版本的软件安装包和依赖，不安装软件
 ```
 yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+# yum install -y docker-ce-18.09.3
 yum install --downloadonly --downloaddir=hgp/docker-install-packages/18.09 docker-ce-18.09.3
 ```
 
@@ -40,6 +43,9 @@ yum list docker-ce --showduplicates | sort -r
 ```
 #### 下载相应的docker版本软件到指定目录
 ```
+mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
+curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
+yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
 mkdir -p hgp/docker-install-packages/18.09
 yum install --downloadonly --downloaddir=hgp/docker-install-packages/18.09 docker-ce-18.09.3
 # cd hgp/docker-install-packages/18.09
