@@ -1,18 +1,15 @@
 ## Centos7安装docker
 
-
-#### 配置docker的yum源
+#### Centos下载指定版本的软件安装包和依赖，不安装软件
 ```
-mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
-curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
-echo "export LC_ALL=en_US.UTF-8" >> /etc/profile
-source /etc/profile
-yum clean all
-
 yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+yum install --downloadonly --downloaddir=hgp/docker-install-packages/18.09 docker-ce-18.09.3
 ```
-#### 列出docker的软件安装包版本
+
+#### 配置docker的yum源，列出docker的软件安装包版本
 ```
+yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+
 yum list docker-ce --showduplicates | sort -r
 #  * updates: mirrors.aliyun.com
 # Loading mirror speeds from cached hostfile

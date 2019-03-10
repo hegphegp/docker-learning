@@ -1,5 +1,10 @@
 # Centos常用命令
 
+#### Centos和Ubuntu查看软件开机的启动时间
+```
+systemd-analyze blame
+```
+
 #### 查看具体的Centos版本(下面任意一条命令)
 ```
 cat /etc/redhat-release
