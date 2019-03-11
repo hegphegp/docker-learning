@@ -8,7 +8,7 @@ ETCD_VER=v3.3.12
 rm -rf hgp/etcd/${ETCD_VER}
 mkdir -p hgp/etcd/${ETCD_VER}
 cd hgp/etcd/${ETCD_VER}
-curl -L https://github.com/coreos/etcd/releases/download/${ETCD_VER}/etcd-${ETCD_VER}-linux-amd64.tar.gz -o etcd-${ETCD_VER}-linux-amd64.tar.gz
+curl -L https://github.com/coreos/etcd/releases/download/${ETCD_VER}/etcd-${ETCD_VER}-linux-amd64.tar.gz > etcd-${ETCD_VER}-linux-amd64.tar.gz
 tar xzvf etcd-${ETCD_VER}-linux-amd64.tar.gz -C . --strip-components=1
 
 # 因为docker-compose的放置路径是  /usr/local/bin  ，所以etcd也放到该目录
