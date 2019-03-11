@@ -20,8 +20,9 @@ docker run -itd --net ansible-network --ip 10.10.58.103 --name web2 --restart al
 docker exec -it ansible sh
 cd /ansible
 cat > host <<EOF
-[web]
+[web1]
 10.10.58.102 ansible_ssh_user=root ansible_ssh_pass=root ansible_ssh_port=22
+[web2]
 10.10.58.103 ansible_ssh_user=root ansible_ssh_pass=root ansible_ssh_port=22
 EOF
 cat > ansible.cfg <<EOF
@@ -31,8 +32,9 @@ inventory = ./host
 EOF
 
 # 在执行命令的时候指定host文件
-# ansible -i /ansible/host web -u root -m command -a 'ls /etc' -k (-k表示手动输入密码)
-ansible -i /ansible/host web -u root -m command -a 'ls /etc'
+# ansible -i /ansible/host web1 -u root -m command -a 'ls /etc' -k (-k表示手动输入密码)
+ansible -i host all -u root -m command -a 'ls /etc'
+ansible -i host all -u root -m command -a 'ls /etc'
 # 使用ansible.cfg的设置的host文件
 ansible web -u root -m command -a 'ls /etc'
 ```

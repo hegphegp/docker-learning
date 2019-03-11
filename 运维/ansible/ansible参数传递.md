@@ -4,6 +4,7 @@
 ```yml
 # 执行命令  ansible-playbook main.yml -i host -v
 ---
+tee Dockerfile <<-'EOF'
 ## 在同一个yml文件定义变量
 - name: test vars
   hosts: web
@@ -17,6 +18,7 @@
 
     - name: see_folder
       command: ls /etc
+EOF
 ```
 
 #### 用命令行传递参数
