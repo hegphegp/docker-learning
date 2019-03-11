@@ -1,5 +1,78 @@
 ## Ubuntu sh脚本安装docker,docker-compose,docker-machine
 
+#### 下载离线安装包以及依赖
+```
+# 添加Docker公共密钥，作用应该是 apt-get 安装 http://mirrors.aliyun.com/docker-ce/linux/ubuntu/ 的docker软件时对比公钥证明仓库是合法的吧
+curl -fsSL https://mirrors.aliyun.com/docker-ce/linux/ubuntu//gpg | apt-key add -
+
+cp /etc/apt/sources.list /etc/apt/sources.list.bak
+echo "deb http://mirrors.aliyun.com/ubuntu/ $(lsb_release -cs) main restricted universe multiverse" > /etc/apt/sources.list
+echo "deb http://mirrors.aliyun.com/ubuntu/ $(lsb_release -cs)-security main restricted universe multiverse" >> /etc/apt/sources.list
+echo "deb http://mirrors.aliyun.com/ubuntu/ $(lsb_release -cs)-updates main restricted universe multiverse" >> /etc/apt/sources.list
+echo "deb http://mirrors.aliyun.com/ubuntu/ $(lsb_release -cs)-proposed main restricted universe multiverse" >> /etc/apt/sources.list
+echo "deb http://mirrors.aliyun.com/ubuntu/ $(lsb_release -cs)-backports main restricted universe multiverse" >> /etc/apt/sources.list
+echo "deb [arch=amd64] https://mirrors.ustc.edu.cn/docker-ce/linux/ubuntu $(lsb_release -cs) stable" >> /etc/apt/sources.list
+apt-get update
+apt-get clean
+apt-get autoclean   # 清理旧版本的软件缓存
+apt-get clean       # 清理所有软件缓存
+apt-get autoremove  # 删除系统不再使用的孤立软件
+
+# 列表显示版本库中可以安装的Docker CE
+apt-cache madison docker-ce
+# docker-ce | 5:18.09.3~3-0~ubuntu-bionic | http://mirrors.aliyun.com/docker-ce/linux/ubuntu bionic/stable amd64 Packages
+# docker-ce | 5:18.09.2~3-0~ubuntu-bionic | http://mirrors.aliyun.com/docker-ce/linux/ubuntu bionic/stable amd64 Packages
+# docker-ce | 5:18.09.1~3-0~ubuntu-bionic | http://mirrors.aliyun.com/docker-ce/linux/ubuntu bionic/stable amd64 Packages
+# docker-ce | 5:18.09.0~3-0~ubuntu-bionic | http://mirrors.aliyun.com/docker-ce/linux/ubuntu bionic/stable amd64 Packages
+# docker-ce | 18.06.3~ce~3-0~ubuntu | http://mirrors.aliyun.com/docker-ce/linux/ubuntu bionic/stable amd64 Packages
+# docker-ce | 18.06.2~ce~3-0~ubuntu | http://mirrors.aliyun.com/docker-ce/linux/ubuntu bionic/stable amd64 Packages
+# docker-ce | 18.06.1~ce~3-0~ubuntu | http://mirrors.aliyun.com/docker-ce/linux/ubuntu bionic/stable amd64 Packages
+# docker-ce | 18.06.0~ce~3-0~ubuntu | http://mirrors.aliyun.com/docker-ce/linux/ubuntu bionic/stable amd64 Packages
+# docker-ce | 18.03.1~ce~3-0~ubuntu | http://mirrors.aliyun.com/docker-ce/linux/ubuntu bionic/stable amd64 Packages
+
+cd /var/cache/apt/archives
+rm -rf *.deb
+apt-get install -y -d docker-ce=5:18.09.3~3-0~ubuntu-bionic
+mkdir -p /root/hgp/docker-ce/18.09
+cp -r /var/cache/apt/archives/* /root/hgp/docker-ce/18.09/
+rm -rf /root/hgp/docker-ce/18.09/lock
+rm -rf /root/hgp/docker-ce/18.09/partial
+```
+
+#### 下载软件安装包及其依赖( apt-get -d install 软件名=版本号 )，对这条命令很绝望，居然不能下载到指定目录，直接下载到/var/cache/apt/archives目录。白白浪费了半天生命各种百度，痛恨一切垃圾命令、工具和设计
+```
+# 列表显示版本库中可以安装的Docker CE
+apt-cache madison docker-ce
+# docker-ce | 5:18.09.3~3-0~ubuntu-bionic | http://mirrors.aliyun.com/docker-ce/linux/ubuntu bionic/stable amd64 Packages
+# docker-ce | 5:18.09.2~3-0~ubuntu-bionic | http://mirrors.aliyun.com/docker-ce/linux/ubuntu bionic/stable amd64 Packages
+# docker-ce | 5:18.09.1~3-0~ubuntu-bionic | http://mirrors.aliyun.com/docker-ce/linux/ubuntu bionic/stable amd64 Packages
+# docker-ce | 5:18.09.0~3-0~ubuntu-bionic | http://mirrors.aliyun.com/docker-ce/linux/ubuntu bionic/stable amd64 Packages
+# docker-ce | 18.06.3~ce~3-0~ubuntu | http://mirrors.aliyun.com/docker-ce/linux/ubuntu bionic/stable amd64 Packages
+# docker-ce | 18.06.2~ce~3-0~ubuntu | http://mirrors.aliyun.com/docker-ce/linux/ubuntu bionic/stable amd64 Packages
+# docker-ce | 18.06.1~ce~3-0~ubuntu | http://mirrors.aliyun.com/docker-ce/linux/ubuntu bionic/stable amd64 Packages
+# docker-ce | 18.06.0~ce~3-0~ubuntu | http://mirrors.aliyun.com/docker-ce/linux/ubuntu bionic/stable amd64 Packages
+# docker-ce | 18.03.1~ce~3-0~ubuntu | http://mirrors.aliyun.com/docker-ce/linux/ubuntu bionic/stable amd64 Packages
+
+# apt-get install -y -d docker-ce=18.06.3~ce~3-0~ubuntu
+# apt-get install -d docker-ce=5:18.09.2~3-0~ubuntu-bionic
+# apt-get install -d docker-ce=5:18.09.1~3-0~ubuntu-bionic
+# apt-get install -d docker-ce=5:18.09.0~3-0~ubuntu-bionic
+# apt-get install -d docker-ce=18.06.3~ce~3-0~ubuntu
+# apt-get install -d docker-ce=18.06.2~ce~3-0~ubuntu
+# apt-get install -d docker-ce=18.06.1~ce~3-0~ubuntu
+# apt-get install -d docker-ce=18.06.0~ce~3-0~ubuntu
+# apt-get install -d docker-ce=18.03.1~ce~3-0~ubuntu
+cd /var/cache/apt/archives
+rm -rf *.deb
+apt-get install -d docker-ce=5:18.09.3~3-0~ubuntu-bionic
+mkdir -p /root/hgp/docker-ce/18.09
+cp -r /var/cache/apt/archives/* /root/hgp/docker-ce/18.09/
+rm -rf /root/hgp/docker-ce/18.09/lock /root/hgp/docker-ce/18.09/partial
+cd /root/hgp/docker-ce/18.09
+# dpkg -i *.deb
+```
+
+
 [16.04-Xenial的阿里云docker安装包下载地址https://mirrors.aliyun.com/docker-ce/linux/ubuntu/dists/xenial/pool/edge/amd64/](https://mirrors.aliyun.com/docker-ce/linux/ubuntu/dists/xenial/pool/edge/amd64/)  
 [16.10-Yakkety的阿里云docker安装包下载地址https://mirrors.aliyun.com/docker-ce/linux/ubuntu/dists/yakkety/pool/edge/amd64/](https://mirrors.aliyun.com/docker-ce/linux/ubuntu/dists/yakkety/pool/edge/amd64/)  
 [17.04-Zesty的阿里云docker安装包下载地址https://mirrors.aliyun.com/docker-ce/linux/ubuntu/dists/zesty/pool/edge/amd64/](https://mirrors.aliyun.com/docker-ce/linux/ubuntu/dists/zesty/pool/edge/amd64/)  
@@ -10,83 +83,16 @@
 [docker-machine的官方下载地址https://github.com/docker/machine/releases/](https://github.com/docker/machine/releases)  
 [docker-machine的阿里云下载地址https://mirrors.aliyun.com/docker-toolbox/linux/machine/](https://mirrors.aliyun.com/docker-toolbox/linux/machine/)  
 
-#### Ubuntu-16.04安装docker-ce_18.03.0-ce-0-ubuntu_amd64.deb
-```shell
-#!/bin/bash
-
-# 定义变量
-PASSWD=admin
-DOCKER_VERSION=docker-ce_18.03.0-ce-0-ubuntu_amd64.deb
-DOCKER_USER=hgp
-
-# 安装版本 docker-ce_18.03.0-ce-0-ubuntu_amd64.deb, docker-compose-Linux-x86_64-1.16.1, docker-machine-Linux-x86_64-0.13.0
-# 适用于ubuntu-16.04
-# ubuntu脚本自动输入sudo密码
-# sudo后面都有用到参数 -S
-# ubuntu-16.04安装高版本docker-ce_17.12.0~ce-0~ubuntu_amd64.deb以上版本，必须安装依赖　sudo apt-get install -y libltdl7 libseccomp2
-
-echo $PASSWD | sudo -S apt-get remove -y docker docker-engine docker.io docker-ce
-echo $PASSWD | sudo -S apt-get install -y libltdl7 libseccomp2
-echo $PASSWD | sudo -S apt-get update
-echo $PASSWD | sudo -S dpkg -i $DOCKER_VERSION
-echo $PASSWD | sudo -S groupadd docker
-echo $PASSWD | sudo -S usermod -aG docker ${DOCKER_USER}
-
-echo $PASSWD | sudo -S mkdir -p /etc/docker
-if sudo [ -f "/etc/docker/daemon.json" ]; then
-  datetime=$(date +%Y%m%d-%H%M%S)
-  echo $PASSWD | sudo -S cp /etc/docker/daemon.json /etc/docker/daemon-$datetime.json
-  echo $PASSWD | sudo -S rm -rf /etc/docker/daemon.json
-fi
-
-echo $PASSWD | sudo tee /etc/docker/daemon.json <<-'EOF'
-{
-  "registry-mirrors": ["https://docker.mirrors.ustc.edu.cn"]
-}
-EOF
-
-# 生产环境一定要加graph选项，指定docker镜像和日志的目录为大空间的目录，否则死的时候武眼睇
-# echo $PASSWD | sudo tee /etc/docker/daemon.json <<-'EOF'
-# {
-#    "registry-mirrors": ["https://docker.mirrors.ustc.edu.cn"],
-#    "graph": "/opt/data/docker"
-# }
-# EOF
-
-echo $PASSWD | sudo -S systemctl restart docker
-
-if sudo [ -f "/usr/local/bin/docker-compose" ]; then
-  echo $PASSWD | sudo -S rm -rf /usr/local/bin/docker-compose
-fi
-
-echo $PASSWD | sudo -S cp docker-compose-Linux-x86_64-1.16.1 /usr/local/bin/docker-compose
-echo $PASSWD | sudo -S chmod +x /usr/local/bin/docker-compose
-
-if sudo [ -f "/usr/local/bin/docker-machine" ]; then
-  echo $PASSWD | sudo -S rm -rf /usr/local/bin/docker-machine
-fi
-
-echo $PASSWD | sudo -S cp docker-machine-Linux-x86_64-0.13.0 /usr/local/bin/docker-machine
-echo $PASSWD | sudo -S chmod +x /usr/local/bin/docker-machine
-
-echo $PASSWD | sudo docker images | head -n 2
-echo $PASSWD | docker-compose version
-echo $PASSWD | docker-machine version
-# 这步是必须的，否则因为 groups 命令获取到的是缓存的组信息，刚添加的组信息未能生效，所以 docker ps -a 执行时有错。或者重启系统让用户组信息生效
-newgrp - docker
-
-
-```
-
 ### Ubuntu18.04安装docker-ce_18.09.0~3-0~ubuntu-bionic_amd64.deb
 ```
 # 用root用户安装
 cp /etc/apt/sources.list /etc/apt/sources.list.bak
-echo "deb http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse" > /etc/apt/sources.list
-echo "deb http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse" >> /etc/apt/sources.list
-echo "deb http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse" >> /etc/apt/sources.list
-echo "deb http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiverse" >> /etc/apt/sources.list
-echo "deb http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse" >> /etc/apt/sources.list
+echo "deb http://mirrors.aliyun.com/ubuntu/ $(lsb_release -cs) main restricted universe multiverse" > /etc/apt/sources.list
+echo "deb http://mirrors.aliyun.com/ubuntu/ $(lsb_release -cs)-security main restricted universe multiverse" >> /etc/apt/sources.list
+echo "deb http://mirrors.aliyun.com/ubuntu/ $(lsb_release -cs)-updates main restricted universe multiverse" >> /etc/apt/sources.list
+echo "deb http://mirrors.aliyun.com/ubuntu/ $(lsb_release -cs)-proposed main restricted universe multiverse" >> /etc/apt/sources.list
+echo "deb http://mirrors.aliyun.com/ubuntu/ $(lsb_release -cs)-backports main restricted universe multiverse" >> /etc/apt/sources.list
+echo "deb [arch=amd64] https://mirrors.ustc.edu.cn/docker-ce/linux/ubuntu $(lsb_release -cs) stable" >> /etc/apt/sources.list
 apt-get update
 apt-get clean
 apt-get autoclean   # 清理旧版本的软件缓存
@@ -102,5 +108,6 @@ sudo dpkg -i docker-ce_18.09.0~3-0~ubuntu-bionic_amd64.deb
 
 # groupadd docker
 # usermod -aG docker hgp
+# 这步是必须的，否则因为 groups 命令获取到的是缓存的组信息，刚添加的组信息未能生效，所以 docker ps -a 执行时有错。或者重启系统让用户组信息生效
 # newgrp - docker
 ```
