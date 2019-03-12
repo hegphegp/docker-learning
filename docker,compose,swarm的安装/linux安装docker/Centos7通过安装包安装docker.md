@@ -6,6 +6,7 @@
 ```
 yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
 # yum install -y docker-ce-18.09.3
+mkdir -p hgp/docker-install-packages/18.09
 yum install --downloadonly --downloaddir=hgp/docker-install-packages/18.09 docker-ce-18.09.3
 ```
 
