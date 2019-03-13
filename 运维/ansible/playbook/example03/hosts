@@ -1,0 +1,8 @@
+[docker-host]
+10.10.58.101 ansible_ssh_user=root ansible_ssh_pass=root ansible_ssh_port=22
+10.10.58.102 ansible_ssh_user=root ansible_ssh_pass=root ansible_ssh_port=22
+10.10.58.103 ansible_ssh_user=root ansible_ssh_pass=root ansible_ssh_port=22
+
+[java-host]
+10.10.58.102 ansible_ssh_user=root ansible_ssh_pass=root ansible_ssh_port=22
+10.10.58.103 ansible_ssh_user=root ansible_ssh_pass=root ansible_ssh_port=22

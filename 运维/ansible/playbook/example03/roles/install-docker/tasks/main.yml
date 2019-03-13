@@ -1,0 +1,8 @@
+---
+# # 安装docker，设置docker开机启动，模板文件配置docker加速器
+
+- name: 创建docker配置文件的目录路径
+  file: path=/etc/docker state=directory
+  # file: path=/etc/docker state=directory owner=root group=root
+- name: Create the hosts file for all machines
+  template: src=hosts.j2 dest=/etc/hosts

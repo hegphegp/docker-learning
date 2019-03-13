@@ -1,0 +1,7 @@
+{
+{% if registry-mirrors %}
+    "registry-mirrors": ["{{registry-mirrors}}"]
+{% else %}
+    "registry-mirrors": ["https://docker.mirrors.ustc.edu.cn"]
+{% endif %}
+}

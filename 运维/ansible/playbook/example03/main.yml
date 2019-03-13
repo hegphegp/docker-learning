@@ -1,0 +1,14 @@
+---
+# 安装docker，设置docker开机启动，模板文件配置docker加速器；安装Java，配置Java环境
+
+- hosts: docker-host
+  roles:
+  - role: install-docker
+
+# - hosts: java-host
+#   roles:
+#   - role: install-java
+
+- hosts: java-host
+  tasks:
+  - include: roles/install-java/tasks/shards.yml
