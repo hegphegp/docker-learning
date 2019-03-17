@@ -5,9 +5,6 @@
 * 在centos:7镜像中 docker-entrypoint.sh 中存在 /usr/sbin/init 容器启动就会死
 * docker run --privileged -it -d centos:7.6.1810 /usr/sbin/init  不加 -d 参数，容器启动就是死
 ```
-mkdir -p centos-7.6.1810-sshd
-cd centos-7.6.1810-sshd
-
 ##### 制作Dockerfile文件
 tee Dockerfile <<-'EOF'
 FROM centos:7.6.1810
@@ -19,7 +16,6 @@ RUN curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Cen
     yum install -y openssh-server openssh-clients firewalld ; \
     ssh-keygen -A ; \
     echo "root:${ROOT_PASSWORD}" | chpasswd ; \
-    echo "nameserver 8.8.8.8\nnameserver 8.8.4.4" >> /etc/resolv.conf ; \
     sed -i 's/UsePAM yes/#UsePAM yes/g' /etc/ssh/sshd_config; \
     sed -i 's/#UsePAM no/UsePAM no/g' /etc/ssh/sshd_config; \
     sed -i 's/#PermitRootLogin yes/PermitRootLogin yes/' /etc/ssh/sshd_config; \
@@ -33,8 +29,26 @@ EOF
 
 docker build -t centos-sshd:7.6.1810 .
 
-# docker run --privileged -itd --name centos-sshd1 centos-sshd:7.6.1810 /usr/sbin/init
 # docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' centos-sshd1
 # # 172.17.0.2
 # ssh root@172.17.0.2
+```
+
+
+```
+docker pull williamyeh/ansible:alpine3
+docker tag williamyeh/ansible:alpine3 ansible-2.5
+
+docker stop web1
+docker rm web1
+docker stop web2
+docker rm web2
+docker stop ansible
+docker rm ansible
+docker network rm ansible-network
+docker network create --subnet=10.10.58.0/24 ansible-network
+docker run --privileged -itd --restart always --net ansible-network --ip 10.10.58.100 --name ansible -v /opt/soft/ansible:/ansible ansible-2.5 sh
+docker run --privileged -itd --restart always --net ansible-network --ip 10.10.58.101 --name web1 centos-sshd:7.6.1810 /usr/sbin/init
+docker run --privileged -itd --restart always --net ansible-network --ip 10.10.58.102 --name web2 centos-sshd:7.6.1810 /usr/sbin/init
+docker run --privileged -itd --restart always --net ansible-network --ip 10.10.58.103 --name web3 centos-sshd:7.6.1810 /usr/sbin/init
 ```
