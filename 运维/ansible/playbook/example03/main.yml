@@ -11,4 +11,4 @@
 
 - hosts: java-host
   tasks:
-  - include: roles/install-java/tasks/shards.yml
+  - include: roles/install-java/tasks/main.yml

@@ -21,7 +21,7 @@ tar cvf idea.tar.gz -C /home/hgp/workspace idea
 tar -xvf idea.tar.gz -C /home/hgp/workspace
 
 # tar压缩当前目录(如果目录有空格的话，命令会执行失败)
-WORKPATH=$PWD && tar -czvf $(basename `pwd`).tar.gz -C $WORKPATH $(ls $WORKPATH)
+WORKPATH=$PWD && tar -czvf $(basename `pwd`).tar.gz -C $WORKPATH $(ls -all $WORKPATH)
 # 压缩指定文件夹
 tar -czvf postgres-idc.tar.gz postgres
 
