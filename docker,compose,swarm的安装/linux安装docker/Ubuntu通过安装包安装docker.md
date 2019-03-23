@@ -1,5 +1,43 @@
 ## Ubuntu sh脚本安装docker,docker-compose,docker-machine
 
+### Ubuntu安装最新版本的docker-ce
+```
+# 用root用户安装
+echo "deb http://mirrors.aliyun.com/ubuntu/ $(lsb_release -cs) main restricted universe multiverse" > /etc/apt/sources.list
+echo "deb http://mirrors.aliyun.com/ubuntu/ $(lsb_release -cs)-security main restricted universe multiverse" >> /etc/apt/sources.list
+echo "deb http://mirrors.aliyun.com/ubuntu/ $(lsb_release -cs)-updates main restricted universe multiverse" >> /etc/apt/sources.list
+echo "deb http://mirrors.aliyun.com/ubuntu/ $(lsb_release -cs)-proposed main restricted universe multiverse" >> /etc/apt/sources.list
+echo "deb http://mirrors.aliyun.com/ubuntu/ $(lsb_release -cs)-backports main restricted universe multiverse" >> /etc/apt/sources.list
+
+echo "deb [arch=amd64] https://mirrors.ustc.edu.cn/docker-ce/linux/ubuntu $(lsb_release -cs) stable" >> /etc/apt/sources.list
+
+# 添加Docker公共密钥，作用应该是 apt-get 安装 http://mirrors.aliyun.com/docker-ce/linux/ubuntu/ 的docker软件时对比公钥证明仓库是合法的吧
+curl -fsSL https://mirrors.aliyun.com/docker-ce/linux/ubuntu//gpg | apt-key add -
+
+apt-get update clean autoclean clean autoremove
+
+apt-get install -y docker-ce
+
+mkdir -p /etc/docker
+tee /etc/docker/daemon.json <<-'EOF'
+{
+  "registry-mirrors": ["https://docker.mirrors.ustc.edu.cn"]
+}
+EOF
+systemctl enable docker #设置docker服务开机自启动
+systemctl restart docker
+
+# groupadd docker
+# usermod -aG docker hgp
+# 这步是必须的，否则因为 groups 命令获取到的是缓存的组信息，刚添加的组信息未能生效，所以 docker ps -a 执行时有错。或者重启系统让用户组信息生效
+# newgrp - docker
+
+# 安装docker-compose
+curl -L https://mirrors.aliyun.com/docker-toolbox/linux/compose/1.21.2/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
+chmod +x /usr/local/bin/docker-compose
+
+```
+
 #### 下载离线安装包以及依赖
 ```
 # 添加Docker公共密钥，作用应该是 apt-get 安装 http://mirrors.aliyun.com/docker-ce/linux/ubuntu/ 的docker软件时对比公钥证明仓库是合法的吧
@@ -82,32 +120,3 @@ cd /root/hgp/docker-ce/18.09
 [docker-compose的阿里云下载地址https://mirrors.aliyun.com/docker-toolbox/linux/compose/](https://mirrors.aliyun.com/docker-toolbox/linux/compose/)  
 [docker-machine的官方下载地址https://github.com/docker/machine/releases/](https://github.com/docker/machine/releases)  
 [docker-machine的阿里云下载地址https://mirrors.aliyun.com/docker-toolbox/linux/machine/](https://mirrors.aliyun.com/docker-toolbox/linux/machine/)  
-
-### Ubuntu18.04安装docker-ce_18.09.0~3-0~ubuntu-bionic_amd64.deb
-```
-# 用root用户安装
-cp /etc/apt/sources.list /etc/apt/sources.list.bak
-echo "deb http://mirrors.aliyun.com/ubuntu/ $(lsb_release -cs) main restricted universe multiverse" > /etc/apt/sources.list
-echo "deb http://mirrors.aliyun.com/ubuntu/ $(lsb_release -cs)-security main restricted universe multiverse" >> /etc/apt/sources.list
-echo "deb http://mirrors.aliyun.com/ubuntu/ $(lsb_release -cs)-updates main restricted universe multiverse" >> /etc/apt/sources.list
-echo "deb http://mirrors.aliyun.com/ubuntu/ $(lsb_release -cs)-proposed main restricted universe multiverse" >> /etc/apt/sources.list
-echo "deb http://mirrors.aliyun.com/ubuntu/ $(lsb_release -cs)-backports main restricted universe multiverse" >> /etc/apt/sources.list
-echo "deb [arch=amd64] https://mirrors.ustc.edu.cn/docker-ce/linux/ubuntu $(lsb_release -cs) stable" >> /etc/apt/sources.list
-apt-get update
-apt-get clean
-apt-get autoclean   # 清理旧版本的软件缓存
-apt-get clean       # 清理所有软件缓存
-apt-get autoremove  # 删除系统不再使用的孤立软件
-
-curl https://mirrors.aliyun.com/docker-ce/linux/ubuntu/dists/bionic/pool/stable/amd64/containerd.io_1.2.0-1_amd64.deb > containerd.io_1.2.0-1_amd64.deb 
-curl https://mirrors.aliyun.com/docker-ce/linux/ubuntu/dists/bionic/pool/stable/amd64/docker-ce_18.09.0~3-0~ubuntu-bionic_amd64.deb > docker-ce_18.09.0~3-0~ubuntu-bionic_amd64.deb
-curl https://mirrors.aliyun.com/docker-ce/linux/ubuntu/dists/bionic/pool/stable/amd64/docker-ce-cli_18.09.0~3-0~ubuntu-bionic_amd64.deb > docker-ce-cli_18.09.0~3-0~ubuntu-bionic_amd64.deb
-sudo dpkg -i containerd.io_1.2.0-1_amd64.deb
-sudo dpkg -i docker-ce-cli_18.09.0~3-0~ubuntu-bionic_amd64.deb
-sudo dpkg -i docker-ce_18.09.0~3-0~ubuntu-bionic_amd64.deb
-
-# groupadd docker
-# usermod -aG docker hgp
-# 这步是必须的，否则因为 groups 命令获取到的是缓存的组信息，刚添加的组信息未能生效，所以 docker ps -a 执行时有错。或者重启系统让用户组信息生效
-# newgrp - docker
-```
