@@ -121,5 +121,6 @@ dpkg -i vagrant_2.2.4_x86_64.deb
 
 ### 截图工具
 ```
+
 apt-get install -y shutter
 ```
