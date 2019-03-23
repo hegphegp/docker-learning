@@ -3,11 +3,7 @@
 
 ### 删除LibreOffice
 ```
-sudo apt remove -y libreoffice-calc
-sudo apt remove -y libreoffice-draw
-sudo apt remove -y libreoffice-impress
-sudo apt remove -y libreoffice-writer
-sudo apt remove -y libreoffice*
+sudo apt remove -y libreoffice-calc libreoffice-draw libreoffice-impress libreoffice-writer libreoffice*
 ```
 ### 配置阿里云加速器
 ```
@@ -146,11 +142,10 @@ sudo apt --fix-broken -y install    # 自动修复包的依赖
 ### 安装钉钉 [https://github.com/nashaofu/dingtalk/releases/]
 ### 安装Navicat，到百度云找安装包
 
-### 安装WPS
+### 安装WPS，另外在网上下载相应字体，避免找不到字体抛错
 ```
 # 下载WPS安装包
 http://wps-community.org/download.html
-
 ```
 
 ### 更新驱动，然后重启
@@ -167,3 +162,25 @@ sudo pavucontrol
 * 配置步骤，图片演示  
 ![avatar](imgs/声音配置-001.png)  
 ![avatar](imgs/声音配置-002.png)  
+
+### 视频播放器 smplayer
+```
+sudo apt-get install -y smplayer
+```
+
+### 视频播放器 vlc
+```
+sudo apt-get install -y vlc
+```
+
+### 安装网易云音乐
+```
+# 切换到root用户
+wget http://d1.music.126.net/dmusic/netease-cloud-music_1.1.0_amd64_ubuntu.deb
+sudo dpkg -i netease-cloud-music_1.1.0_amd64_ubuntu.deb
+# ubuntu-18.04必须要用sudo才可以启动网易云音乐，在 /etc/sudoers 加上sudo的网易云程序的sudo免密运行
+# sudo echo "用户名 ALL = NOPASSWD: /usr/bin/netease-cloud-music" >> /etc/sudoers
+sudo echo "hgp ALL = NOPASSWD: /usr/bin/netease-cloud-music" >> /etc/sudoers
+sudo sed -ri 's|Exec=netease-cloud-music %U|Exec=sudo netease-cloud-music %U|' /usr/share/applications/netease-cloud-music.desktop ;
+# 必须重启系统
+```
