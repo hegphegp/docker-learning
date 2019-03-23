@@ -1,6 +1,14 @@
 
 ## 都切换到root用户进行命令操作
 
+### 删除LibreOffice
+```
+sudo apt remove -y libreoffice-calc
+sudo apt remove -y libreoffice-draw
+sudo apt remove -y libreoffice-impress
+sudo apt remove -y libreoffice-writer
+sudo apt remove -y libreoffice*
+```
 ### 配置阿里云加速器
 ```
 echo "deb http://mirrors.aliyun.com/ubuntu/ $(lsb_release -cs) main restricted universe multiverse" > /etc/apt/sources.list
@@ -82,8 +90,8 @@ sudo dpkg -i google-chrome-stable_current_amd64.deb
 # 去官网下载搜狗输入法  sogoupinyin_2.2.0.0108_amd64.deb
 # wget http://cdn2.ime.sogou.com/dl/index/1524572264/sogoupinyin_2.2.0.0108_amd64.deb
 sudo dpkg -i sogoupinyin_2.2.0.0108_amd64.deb
-sudo apt-get install -f          # 自动修复包的依赖
-# sudo apt --fix-broken install  # 自动修复包的依赖
+# sudo apt-get install -f -y       # 自动修复包的依赖
+sudo apt --fix-broken install -y   # 自动修复包的依赖
 sudo dpkg -i sogoupinyin_2.2.0.0108_amd64.deb
 # 配置输入法 Setting -> Region & Language -> Manage Installed Languages 把Keboard input method system从IBus修改为fcitx
 # 然后直接重启系统
@@ -115,12 +123,47 @@ systemctl restart vboxdrv
 # 安装2.2.4版本
 wget https://releases.hashicorp.com/vagrant/2.2.4/vagrant_2.2.4_x86_64.deb
 dpkg -i vagrant_2.2.4_x86_64.deb
-apt-get install -f          # 自动修复包的依赖
+# sudo apt-get install -f -y        # 自动修复包的依赖
+sudo apt --fix-broken -y install    # 自动修复包的依赖
 dpkg -i vagrant_2.2.4_x86_64.deb
 ```
 
 ### 截图工具
 ```
-
 apt-get install -y shutter
+# shutter在Ubuntu-18.04中不能编辑，要安装下面的依赖
+wget https://launchpadlibrarian.net/226687719/libgoocanvas-common_1.0.0-1_all.deb
+sudo dpkg -i libgoocanvas-common_1.0.0-1_all.deb
+sudo apt --fix-broken -y install    # 自动修复包的依赖
+wget https://launchpadlibrarian.net/226687722/libgoocanvas3_1.0.0-1_amd64.deb
+sudo dpkg -i libgoocanvas3_1.0.0-1_amd64.deb
+sudo apt --fix-broken -y install    # 自动修复包的依赖
+wget https://launchpadlibrarian.net/330848267/libgoo-canvas-perl_0.06-2ubuntu3_amd64.deb
+sudo dpkg -i libgoo-canvas-perl_0.06-2ubuntu3_amd64.deb
+sudo apt --fix-broken -y install    # 自动修复包的依赖
 ```
+
+### 安装钉钉 [https://github.com/nashaofu/dingtalk/releases/]
+### 安装Navicat，到百度云找安装包
+
+### 安装WPS
+```
+# 下载WPS安装包
+http://wps-community.org/download.html
+
+```
+
+### 更新驱动，然后重启
+```
+sudo ubuntu-drivers autoinstall
+reboot
+```
+
+### ubuntu18.04 没声音解决方案
+```
+sudo apt install pavucontrol
+sudo pavucontrol
+```
+* 配置步骤，图片演示  
+![avatar](imgs/声音配置-001.png)  
+![avatar](imgs/声音配置-002.png)  
