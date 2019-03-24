@@ -1,12 +1,3 @@
-# Ubuntu的vagrant模板的制作
-
-### 注意点
-* Ubuntu-16.04版本以上的全新系统，默认root是没有密码的，必须在某个用户的命令行给root设置密码 sudo passwd root  
-* Vagrant提供的Ubuntu镜像，vagrant和root用户是不允许远程登录的，修改的/etc/ssh/sshd_config的参数有四个
-* Ubuntu的vagrant镜像下载地址 https://cloud-images.ubuntu.com/ , 下载链接 http://cloud-images.ubuntu.com/bionic/20190306/bionic-server-cloudimg-amd64-vagrant.box
-
-
-### 所以步骤合在一起
 ```
 # 步骤01 导入vagrant官方的ubuntu-1804虚拟机模板
 vagrant box remove -f Ubuntu-18.04-bionic-server-cloudimg-amd64
@@ -71,44 +62,5 @@ vagrant box add ubuntu-1804-template Ubuntu-18.04-bionic-server-cloudimg-amd64-v
 vagrant destroy -f ubuntu1804
 cd ..
 rm -rf Ubuntu-18.04-bionic-server-cloudimg-amd64
-
-```
-
-
-### 导入vagrant官方的centos7虚拟机模板
-```
-vagrant box add ubuntu-18.04 bionic-server-cloudimg-amd64-vagrant.box
-```
-
-### Vagrantfile文件
-```
-# -*- mode: ruby -*-
-# vi: set ft=ruby :
-
-Vagrant.configure("2") do |config|
-  config.vm.define :template do |template|
-    template.vm.box = "ubuntu-18.04"
-    template.vm.hostname = "template"
-    template.ssh.insert_key = false
-    template.vm.synced_folder ".", "/vagrant", disabled: true
-    template.vm.network :private_network, ip: "192.168.35.11"
-    template.vm.provider "virtualbox" do |vb|
-      vb.name = "template"
-      vb.memory = "1024"
-      vb.cpus = "1"
-      vb.uartmode1 ="disconnected"
-    end
-  end
-end
-```
-
-### 用vagrant ssh登录服务器，修改配置文件允许账号远程登录
-```
-# 用vagrant ssh登录服务器，修改配置文件允许账号远程登录，修改/etc/ssh/sshd_config
-vagrant ssh template
-sudo -i 
-echo 'vagrant:vagrant' | chpasswd
-sed -ri 's|#PermitRootLogin prohibit-password|PermitRootLogin yes|' /etc/ssh/sshd_config ;
-systemctl restart sshd
 
 ```

@@ -58,7 +58,7 @@ echo "vagrant" | sudo -S shutdown -h now
 
 # 步骤06 在宿主机导出虚拟机
 rm -rf centos-1811-vagrant-templates.VirtualBox.box
-vagrant package --base=centos-1811 --output=centos-1811-vagrant-templates.VirtualBox.box
+vagrant package --base=CentOS-7-x86_64-Vagrant-1811_02 --output=centos-1811-vagrant-templates.VirtualBox.box
 vagrant box remove -f centos-1811-template
 vagrant box remove -f CentOS-7-x86_64-Vagrant-1811_02
 vagrant box add centos-1811-template centos-1811-vagrant-templates.VirtualBox.box

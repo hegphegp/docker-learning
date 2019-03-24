@@ -14,7 +14,7 @@ echo "deb [arch=amd64] https://mirrors.ustc.edu.cn/docker-ce/linux/ubuntu $(lsb_
 # 添加Docker公共密钥，作用应该是 apt-get 安装 http://mirrors.aliyun.com/docker-ce/linux/ubuntu/ 的docker软件时对比公钥证明仓库是合法的吧
 curl -fsSL https://mirrors.aliyun.com/docker-ce/linux/ubuntu//gpg | apt-key add -
 
-apt-get update clean autoclean clean autoremove
+apt-get update && apt-get clean && apt-get autoclean && apt-get clean && apt-get autoremove
 
 apt-get install -y docker-ce
 

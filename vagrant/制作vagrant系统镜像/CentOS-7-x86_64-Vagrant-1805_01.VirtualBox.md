@@ -13,13 +13,13 @@ tee Vagrantfile <<-'EOF'
 # vi: set ft=ruby :
 
 Vagrant.configure("2") do |config|
-  config.vm.define :CentOS1805 do |CentOS1805|
-    CentOS1805.vm.box = "CentOS-7-x86_64-Vagrant-1805_01"
-    CentOS1805.vm.hostname = "CentOS-1805"
+  config.vm.define :centos1805 do |centos1805|
+    centos1805.vm.box = "CentOS-7-x86_64-Vagrant-1805_01"
+    centos1805.vm.hostname = "CentOS-1805"
 # 官方镜像都不能设置账号密码登录，因为官方原始镜像的/etc/ssh/sshd_config文件配置都是不允许任何账号远程登录的
-    CentOS1805.vm.synced_folder ".", "/vagrant", disabled: true
-    CentOS1805.vm.network :private_network, ip: "192.168.130.11"
-    CentOS1805.vm.provider "virtualbox" do |vb|
+    centos1805.vm.synced_folder ".", "/vagrant", disabled: true
+    centos1805.vm.network :private_network, ip: "192.168.130.11"
+    centos1805.vm.provider "virtualbox" do |vb|
       vb.customize [ "modifyvm", :id, "--name", "CentOS-7-x86_64-Vagrant-1805_01", "--memory", "1024", "--cpus", "2" ]
     end
   end
@@ -31,7 +31,7 @@ vagrant up
 # ===============================停止copy===================================
 
 # 步骤03 用vagrant ssh登录服务器，修改配置文件 /etc/ssh/sshd_config 允许账号远程登录
-vagrant ssh CentOS1805
+vagrant ssh centos1805
 echo "vagrant" | sudo -S sed -ri 's/^#?PubkeyAuthentication\s+.*/PubkeyAuthentication yes/' /etc/ssh/sshd_config ;
 echo "vagrant" | sudo -S sed -ri 's/^PasswordAuthentication\s+.*/PasswordAuthentication yes/' /etc/ssh/sshd_config ;
 echo "vagrant" | sudo -S sed -ri 's/^GSSAPIAuthentication\s+.*/GSSAPIAuthentication no/' /etc/ssh/sshd_config ;
@@ -58,13 +58,13 @@ echo "vagrant" | sudo -S shutdown -h now
 
 # 步骤06 在宿主机导出虚拟机
 rm -rf CentOS-1805-vagrant-templates.VirtualBox.box
-vagrant package --base=CentOS-1805 --output=CentOS-1805-vagrant-templates.VirtualBox.box
+vagrant package --base=CentOS-7-x86_64-Vagrant-1805_01 --output=CentOS-1805-vagrant-templates.VirtualBox.box
 vagrant box remove -f CentOS-1805-template
 vagrant box remove -f CentOS-7-x86_64-Vagrant-1805_01
 vagrant box add CentOS-1805-template CentOS-1805-vagrant-templates.VirtualBox.box
 
 # 步骤07 删除virtualbox的CentOS-1805虚拟机
-vagrant destroy -f CentOS1805
+vagrant destroy -f centos1805
 cd ..
 rm -rf CentOS-7-x86_64-Vagrant-1805_01
 
