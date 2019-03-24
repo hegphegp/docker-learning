@@ -182,5 +182,4 @@ sudo dpkg -i netease-cloud-music_1.1.0_amd64_ubuntu.deb
 # sudo echo "用户名 ALL = NOPASSWD: /usr/bin/netease-cloud-music" >> /etc/sudoers
 sudo echo "hgp ALL = NOPASSWD: /usr/bin/netease-cloud-music" >> /etc/sudoers
 sudo sed -ri 's|Exec=netease-cloud-music %U|Exec=sudo netease-cloud-music %U|' /usr/share/applications/netease-cloud-music.desktop ;
-# 必须重启系统
 ```
