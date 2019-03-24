@@ -28,8 +28,6 @@ EOF
 
 vagrant up
 
-# ===============================停止copy===================================
-
 # 步骤03 用vagrant ssh登录服务器，修改配置文件 /etc/ssh/sshd_config 允许账号远程登录
 vagrant ssh centos1811
 echo "vagrant" | sudo -S sed -ri 's/^#?PubkeyAuthentication\s+.*/PubkeyAuthentication yes/' /etc/ssh/sshd_config ;
@@ -53,8 +51,6 @@ echo "vagrant" | sudo -S sed -i '/HWADDR/d' /etc/sysconfig/network-scripts/ifcfg
 echo "vagrant" | sudo -S sed -i '/UUID/d' /etc/sysconfig/network-scripts/ifcfg-eth0
 echo "vagrant" | sudo -S rm -rf /etc/sysconfig/network-scripts/ifcfg-eth1
 echo "vagrant" | sudo -S shutdown -h now
-
-# ===============================停止copy===================================
 
 # 步骤06 在宿主机导出虚拟机
 rm -rf centos-1811-vagrant-templates.VirtualBox.box

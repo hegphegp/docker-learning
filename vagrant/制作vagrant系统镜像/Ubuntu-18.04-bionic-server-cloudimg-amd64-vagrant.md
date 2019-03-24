@@ -28,8 +28,6 @@ EOF
 
 vagrant up
 
-# ===============================停止copy===================================
-
 # 步骤03 用vagrant ssh登录服务器，修改配置文件 /etc/ssh/sshd_config 允许账号远程登录
 vagrant ssh ubuntu1804
 sudo -i
@@ -50,8 +48,6 @@ systemctl disable apt-daily.service
 systemctl disable apt-daily.timer
 shutdown -h now
 
-# ===============================停止copy===================================
-
 # 步骤05 在宿主机导出虚拟机
 vagrant package --base=Ubuntu-18.04-bionic-server-cloudimg-amd64 --output=Ubuntu-18.04-bionic-server-cloudimg-amd64-vagrant.box
 vagrant box remove -f ubuntu-1804-template
@@ -62,5 +58,6 @@ vagrant box add ubuntu-1804-template Ubuntu-18.04-bionic-server-cloudimg-amd64-v
 vagrant destroy -f ubuntu1804
 cd ..
 rm -rf Ubuntu-18.04-bionic-server-cloudimg-amd64
+
 
 ```
