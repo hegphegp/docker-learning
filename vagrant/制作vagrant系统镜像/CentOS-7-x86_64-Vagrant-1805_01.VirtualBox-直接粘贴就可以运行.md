@@ -1,3 +1,4 @@
+#### 前提：在命令运行的目录路径下准备好 CentOS-7-x86_64-Vagrant-1805_01.VirtualBox.box
 ```
 # 步骤01 导入vagrant官方的centos7虚拟机模板
 vagrant box remove -f CentOS-7-x86_64-Vagrant-1805_01
