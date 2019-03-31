@@ -73,6 +73,9 @@ chmod +x /usr/local/bin/docker-compose
 
 ### 上官网下载VSCode的deb安装包安装
 ```
+# VSCode下载地址
+# https://code.visualstudio.com/Download
+sudo dpkg -i code_1.26.1-1534444688_amd64.deb
 ```
 
 ### 安装最新的chrome浏览器
