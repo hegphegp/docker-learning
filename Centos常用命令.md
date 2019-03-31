@@ -118,7 +118,42 @@ java -Xmx2560m -Xms256m -Xmn128m -Xss1m -jar ${currentPath}/icity-admin-service-
 
 ```
 
-# alpine apk 安装指定版本的软件
+### alpine apk 安装指定版本的软件
 ```
 apk add python2=2.7.14-r2
+```
+
+
+### Linux禁止删除文件夹
+
+* 在Ubuntu实验时，发现root用户可以chattr命令，普通用户加上sudo也可以使用chattr命令，普通用户直接输入chattr命令，Ubuntu不会提示没权限，提示了人看不懂含义的警告
+* 对某个文件夹使用chattr命令后，该文件夹内就不能创建文件夹和文件了，但是该文件夹内的子文件夹可以创建文件和文件夹
+```
+mkdir -p workspace/son
+echo 'qqqqqqqqqqqq' >> workspace/son.txt
+# 对文件夹上锁，要停止复制粘贴，因为sudo可能要输入密码
+# sudo chattr +i workspace/
+echo "密码" | sudo -S chattr +i workspace/
+
+# 通过父级文件夹查看workspace的lsattr属性
+lsattr $PWD
+# ----i---------e--- /当前路径/workspace      # 输出结果
+
+# 执行下面删除命令，创建子文件和创建子文件夹命令，提示 `不允许的操作`
+rm -rf workspace/son
+# rm: 无法删除'workspace/son': 不允许的操作
+rm -rf workspace/son.txt
+# rm: 无法删除'workspace/son.txt': 不允许的操作
+mkdir -p workspace/son1
+# mkdir: 无法创建目录"workspace/son1": 不允许的操作
+echo 'qqqqqqqqqqqq' >> workspace/son1.txt
+# bash: workspace/son1.txt: 不允许的操作
+
+# 可以修改直属子文件
+echo 'qqqqqqqqqqqq' >> workspace/son.txt
+
+# 删除权限
+echo "密码" | sudo -S chattr -i workspace/
+lsattr $PWD
+# --------------e--- /当前路径/workspace      # 输出结果
 ```

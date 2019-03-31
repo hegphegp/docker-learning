@@ -56,7 +56,7 @@ spring-plugin | proxy | RELEASE	| https://maven.aliyun.com/repository/spring-plu
 public | group | RELEASE | https://maven.aliyun.com/repository/public
 releases | hosted | RELEASE | https://maven.aliyun.com/repository/releases
 snapshots | hosted | SNAPSHOT | https://maven.aliyun.com/repository/snapshots
-grails-core | proxy | RELEASE |https://maven.aliyun.com/repository/grails-core
+grails-core | proxy | RELEASE | https://maven.aliyun.com/repository/grails-core
 
 
 #### maven的settings.xml配置文件
