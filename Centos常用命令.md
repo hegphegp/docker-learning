@@ -128,14 +128,13 @@ apk add python2=2.7.14-r2
 
 * 在Ubuntu实验时，发现root用户可以chattr命令，普通用户加上sudo也可以使用chattr命令，普通用户直接输入chattr命令，Ubuntu不会提示没权限，提示了人看不懂含义的警告
 * 对某个文件夹使用chattr命令后，该文件夹内就不能创建文件夹和文件了，但是该文件夹内的子文件夹可以创建文件和文件夹
-```
+```json
 mkdir -p workspace/son
 echo 'qqqqqqqqqqqq' >> workspace/son.txt
-# 对文件夹上锁，要停止复制粘贴，因为sudo可能要输入密码
 # sudo chattr +i workspace/
 echo "密码" | sudo -S chattr +i workspace/
 
-# 通过父级文件夹查看workspace的lsattr属性
+# 通过查看当前路径下的文件和文件夹的lsattr属性
 lsattr $PWD
 # ----i---------e--- /当前路径/workspace      # 输出结果
 
