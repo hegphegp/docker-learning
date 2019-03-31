@@ -141,8 +141,8 @@ grails-core | proxy | RELEASE |https://maven.aliyun.com/repository/grails-core
 #### build.gradle配置文件
 ```
 repositories {
-	mavenLocal()
-	maven{ url "https://maven.aliyun.com/repository/apache-snapshots"}
+    mavenLocal()
+    maven{ url "https://maven.aliyun.com/repository/apache-snapshots"}
     maven{ url "https://maven.aliyun.com/repository/central"}
     maven{ url "https://maven.aliyun.com/repository/google"}
     maven{ url "https://maven.aliyun.com/repository/gradle-plugin"}
@@ -153,6 +153,6 @@ repositories {
     maven{ url "https://maven.aliyun.com/repository/releases"}
     maven{ url "https://maven.aliyun.com/repository/snapshots"}
     maven{ url "https://maven.aliyun.com/repository/grails-core"}
-	mavenCentral()
+    mavenCentral()
 }
 ```
