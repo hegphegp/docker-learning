@@ -156,3 +156,10 @@ echo "密码" | sudo -S chattr -i workspace/
 lsattr $PWD
 # --------------e--- /当前路径/workspace      # 输出结果
 ```
+
+
+```
+sudo echo 'deb http://ppa.launchpad.net/hzwhuang/ss-qt5/ubuntu xenial main' >> /etc/apt/sources.list.d/hzwhuang-ubuntu-ss-qt5-bionic.list
+sudo apt-get update
+sudo apt-get install -y shadowsocks-qt5
+```
