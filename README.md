@@ -24,12 +24,12 @@
         * [使用说明](/vagrant/使用说明.md)
         * [常用命令](/vagrant/vagrantvagrant常用命令.md)
         * [Centos的vagrant模板的制作](/vagrant/制作vagrant系统镜像/Centos的vagrant模板的制作.md)
-            * [Centos-1804可远程登录的模板](/vagrant/制作vagrant系统镜像/CentOS-7-x86_64-Vagrant-1804_02.VirtualBox-直接粘贴就可以运行.md)
-            * [Centos-1805可远程登录的模板](/vagrant/制作vagrant系统镜像/CentOS-7-x86_64-Vagrant-1805_01.VirtualBox-直接粘贴就可以运行.md)
-            * [Centos-1811可远程登录的模板](/vagrant/制作vagrant系统镜像/CentOS-7-x86_64-Vagrant-1811_02.VirtualBox-直接粘贴就可以运行.md)
+            * [Centos-1804可远程登录的模板](/vagrant/制作vagrant系统镜像/CentOS/CentOS-7-x86_64-Vagrant-1804_02.VirtualBox-直接粘贴就可以运行.md)
+            * [Centos-1805可远程登录的模板](/vagrant/制作vagrant系统镜像/CentOS/CentOS-7-x86_64-Vagrant-1805_01.VirtualBox-直接粘贴就可以运行.md)
+            * [Centos-1811可远程登录的模板](/vagrant/制作vagrant系统镜像/CentOS/CentOS-7-x86_64-Vagrant-1811_02.VirtualBox-直接粘贴就可以运行.md)
         * [Ubuntu的vagrant模板的制作](/vagrant/制作vagrant系统镜像/Ubuntu的vagrant模板的制作.md)
-            * [Ubuntu-1804可远程登录的模板](/vagrant/制作vagrant系统镜像/Ubuntu-18.04-bionic-server-cloudimg-amd64-vagrant-直接粘贴就可以运行.md)
-            * [Ubuntu-1811可远程登录的模板](/vagrant/制作vagrant系统镜像/Ubuntu-18.10-cosmic-server-cloudimg-amd64-vagrant-直接粘贴就可以运行.md)
+            * [Ubuntu-1804可远程登录的模板](/vagrant/制作vagrant系统镜像/Ubuntu/Ubuntu-18.04-bionic-server-cloudimg-amd64-vagrant-直接粘贴就可以运行.md)
+            * [Ubuntu-1811可远程登录的模板](/vagrant/制作vagrant系统镜像/Ubuntu/Ubuntu-18.10-cosmic-server-cloudimg-amd64-vagrant-直接粘贴就可以运行.md)
     * [软件的使用和部分的镜像制作]
         * [node使用命令](/常用软件/node/node命令.md)
         * [nginx]
