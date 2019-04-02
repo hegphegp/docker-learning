@@ -186,3 +186,13 @@ sudo dpkg -i netease-cloud-music_1.1.0_amd64_ubuntu.deb
 sudo echo "hgp ALL = NOPASSWD: /usr/bin/netease-cloud-music" >> /etc/sudoers
 sudo sed -ri 's|Exec=netease-cloud-music %U|Exec=sudo netease-cloud-music %U|' /usr/share/applications/netease-cloud-music.desktop ;
 ```
+
+
+### 安装shadowsocks，Ubuntu-18.04(2019年4月2号，此时还没有Ubuntu-18.04-bionic的版本，只能用Ubuntu-16.04-xenial版本)，适用于Ubuntu-16.04
+```
+# sudo add-apt-repository ppa:hzwhuang/ss-qt5 必须执行这句，否则安装shadowsocks-qt5，会提示 "由于没有公钥，无法验证下列签名"
+sudo add-apt-repository ppa:hzwhuang/ss-qt5
+sudo echo 'deb http://ppa.launchpad.net/hzwhuang/ss-qt5/ubuntu xenial main' > /etc/apt/sources.list.d/hzwhuang-ubuntu-ss-qt5-bionic.list
+sudo apt-get update
+sudo apt-get install -y --allow-unauthenticated shadowsocks-qt5
+```
