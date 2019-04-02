@@ -2,6 +2,7 @@
 * 不能指定静态IP，只能dhcp动态分配IP地址  .vm.network :private_network, type: "dhcp"
 * 对官方的失望，/etc/ssh/sshd_config文件不能编辑，只能通过coreos-cloudinit -from-file=coreos-sshd-config.yml 命令修改
 
+#### 查考 CoreOS裸机iso安装和相关配置 [https://cloud.tencent.com/developer/article/1335572]
 ```
 # 步骤01 导入vagrant官方的CoreOS虚拟机模板
 vagrant box remove -f coreos_production_vagrant_virtualbox-2023.5.0
