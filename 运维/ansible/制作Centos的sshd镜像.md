@@ -16,8 +16,8 @@ RUN curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Cen
     yum install -y openssh-server openssh-clients firewalld ; \
     ssh-keygen -A ; \
     echo "root:${ROOT_PASSWORD}" | chpasswd ; \
-    sed -i 's/UsePAM yes/#UsePAM yes/g' /etc/ssh/sshd_config; \
-    sed -i 's/#UsePAM no/UsePAM no/g' /etc/ssh/sshd_config; \
+    sed -i 's/UsePAM yes/UsePAM no/g' /etc/ssh/sshd_config; \
+    sed -i 's/#UseDNS yes/UseDNS no/g' /etc/ssh/sshd_config; \
     sed -i 's/#PermitRootLogin yes/PermitRootLogin yes/' /etc/ssh/sshd_config; \
     yum clean all
 
