@@ -212,3 +212,9 @@ sudo apt-get install ubuntu-desktop
 # 然后重启，系统能登录了
 reboot
 ```
+
+### Ubuntu-18.04鼠标移动卡顿，有时候不能移动
+```
+sudo apt-get install xserver-xorg-input-all
+sudo apt-get install --reinstall xserver-xorg-input-all
+```
