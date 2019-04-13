@@ -31,6 +31,7 @@
             * [Ubuntu-1804可远程登录的模板](/vagrant/制作vagrant系统镜像/Ubuntu/Ubuntu-18.04-bionic-server-cloudimg-amd64-vagrant-直接粘贴就可以运行.md)
             * [Ubuntu-1811可远程登录的模板](/vagrant/制作vagrant系统镜像/Ubuntu/Ubuntu-18.10-cosmic-server-cloudimg-amd64-vagrant-直接粘贴就可以运行.md)
     * [软件的使用和部分的镜像制作]
+        * [chrony时间同步工具](/常用软件/chrony/chrony时间同步工具.md)
         * [node使用命令](/常用软件/node/node命令.md)
         * [nginx]
             * [参数说明](/常用软件/nginx/参数说明/nginx.conf配置文件参数自定义划分为三类.md)

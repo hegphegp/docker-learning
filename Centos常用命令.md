@@ -156,3 +156,11 @@ echo "密码" | sudo -S chattr -i workspace/
 lsattr $PWD
 # --------------e--- /当前路径/workspace      # 输出结果
 ```
+
+#### docker的常见问题
+* Failed to get D-Bus connection: Operation not permitted
+- 报这个错的原因是dbus-daemon没能启动。并不是容器里面systemctl不能使用
+```
+# 启动的时候加 --privileged 参数
+# 将CMD或者entrypoint设置为/usr/sbin/init即可。docker容器会自动将dbus等服务启动起来。
+```

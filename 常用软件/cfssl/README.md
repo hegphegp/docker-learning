@@ -114,9 +114,9 @@ cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=peer
 
 ```
 
-> 步骤二是全局配置
-> 步骤三是证书生成策略配置文件，可以全局公用一个，里面配置三种类型：server, client, peer
-> 步骤四以后都是配置具体的证书
+> 步骤二是全局配置  
+> 步骤三是证书生成策略配置文件，可以全局公用一个，里面配置三种类型：server, client, peer  
+> 步骤四以后都是配置具体的证书  
 
 ### 步骤一：下载相关软件，共3个软件
 ```
@@ -244,6 +244,31 @@ cat > kubernetes-csr.json <<EOF
 }
 EOF
 
+
+# {
+#   "CN": "etcd",
+#   "hosts": [
+#     "127.0.0.1",
+#     "etcd01所在服务器的IP地址",
+#     "etcd02所在服务器的IP地址",
+#     "etcd03所在服务器的IP地址",
+#   ],
+#   "key": {
+#     "algo": "rsa",
+#     "size": 2048
+#   },
+#   "names": [
+#     {
+#       "C": "CN",
+#       "ST": "HangZhou",
+#       "L": "XS",
+#       "O": "k8s",
+#       "OU": "System"
+#     }
+#   ]
+# }
+
+# etcd使用对等证书，hosts 字段必须指定授权使用该证书的 etcd 节点 IP
 ```
 #### 生成证书的命令
 ```
