@@ -167,4 +167,9 @@ yum --disablerepo=\* --enablerepo=elrepo-kernel list kernel* # 查出来的仓�
 mkdir -p kernel-ml
 yum --enablerepo=elrepo-kernel install --downloadonly --downloaddir=kernel-ml kernel-ml-devel kernel-ml
 tar -czvf kernel-ml.tar.gz kernel-ml
+
+# 查看已安装的内核列表
+awk -F\' '$1=="menuentry " {print $2}' /etc/grub2.cfg
+# 新安装的内核在列表中排第一位，把新安装的内核启动顺序设置为第一
+grub2-set-default 0
 ```
