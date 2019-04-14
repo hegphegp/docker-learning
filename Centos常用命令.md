@@ -157,10 +157,14 @@ lsattr $PWD
 # --------------e--- /当前路径/workspace      # 输出结果
 ```
 
-#### docker的常见问题
-* Failed to get D-Bus connection: Operation not permitted
-- 报这个错的原因是dbus-daemon没能启动。并不是容器里面systemctl不能使用
+#### 获取kernel-ml离线安装包
 ```
-# 启动的时候加 --privileged 参数
-# 将CMD或者entrypoint设置为/usr/sbin/init即可。docker容器会自动将dbus等服务启动起来。
+# 载入公钥
+rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
+# 安装ELRepo
+rpm -Uvh http://www.elrepo.org/elrepo-release-7.0-3.el7.elrepo.noarch.rpm
+yum --disablerepo=\* --enablerepo=elrepo-kernel list kernel* # 查出来的仓库地址居然是香港的 hkg.mirror.rackspace.com 
+mkdir -p kernel-ml
+yum --enablerepo=elrepo-kernel install --downloadonly --downloaddir=kernel-ml kernel-ml-devel kernel-ml
+tar -czvf kernel-ml.tar.gz kernel-ml
 ```
