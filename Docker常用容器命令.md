@@ -114,3 +114,11 @@ docker inspect -f {{.State.Pid}} redis
 # 2567
 nsenter --target 2567 --mount --uts --ipc --net --pid
 ```
+
+#### docker的常见问题
+* Failed to get D-Bus connection: Operation not permitted
+- 报这个错的原因是dbus-daemon没启动。并不是容器里不能使用systemctl命令
+```
+# docker run的时候加 --privileged 参数
+# CMD或者entrypoint设置 /usr/sbin/init 即可。docker容器会自动将dbus等服务启动起来。
+```

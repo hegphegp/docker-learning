@@ -197,6 +197,14 @@ sudo apt-get update
 sudo apt-get install -y --allow-unauthenticated shadowsocks-qt5
 ```
 
+### 安装wine
+```
+# 以root用户运行下面的命令，如果运行有错，复制粘贴重新运行几遍，直到成功为止
+sudo dpkg --add-architecture i386
+sudo apt install wine-development
+wine --version     #如果出现wine的版本则说明安装成功
+sudo apt install winbind
+```
 
 ### 禁止chrome硬件加速
 ![avatar](imgs/禁止chrome硬件加速.png)  

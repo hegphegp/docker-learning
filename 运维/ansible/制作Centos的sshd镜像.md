@@ -1,6 +1,7 @@
 ## 制作Centos的sshd镜像
 
 #### 有很多坑，但是无法一一写明。用一天生命换来的：人生要去接受无奈，用再多的生命时间去解决这些问题就是找死
+* 容器里使用systemctl可能抛错：Failed to get D-Bus connection: Operation not permitted，原因是dbus-daemon没启动，解决方法：docker run 加 --privileged 参数，同时CMD或者entrypoint.sh设置 /usr/sbin/init，docker容器会自动将dbus等服务启动起来
 * centos:7镜像中，如果容器启动命令用了 /usr/sbin/init ，就不要有 docker-entrypoint.sh ，好像docker-entrypoint.sh会影响到 /usr/sbin/init 的运行
 * 在centos:7镜像中 docker-entrypoint.sh 中存在 /usr/sbin/init 容器启动就会死
 * docker run --privileged -it -d centos:7.6.1810 /usr/sbin/init  不加 -d 参数，容器启动就是死
