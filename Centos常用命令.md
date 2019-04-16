@@ -156,3 +156,20 @@ echo "密码" | sudo -S chattr -i workspace/
 lsattr $PWD
 # --------------e--- /当前路径/workspace      # 输出结果
 ```
+
+#### 获取kernel-ml离线安装包
+```
+# 载入公钥
+rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
+# 安装ELRepo
+rpm -Uvh http://www.elrepo.org/elrepo-release-7.0-3.el7.elrepo.noarch.rpm
+yum --disablerepo=\* --enablerepo=elrepo-kernel list kernel* # 查出来的仓库地址居然是香港的 hkg.mirror.rackspace.com 
+mkdir -p kernel-ml
+yum --enablerepo=elrepo-kernel install --downloadonly --downloaddir=kernel-ml kernel-ml-devel kernel-ml
+tar -czvf kernel-ml.tar.gz kernel-ml
+
+# 查看已安装的内核列表
+awk -F\' '$1=="menuentry " {print $2}' /etc/grub2.cfg
+# 新安装的内核在列表中排第一位，把新安装的内核启动顺序设置为第一
+grub2-set-default 0
+```

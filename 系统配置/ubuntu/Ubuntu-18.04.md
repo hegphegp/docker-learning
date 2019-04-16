@@ -196,3 +196,33 @@ sudo echo 'deb http://ppa.launchpad.net/hzwhuang/ss-qt5/ubuntu xenial main' > /e
 sudo apt-get update
 sudo apt-get install -y --allow-unauthenticated shadowsocks-qt5
 ```
+
+### 安装wine
+```
+# 以root用户运行下面的命令，如果运行有错，复制粘贴重新运行几遍，直到成功为止
+sudo dpkg --add-architecture i386
+sudo apt install wine-development
+wine --version     #如果出现wine的版本则说明安装成功
+sudo apt install winbind
+```
+
+### 禁止chrome硬件加速
+![avatar](imgs/禁止chrome硬件加速.png)  
+
+### Ubuntu-18.04试了几十次登录，输入正确密码后，直接卡死在红色的界面，进入不了系统，一动不能动，只能强制按电源键断电
+```
+sudo apt-get remove plymouth
+sudo apt-get remove xserver-xorg-video-intel
+sudo apt-get install lightdm
+sudo dpkg-reconfigure lightdm
+# 弹出一个命令行窗口选择项，把  gdm3  改成  lightdm
+sudo apt-get install ubuntu-desktop
+# 然后重启，系统能登录了
+reboot
+```
+
+### Ubuntu-18.04鼠标移动卡顿，有时候不能移动
+```
+sudo apt-get install xserver-xorg-input-all
+sudo apt-get install --reinstall xserver-xorg-input-all
+```

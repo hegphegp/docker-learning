@@ -31,6 +31,8 @@
             * [Ubuntu-1804可远程登录的模板](/vagrant/制作vagrant系统镜像/Ubuntu/Ubuntu-18.04-bionic-server-cloudimg-amd64-vagrant-直接粘贴就可以运行.md)
             * [Ubuntu-1811可远程登录的模板](/vagrant/制作vagrant系统镜像/Ubuntu/Ubuntu-18.10-cosmic-server-cloudimg-amd64-vagrant-直接粘贴就可以运行.md)
     * [软件的使用和部分的镜像制作]
+        * [chrony时间同步工具](/常用软件/chrony/chrony时间同步工具.md)
+        * [calico使用命令](/常用软件/calico/calico.md)
         * [node使用命令](/常用软件/node/node命令.md)
         * [nginx]
             * [参数说明](/常用软件/nginx/参数说明/nginx.conf配置文件参数自定义划分为三类.md)
@@ -41,6 +43,7 @@
         * [etcd命令](/常用软件/etcd/etcd命令.md)
         * [draw.io镜像制作的Dockerfile文件](/常用软件/draw.io/dockerfile/Dockerfile)
         * [easy-mock镜像制作的Dockerfile文件](/常用软件/easy-mock/Dockerfile/Dockerfile)
+        * [gopub使用命令](/常用软件/gopub/README.md)
         * [etcd软件使用的命令](/常用软件/etcd/etcd命令.md)
         * [shell命令行操作json的工具-jq](/常用软件/shell命令行操作json的工具-jq/使用说明.md)
         * [shell命令行操作xml的工具-xmlstarlet](/常用软件/shell命令行操作xml的工具-xmlstarlet)
@@ -80,7 +83,8 @@
         * [jenkins]
             * [jenkins的使用](/运维/jenkins/使用说明.md)
     * [linux]
-        * [alpine安装.md]
+        * [alpine的安装.md](/仓库/linux/alpine/alpine的安装.md)
+        * [Linux的磁盘挂载.md](/常用知识/Linux的磁盘挂载.md)
     * [预留模块]
         * [大数据]
             * [docker搭建真正的Hadoop集群](/预留模块/大数据/hadoop/Hadoop搭建.md)

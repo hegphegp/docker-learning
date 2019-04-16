@@ -31,7 +31,10 @@ vagrant up
 
 # 步骤03 用vagrant ssh登录服务器，修改配置文件 /etc/ssh/sshd_config 允许账号远程登录
 vagrant ssh ubuntu1810
+# sudo -i 命令 是让当前操作的所有命令拥有超级管理员的权限
 sudo -i
+# echo -e "vagrant\nvagrant" | passwd             # 修改自己的密码
+# echo -e "vagrant\nvagrant" | passwd 指定用户名    # 修改指定用户名的密码
 echo -e "vagrant\nvagrant" | passwd
 sed -ri 's|^#?PubkeyAuthentication\s+.*|PubkeyAuthentication yes|' /etc/ssh/sshd_config ;
 sed -ri 's|^PasswordAuthentication\s+.*|PasswordAuthentication yes|' /etc/ssh/sshd_config ;
