@@ -176,15 +176,11 @@ sudo apt-get install -y smplayer
 sudo apt-get install -y vlc
 ```
 
-### 安装网易云音乐
+### 安装 audacious 音乐播放器
 ```
-# 切换到root用户
-wget http://d1.music.126.net/dmusic/netease-cloud-music_1.1.0_amd64_ubuntu.deb
-sudo dpkg -i netease-cloud-music_1.1.0_amd64_ubuntu.deb
-# ubuntu-18.04必须要用sudo才可以启动网易云音乐，在 /etc/sudoers 加上sudo的网易云程序的sudo免密运行
-# sudo echo "用户名 ALL = NOPASSWD: /usr/bin/netease-cloud-music" >> /etc/sudoers
-sudo echo "hgp ALL = NOPASSWD: /usr/bin/netease-cloud-music" >> /etc/sudoers
-sudo sed -ri 's|Exec=netease-cloud-music %U|Exec=sudo netease-cloud-music %U|' /usr/share/applications/netease-cloud-music.desktop ;
+sudo apt-get install audacious
+# 解决乱码的操作，在导航菜单依次点击  文件 -> 设置 -> 播放列表 -> 自动检测下拉编码 -> 选中汉语
+# 解决乱码的操作，在导航菜单依次点击  文件 -> 设置 -> 播放列表 -> 备用字符编码 -> 输入 GBK
 ```
 
 
