@@ -13,13 +13,7 @@ lsb_release -a   # 事先必须先安装好 lsb_release 这个工具
 ```
 
 ```
-# 打包命令，参数z是压缩
-
-# 1) 打包指定文件夹，正确的命令格式只有下面这一条，到时候出问题了就跪掉了
-tar cvf idea.tar.gz -C /home/hgp/workspace idea
-# 2) 与上面对应的解压命令是
-tar -xvf idea.tar.gz -C /home/hgp/workspace
-
+# 压缩命令，参数z是压缩
 # tar压缩当前目录(如果目录有空格的话，命令会执行失败)
 WORKPATH=$PWD && tar -czvf $(basename `pwd`).tar.gz -C $WORKPATH $(ls -all $WORKPATH)
 # 压缩指定文件夹

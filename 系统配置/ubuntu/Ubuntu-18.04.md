@@ -157,6 +157,11 @@ sudo ubuntu-drivers autoinstall
 reboot
 ```
 
+### 安装filezilla
+```
+sudo apt-get install filezilla
+```
+
 ### ubuntu18.04 没声音解决方案
 ```
 sudo apt install pavucontrol
