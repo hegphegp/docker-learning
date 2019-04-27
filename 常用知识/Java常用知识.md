@@ -59,7 +59,7 @@ snapshots | hosted | SNAPSHOT | https://maven.aliyun.com/repository/snapshots
 grails-core | proxy | RELEASE | https://maven.aliyun.com/repository/grails-core
 
 
-#### maven的settings.xml配置文件, mirrorOf的名称都设为 central 
+#### maven的settings.xml配置文件, mirrorOf的名称都设为 central , 好像maven下载插件时，默认是通过central的mirror对应的URL去查找，找遍了自定义的central后，再去官方默认的central找
 ```
 <mirrors>
     <mirror>
