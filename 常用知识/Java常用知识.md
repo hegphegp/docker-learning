@@ -59,80 +59,86 @@ snapshots | hosted | SNAPSHOT | https://maven.aliyun.com/repository/snapshots
 grails-core | proxy | RELEASE | https://maven.aliyun.com/repository/grails-core
 
 
-#### maven的settings.xml配置文件
+#### maven的settings.xml配置文件, mirrorOf的名称都设为 central 
 ```
-  <mirrors>
+<mirrors>
     <mirror>
-      <id>aliyun-apache</id>
-      <mirrorOf>aliyun-apache</mirrorOf>
-      <name>aliyun-apache</name>
-      <url>https://maven.aliyun.com/repository/apache-snapshots</url>
+        <id>aliyun-central</id>
+        <mirrorOf>central</mirrorOf>
+        <name>aliyun-central</name>
+        <url>https://maven.aliyun.com/repository/central</url>
     </mirror>
     <mirror>
-      <id>aliyun-central</id>
-      <mirrorOf>aliyun-central</mirrorOf>
-      <name>aliyun-central</name>
-      <url>https://maven.aliyun.com/repository/central</url>
+        <id>nexus-aliyun</id>
+        <mirrorOf>central</mirrorOf>
+        <name>Nexus aliyun</name>
+        <url>http://maven.aliyun.com/nexus/content/groups/public</url>
+    </mirror> 
+    <mirror>
+        <id>aliyun-apache</id>
+        <mirrorOf>central</mirrorOf>
+        <name>aliyun-apache</name>
+        <url>https://maven.aliyun.com/repository/apache-snapshots</url>
     </mirror>
     <mirror>
-      <id>aliyun-google</id>
-      <mirrorOf>aliyun-google</mirrorOf>
-      <name>aliyun-google</name>
-      <url>https://maven.aliyun.com/repository/google</url>
+        <id>aliyun-google</id>
+        <mirrorOf>central</mirrorOf>
+        <name>aliyun-google</name>
+        <url>https://maven.aliyun.com/repository/google</url>
     </mirror>
     <mirror>
-      <id>aliyun-gradle-plugin</id>
-      <mirrorOf>aliyun-gradle-plugin</mirrorOf>
-      <name>aliyun-gradle-plugin</name>
-      <url>https://maven.aliyun.com/repository/gradle-plugin</url>
+        <id>aliyun-gradle-plugin</id>
+        <mirrorOf>central</mirrorOf>
+        <name>aliyun-gradle-plugin</name>
+        <url>https://maven.aliyun.com/repository/gradle-plugin</url>
     </mirror>
     <mirror>
-      <id>aliyun-gradle-plugin</id>
-      <mirrorOf>aliyun-gradle-plugin</mirrorOf>
-      <name>aliyun-gradle-plugin</name>
-      <url>https://maven.aliyun.com/repository/gradle-plugin</url>
+        <id>aliyun-gradle-plugin</id>
+        <mirrorOf>central</mirrorOf>
+        <name>aliyun-gradle-plugin</name>
+        <url>https://maven.aliyun.com/repository/gradle-plugin</url>
     </mirror>
     <mirror>
-      <id>aliyun-jcenter</id>
-      <mirrorOf>aliyun-jcenter</mirrorOf>
-      <name>aliyun-jcenter</name>
-      <url>https://maven.aliyun.com/repository/jcenter</url>
+        <id>aliyun-jcenter</id>
+        <mirrorOf>central</mirrorOf>
+        <name>aliyun-jcenter</name>
+        <url>https://maven.aliyun.com/repository/jcenter</url>
     </mirror>
     <mirror>
-      <id>aliyun-spring</id>
-      <mirrorOf>aliyun-spring</mirrorOf>
-      <name>aliyun-spring</name>
-      <url>https://maven.aliyun.com/repository/spring</url>
+        <id>aliyun-spring</id>
+        <mirrorOf>central</mirrorOf>
+        <name>aliyun-spring</name>
+        <url>https://maven.aliyun.com/repository/spring</url>
     </mirror>
     <mirror>
-      <id>aliyun-spring-plugin</id>
-      <mirrorOf>aliyun-spring-plugin</mirrorOf>
-      <name>aliyun-spring-plugin</name>
-      <url>https://maven.aliyun.com/repository/spring-plugin</url>
+        <id>aliyun-spring-plugin</id>
+        <mirrorOf>central</mirrorOf>
+        <name>aliyun-spring-plugin</name>
+        <url>https://maven.aliyun.com/repository/spring-plugin</url>
     </mirror>
     <mirror>
-      <id>aliyun-public</id>
-      <mirrorOf>aliyun-public</mirrorOf>
-      <name>aliyun-public</name>
-      <url>https://maven.aliyun.com/repository/public</url>
+        <id>aliyun-public</id>
+        <mirrorOf>central</mirrorOf>
+        <name>aliyun-public</name>
+        <url>https://maven.aliyun.com/repository/public</url>
     </mirror>
     <mirror>
-      <id>aliyun-releases</id>
-      <mirrorOf>aliyun-releases</mirrorOf>
-      <name>aliyun-releases</name>
-      <url>https://maven.aliyun.com/repository/releases</url>
+        <id>aliyun-releases</id>
+        <mirrorOf>central</mirrorOf>
+        <name>aliyun-releases</name>
+        <url>https://maven.aliyun.com/repository/releases</url>
     </mirror>
     <mirror>
-      <id>aliyun-snapshots</id>
-      <mirrorOf>aliyun-snapshots</mirrorOf>
-      <name>aliyun-snapshots</name>
-      <url>https://maven.aliyun.com/repository/snapshots</url>
+        <id>aliyun-snapshots</id>
+        <mirrorOf>central</mirrorOf>
+        <name>aliyun-snapshots</name>
+        <url>https://maven.aliyun.com/repository/snapshots</url>
     </mirror>
     <mirror>
-      <id>aliyun-grails-core</id>
-      <mirrorOf>aliyun-grails-core</mirrorOf>
-      <name>aliyun-grails-core</name>
-      <url>https://maven.aliyun.com/repository/grails-core</url>
+        <id>aliyun-grails-core</id>
+        <mirrorOf>central</mirrorOf>
+        <name>aliyun-grails-core</name>
+        <url>https://maven.aliyun.com/repository/grails-core</url>
     </mirror>
   </mirrors>
 ```
