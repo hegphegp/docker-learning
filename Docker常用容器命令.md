@@ -95,8 +95,8 @@ docker rm `docker ps -a -q --filter name=redis`
 
 #### 导出和导入docker镜像
 ```
-docker save mysql:5.7.21 > mysql-5.7.21.tar.gz
-docker load < mysql-5.7.21.tar.gz
+docker save mysql:5.7 node:8 | gzip > images.tar.gz  # 压缩压缩多个镜像
+docker load < images.tar.gz                          # 导入镜像
 ```
 
 

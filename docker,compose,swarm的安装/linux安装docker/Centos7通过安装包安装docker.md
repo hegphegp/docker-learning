@@ -2,6 +2,25 @@
 
 #### 全部用centos7的镜像测试纯净centos7安装各种docker版本的软件依赖
 
+```
+docker stop centos
+docker rm centos
+docker run -itd --name centos --privileged centos:7.6.1810 /usr/sbin/init
+docker exec -it centos sh
+cd /
+curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
+yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+mkdir -p 18.03.1 && mkdir -p 18.06.3 && mkdir -p 18.09.5 
+yum install --downloadonly --downloaddir=18.03.1 docker-ce-18.03.1.ce
+yum install --downloadonly --downloaddir=18.06.3 docker-ce-18.06.3.ce
+yum install --downloadonly --downloaddir=18.09.5 docker-ce-18.09.5
+exit
+# 停止copy
+rm -rf docker-ce-18.03.1 docker-ce-18.06.3 docker-ce-18.09.5
+docker cp centos:/18.03.1 docker-ce-18.03.1
+docker cp centos:/18.06.3 docker-ce-18.06.3
+docker cp centos:/18.09.5 docker-ce-18.09.5
+```
 #### Centos下载指定版本的软件安装包和依赖，不安装软件
 ```
 yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
@@ -15,6 +34,9 @@ yum install --downloadonly --downloaddir=hgp/docker-install-packages/18.09 docke
 yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
 
 yum list docker-ce --showduplicates | sort -r
+# yum install --downloadonly --downloaddir=18.03.1 docker-ce-18.03.1.ce
+# yum install --downloadonly --downloaddir=18.06.3 docker-ce-18.06.3.ce
+# yum install --downloadonly --downloaddir=18.09.3 docker-ce-18.09.3
 #  * updates: mirrors.aliyun.com
 # Loading mirror speeds from cached hostfile
 # Loaded plugins: fastestmirror

@@ -58,19 +58,39 @@ docker cp daemon.json worker2:/etc/docker
 docker cp daemon.json worker3:/etc/docker
 
 docker restart manager1 manager2 manager3 worker1 worker2 worker3
+
+# 在宿主机下载 dockersamples/visualizer 镜像
+docker pull dockersamples/visualizer
+docker save dockersamples/visualizer | gzip > visualizer.tar.gz
+# docker load < /visualizer.tar.gz
+
+docker cp visualizer.tar.gz manager1:/ && docker exec -it manager1 sh -c "docker load < /visualizer.tar.gz"
+
+# 停止copy
+docker cp visualizer.tar.gz manager2:/ && docker exec -it manager2 sh -c "docker load < /visualizer.tar.gz"
+
+# 停止copy
+docker cp visualizer.tar.gz manager3:/ && docker exec -it manager3 sh -c "docker load < /visualizer.tar.gz"
+
 ```
 
 ##### 以下是集群搭建的命令
 ```
 docker exec -it manager1 docker swarm init
 # 然后通过 docker swarm join-token manager ，获取manager的token，给集群加入管理节点
-# docker exec -it manager1 docker swarm join-token manager
+# docker exec -it manager1 docker swarm join-token manager | sed -n '3p'
 # docker exec -it manager2 docker swarm join --token SWMTKN-1-3avf9oczaew7wuagai7gmeho4vnj5nzuuedcs19ai4um7doh87-346v7h7a2iha9ppij9xom85v0 10.10.10.101:2377
 # docker exec -it manager3 docker swarm join --token SWMTKN-1-3avf9oczaew7wuagai7gmeho4vnj5nzuuedcs19ai4um7doh87-346v7h7a2iha9ppij9xom85v0 10.10.10.101:2377
 
 # 然后通过 docker swarm join-token worker ，获取worker的token，给集群加入工作节点
-# docker exec -it manager1 docker swarm join-token worker
+# docker exec -it manager1 docker swarm join-token worker | 
 # docker exec -it worker1 docker swarm join --token SWMTKN-1-3avf9oczaew7wuagai7gmeho4vnj5nzuuedcs19ai4um7doh87-ab76i9tf2na5s9nhm77widlqv 10.10.10.101:2377
 # docker exec -it worker2 docker swarm join --token SWMTKN-1-3avf9oczaew7wuagai7gmeho4vnj5nzuuedcs19ai4um7doh87-ab76i9tf2na5s9nhm77widlqv 10.10.10.101:2377
 # docker exec -it worker3 docker swarm join --token SWMTKN-1-3avf9oczaew7wuagai7gmeho4vnj5nzuuedcs19ai4um7doh87-ab76i9tf2na5s9nhm77widlqv 10.10.10.101:2377
+
+docker exec -it manager1 docker node ls
+
+# # docker service create --name=viz --publish=8080:8080/tcp --constraint=node.role==manager --mount=type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock dockersamples/visualizer
+# # docker exec -it manager1 sh -c "docker service create --replicas 12 --name viz --publish 8080:8080/tcp --constraint node.role==manager --mount type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock dockersamples/visualizer"
+# docker exec -it manager1 sh -c "docker service create --replicas 36 --name viz --publish 8080:8080/tcp --constraint node.role==manager --mount type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock dockersamples/visualizer"
 ```
