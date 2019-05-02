@@ -71,6 +71,20 @@ chmod +x /usr/local/bin/docker-compose
 
 ```
 
+### 卸载gedit(在公司电脑被坑死过很多次，几十行的文件替换后，再撤销替换，电脑直接卡死，只能拔电源线强制关机，害死人了)，安装notepadqq
+```
+# 用root用户执行命令
+# 卸载 gedit
+apt-get remove gedit
+add-apt-repository ppa:notepadqq-team/notepadqq
+apt-get update
+apt-get install notepadqq
+
+# 卸载 notepadqq
+apt-get remove notepadqq
+add-apt-repository --remove ppa:notepadqq-team/notepadqq
+```
+
 ### 上官网下载VSCode的deb安装包安装
 ```
 # VSCode下载地址
