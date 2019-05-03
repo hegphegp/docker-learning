@@ -43,12 +43,12 @@ docker network create --subnet=10.10.10.0/24 docker-swarm-network
 
 echo '{ "registry-mirrors": ["https://1a5q7qx0.mirror.aliyuncs.com"] }' > daemon.json
 
-docker run --privileged -itd --name manager1 --net docker-swarm-network --ip 10.10.10.101 --restart always docker:18.09-dind
-docker run --privileged -itd --name manager2 --net docker-swarm-network --ip 10.10.10.102 --restart always docker:18.09-dind
-docker run --privileged -itd --name manager3 --net docker-swarm-network --ip 10.10.10.103 --restart always docker:18.09-dind
-docker run --privileged -itd --name worker1 --net docker-swarm-network --ip 10.10.10.104 --restart always docker:18.09-dind
-docker run --privileged -itd --name worker2 --net docker-swarm-network --ip 10.10.10.105 --restart always docker:18.09-dind
-docker run --privileged -itd --name worker3 --net docker-swarm-network --ip 10.10.10.106 --restart always docker:18.09-dind
+docker run --privileged -itd --name manager1 --hostname manager1 --net docker-swarm-network --ip 10.10.10.101 --restart always docker:18.09-dind
+docker run --privileged -itd --name manager2 --hostname manager2 --net docker-swarm-network --ip 10.10.10.102 --restart always docker:18.09-dind
+docker run --privileged -itd --name manager3 --hostname manager3 --net docker-swarm-network --ip 10.10.10.103 --restart always docker:18.09-dind
+docker run --privileged -itd --name worker1 --hostname worker1 --net docker-swarm-network --ip 10.10.10.104 --restart always docker:18.09-dind
+docker run --privileged -itd --name worker2 --hostname worker2 --net docker-swarm-network --ip 10.10.10.105 --restart always docker:18.09-dind
+docker run --privileged -itd --name worker3 --hostname worker3 --net docker-swarm-network --ip 10.10.10.106 --restart always docker:18.09-dind
 sleep 3
 docker cp daemon.json manager1:/etc/docker
 docker cp daemon.json manager2:/etc/docker
