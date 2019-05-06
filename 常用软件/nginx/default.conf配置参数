@@ -35,6 +35,7 @@ server {
     server_name  localhost;
 
     location / {
+        expires 1d;
         gzip on;
         gzip_min_length 1k;
         gzip_comp_level 1;
@@ -50,6 +51,7 @@ server {
 
     error_page   500 502 503 504  /50x.html;
     location = /50x.html {
+        expires 1d;
         gzip on;
         gzip_min_length 1k;
         gzip_comp_level 1;

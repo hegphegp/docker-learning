@@ -69,6 +69,12 @@ grails-core | proxy | RELEASE | https://maven.aliyun.com/repository/grails-core
         <url>https://maven.aliyun.com/repository/central</url>
     </mirror>
     <mirror>
+        <id>aliyun-jcenter</id>
+        <mirrorOf>central</mirrorOf>
+        <name>aliyun-jcenter</name>
+        <url>https://maven.aliyun.com/repository/jcenter</url>
+    </mirror>
+    <mirror>
         <id>nexus-aliyun</id>
         <mirrorOf>central</mirrorOf>
         <name>Nexus aliyun</name>
@@ -97,12 +103,6 @@ grails-core | proxy | RELEASE | https://maven.aliyun.com/repository/grails-core
         <mirrorOf>central</mirrorOf>
         <name>aliyun-gradle-plugin</name>
         <url>https://maven.aliyun.com/repository/gradle-plugin</url>
-    </mirror>
-    <mirror>
-        <id>aliyun-jcenter</id>
-        <mirrorOf>central</mirrorOf>
-        <name>aliyun-jcenter</name>
-        <url>https://maven.aliyun.com/repository/jcenter</url>
     </mirror>
     <mirror>
         <id>aliyun-spring</id>
@@ -148,11 +148,11 @@ grails-core | proxy | RELEASE | https://maven.aliyun.com/repository/grails-core
 ```
 repositories {
     mavenLocal()
-    maven{ url "https://maven.aliyun.com/repository/apache-snapshots"}
     maven{ url "https://maven.aliyun.com/repository/central"}
+    maven{ url "https://maven.aliyun.com/repository/jcenter"}
+    maven{ url "https://maven.aliyun.com/repository/apache-snapshots"}
     maven{ url "https://maven.aliyun.com/repository/google"}
     maven{ url "https://maven.aliyun.com/repository/gradle-plugin"}
-    maven{ url "https://maven.aliyun.com/repository/jcenter"}
     maven{ url "https://maven.aliyun.com/repository/spring"}
     maven{ url "https://maven.aliyun.com/repository/spring-plugin"}
     maven{ url "https://maven.aliyun.com/repository/public"}
