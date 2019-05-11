@@ -68,6 +68,18 @@ docker inspect 容器名 | grep "IPAddress" -n
 docker inspect -f '{{.Name}} - {{.NetworkSettings.IPAddress }}' $(docker ps -aq)
 ```
 
+#### 指定容器的hostname
+```
+# --hostname ：指定hostname;
+# docker run -itd --restart always --name redis --hostname=redis -p 6379:6379 redis:4.0.9-alpine
+docker run -itd --restart always --name redis --hostname redis -p 6379:6379 redis:4.0.9-alpine
+```
+
+#### 往容器的/etc/hosts里添加hosts
+```
+# --add-host ：指定往/etc/hosts添加的host
+docker run --restart always -itd --name hadoop1 --hostname hadoop1 --net hadoop-network --ip 10.2.2.1 --add-host hadoop2:10.2.2.2 --add-host hadoop3:10.2.2.3 hadoop:master
+```
 #### 通过docker创建网段，分配容器IP
 ```
 docker network rm docker-swarm-network
