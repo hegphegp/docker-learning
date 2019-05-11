@@ -23,18 +23,21 @@ tar -czvf postgres-idc.tar.gz postgres
 tar -zxvf dapeng.tar.gz -C /data/nginx/html
 ```
 
-### yum下载相关依赖包
+### yum下载软件离线安装包和依赖包
 ```
 mkdir -p /opt/packages/dockerRepo/18.06.1
 yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
 yum install --downloadonly --downloaddir=/opt/packages/dockerRepo/18.06.1 docker-ce-18.06.1.ce-3.el7.x86_64
-cd /opt/packages/dockerRepo/18.06.1
-ls
+```
 
-mkdir -p /opt/packages/mysqlRepo
-yum install --downloadonly --downloaddir=/opt/packages/mysqlRepo mysql
-cd /opt/packages/mysqlRepo
-ls
+##### 查看指定端口服务的PID
+```
+netstat -nlp | grep :8080 | awk '{print $7}' | awk -F"/" '{ print $1 }'
+```
+
+##### 关掉指定端口的服务
+```
+kill -9 $(netstat -nlp | grep :8080 | awk '{print $7}' | awk -F"/" '{ print $1 }')
 ```
 
 ### Linux查看服务监听的端口
@@ -51,19 +54,13 @@ netstat -ntpl # 等同于 netstat -antu | grep LISTEN  或者等同于  netstat 
 # tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      1557/sshd
 # tcp        0      0 127.0.0.1:6942          0.0.0.0:*               LISTEN      6211/java
 # tcp6       0      0 :::22                   :::*                    LISTEN      1557/sshd
-# tcp6       0      0 127.0.0.1:52057         :::*                    LISTEN      7648/java
-# tcp6       0      0 :::3306                 :::*                    LISTEN      4542/mysql
-# tcp6       0      0 :::34699                :::*                    LISTEN      7648/java
-
-# 关掉3306端口的服务进程
-kill -9 4542
 ```
 
-### Linux查看java进程开启的线程以及数量
+### Linux查看某个进程开启的线程以及数量
 ```
-# Linux查看java进程开启的线程
+# Linux查看某个进程开启的线程
 top -H -p {pid}
-# Linux查看java进程开启的线程数量
+# Linux查看某个进程开启的线程数量
 ps huH p  {pid}  | wc -l
 ```
 
@@ -74,9 +71,7 @@ grep -rni "netty" .
 grep -rn -i "netty" /opt/soft
 # grep指定搜索指定的后缀名
 grep -R -n -i --include="*.java" "netty" .
-grep -R -n -i --inssh-agent bash
-ssh-add id_rsa
-ssh root@121.201.65.133lude="*.java" "netty" /opt/soft
+grep -R -n -i --include="*.java" "netty" /opt/soft
 ```
 
 ### 被坑死过的命令
@@ -92,31 +87,18 @@ sed -ri 's/^#?PermitRootLogin\s+.*/PermitRootLogin yes/' /etc/ssh/sshd_config ;
 echo 3 > /proc/sys/vm/drop_caches
 ```
 
-#### shell脚本关闭指定端口的服务
+##### 查看前面n行或者最后n行数据
 ```
-#!/bin/bash
-
-serverPort=8888
-currentPath=$(cd "$(dirname "$0")"; pwd)
-echo "current path:"${currentPath}
-cd ${currentPath}
-
-# kill -9 $(netstat -nlp | grep :8080 | awk '{print $7}' | awk -F"/" '{ print $1 }')
-# shell脚本给变量赋值，等号两边不能有括号，否则死的时候武眼睇
-PID=$(netstat -nlp | grep :${serverPort} | awk '{print $7}' | awk -F"/" '{ print $1 }')
-if [ "" != "$PID" ]; then
-  echo "close service in port "${serverPort}
-  kill -9 $PID
-fi
-java -Xmx2560m -Xms256m -Xmn128m -Xss1m -jar ${currentPath}/icity-admin-service-1.0.0-SNAPSHOT.jar --server.port=${serverPort} >> ${currentPath}/log.log &
-
+tail -n 1000 /aa.txt  # 打印文件最后1000行的数据
+tail -n +1000 /aa.txt # 打印文件第1000行开始以后的内容
+head -n 1000 /aa.txt  # 打印前1000的内容
+sed -n '1000,3000p' filename  # 显示1000到300行的数据
 ```
 
 ### alpine apk 安装指定版本的软件
 ```
 apk add python2=2.7.14-r2
 ```
-
 
 ### Linux禁止删除文件夹
 
@@ -157,7 +139,8 @@ lsattr $PWD
 rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
 # 安装ELRepo
 rpm -Uvh http://www.elrepo.org/elrepo-release-7.0-3.el7.elrepo.noarch.rpm
-yum --disablerepo=\* --enablerepo=elrepo-kernel list kernel* # 查出来的仓库地址居然是香港的 hkg.mirror.rackspace.com 
+# yum --disablerepo=\* --enablerepo=elrepo-kernel list kernel* # 查询内核安装包列表
+yum list kernel*   # 查出来的仓库地址是香港的 hkg.mirror.rackspace.com 
 mkdir -p kernel-ml
 yum --enablerepo=elrepo-kernel install --downloadonly --downloaddir=kernel-ml kernel-ml-devel kernel-ml
 tar -czvf kernel-ml.tar.gz kernel-ml
@@ -166,4 +149,25 @@ tar -czvf kernel-ml.tar.gz kernel-ml
 awk -F\' '$1=="menuentry " {print $2}' /etc/grub2.cfg
 # 新安装的内核在列表中排第一位，把新安装的内核启动顺序设置为第一
 grub2-set-default 0
+```
+
+
+#### shell脚本关闭指定端口的服务
+```
+#!/bin/bash
+
+serverPort=8888
+currentPath=$(cd "$(dirname "$0")"; pwd)
+echo "current path:"${currentPath}
+cd ${currentPath}
+
+# kill -9 $(netstat -nlp | grep :8080 | awk '{print $7}' | awk -F"/" '{ print $1 }')
+# shell脚本给变量赋值，等号两边不能有括号，否则死的时候武眼睇
+PID=$(netstat -nlp | grep :${serverPort} | awk '{print $7}' | awk -F"/" '{ print $1 }')
+if [ "" != "$PID" ]; then
+  echo "close service in port "${serverPort}
+  kill -9 $PID
+fi
+java -Xmx2560m -Xms256m -Xmn128m -Xss1m -jar ${currentPath}/icity-admin-service-1.0.0-SNAPSHOT.jar --server.port=${serverPort} >> ${currentPath}/log.log &
+
 ```
