@@ -149,10 +149,7 @@ grails-core | proxy | RELEASE | https://maven.aliyun.com/repository/grails-core
 repositories {
     mavenLocal()
     maven{ url "https://maven.aliyun.com/repository/central"}
-<<<<<<< HEAD
-=======
     maven{ url "https://maven.aliyun.com/repository/jcenter"}
->>>>>>> f6e40ee903cf8e27b0a2d03c61c3e7beed7baecd
     maven{ url "https://maven.aliyun.com/repository/apache-snapshots"}
     maven{ url "https://maven.aliyun.com/repository/google"}
     maven{ url "https://maven.aliyun.com/repository/gradle-plugin"}
