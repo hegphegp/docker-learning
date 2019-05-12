@@ -117,6 +117,11 @@ wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 sudo dpkg -i google-chrome-stable_current_amd64.deb
 ```
 
+### 安装360浏览器，因为谷歌浏览器越来越严格了，不符合谷歌标准的视频网站看不了视频或者网页打不开，因此安装360浏览器，360没有这么严格
+```
+# 下载360浏览器的链接  https://bbs.360.cn/thread-15529293-1-1.html
+```
+
 ### 安装搜狗输入法
 ```
 # 去官网下载搜狗输入法  sogoupinyin_2.2.0.0108_amd64.deb
