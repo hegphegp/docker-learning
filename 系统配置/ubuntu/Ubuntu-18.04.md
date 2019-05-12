@@ -15,6 +15,25 @@ echo "deb http://mirrors.aliyun.com/ubuntu/ $(lsb_release -cs)-backports main re
 apt-get update && apt-get clean && apt-get autoclean && apt-get clean && apt-get autoremove
 ```
 
+### 安装python-3.7 (阿里源仓库有python3.7的安装包)
+```
+apt-get install python3.7-dev
+apt-get install python3.7
+apt-get install python3-pip
+
+# 设置python3.7为默认版本
+rm -rf /usr/bin/python
+ln -s /usr/bin/python3.6 /usr/bin/python
+
+# 在root用户下执行一次，在普通用户下执行一次
+mkdir -p ~/.pip
+echo "[global]" > ~/.pip/pip.conf
+echo "index-url=http://mirrors.aliyun.com/pypi/simple/" >> ~/.pip/pip.conf
+echo "[install]" >> ~/.pip/pip.conf
+echo "trusted-host=mirrors.aliyun.com" >> ~/.pip/pip.conf
+
+```
+
 ### 安装ssh
 ```
 # 查看是否已经安装ssh
