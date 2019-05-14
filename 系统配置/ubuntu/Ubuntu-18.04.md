@@ -17,13 +17,16 @@ apt-get update && apt-get clean && apt-get autoclean && apt-get clean && apt-get
 
 ### 安装python-3.7 (阿里源仓库有python3.7的安装包)
 ```
-apt-get install python3.7-dev
-apt-get install python3.7
-apt-get install python3-pip
+apt-get install -y python3.7-dev
+apt-get install -y python3.7
+apt-get install -y python3-pip
 
 # 设置python3.7为默认版本
 rm -rf /usr/bin/python
-ln -s /usr/bin/python3.6 /usr/bin/python
+ln -s /usr/bin/python3.7 /usr/bin/python
+
+wget https://bootstrap.pypa.io/get-pip.py
+python get-pip.py
 
 # 在root用户下执行一次，在普通用户下执行一次
 mkdir -p ~/.pip
