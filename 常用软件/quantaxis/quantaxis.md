@@ -43,7 +43,11 @@ docker-compose up -d qacron
 docker exec -it quantaxis_qacron_1 sh
 
 mkdir -p ~/.pip
-echo "[global]\nindex-url=http://mirrors.aliyun.com/pypi/simple/\n[install]\ntrusted-host=mirrors.aliyun.com" > ~/.pip/pip.conf
+echo "[global]" > ~/.pip/pip.conf
+echo "index-url=http://mirrors.aliyun.com/pypi/simple/" >> ~/.pip/pip.conf
+
+echo "[install]" >> ~/.pip/pip.conf
+echo "trusted-host=mirrors.aliyun.com" >> ~/.pip/pip.conf
 pip install pyecharts_snapshot
 pip install --upgrade pip
 
