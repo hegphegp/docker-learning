@@ -55,10 +55,19 @@
 ![avatar](imgs/挂载_003.png) 
 
 ```
-lsblk # 查看以挂载的分区
-df -hT  # 查看硬盘ext2、ext3、ext4、xfs类型
+lsblk            # 查看磁盘划分的分区
+df -hT           # 查看硬盘ext2、ext3、ext4、xfs类型
+df -T 磁盘名称    # 查看指定磁盘的文件类型
 ```
 
+```
+mkfs.ext4 /dev/sdb1
+# 若提示 -bash: mkfs.ext4: command not found  或者  mkfs.ext4: No such file or directory  ，请安装以下软件
+yum install e4fsprogs -y
+
+mkfs.ext4 /dev/sdb1
+
+```
 ### 给根目录扩容
 ```
 yum install lvm2

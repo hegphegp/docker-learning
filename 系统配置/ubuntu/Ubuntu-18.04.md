@@ -268,3 +268,9 @@ reboot
 sudo apt-get install xserver-xorg-input-all
 sudo apt-get install --reinstall xserver-xorg-input-all
 ```
+
+### 安装wine
+```
+sudo apt-add-repository --remove https://dl.winehq.org/wine-builds/ubuntu/
+sudo apt-add-repository "deb https://dl.winehq.org/wine-builds/ubuntu/ bionic main"
+```
