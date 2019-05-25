@@ -93,7 +93,7 @@ chmod +x /usr/local/bin/docker-compose
 
 ```
 
-### 卸载gedit(在公司电脑被坑死过很多次，几十行的文件替换后，再撤销替换，电脑直接卡死，只能拔电源线强制关机，害死人了)，安装notepadqq
+### 卸载gedit(被gedit坑死过很多次，几十行的文件替换后，再撤销回退，电脑直接卡死，只能拔电源线强制关机，害死人了，打开大文件直接卡死了)，安装notepadqq
 ```
 # 用root用户执行命令
 # 卸载 gedit
@@ -273,4 +273,9 @@ sudo apt-get install --reinstall xserver-xorg-input-all
 ```
 sudo apt-add-repository --remove https://dl.winehq.org/wine-builds/ubuntu/
 sudo apt-add-repository "deb https://dl.winehq.org/wine-builds/ubuntu/ bionic main"
+```
+
+### 安装C语言开发环境
+```
+apt-get install -y build-essential
 ```

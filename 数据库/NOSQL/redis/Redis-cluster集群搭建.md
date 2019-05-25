@@ -220,11 +220,10 @@ docker logs redis6
 
 docker run -itd --name redis-trib --restart always --net redis-network --ip 10.10.57.90 redis-trib:4.0.9 sh
 docker exec -it redis-trib sh
-# 挺无奈的现实,gem提供的官方redis工具,该工具设置redis连接的密码为空,所以集群的机器事先设置了密码的话,必须修改gem的redis的工具类,把密码写到工具类里面
-# sed -i 's:password => nil:password => "admin":g' /usr/local/bundle/gems/redis-4.0.1/lib/redis/client.rb ; 修改后发现创建集群时不起作用
-# 写 Redis.new(:host => @info[:host], :port => @info[:port], :timeout => 60) 这句替换的命令直接死人了,靠,都不知道哪些垃圾字符需要转义
-# 无尽的无奈和死过后的挣扎,命令终于可以了, 在sed命令中需要转义的字段有 . : [
-sed -i 's:Redis\.new(\:host => @info\[\:host], \:port => @info\[\:port], \:timeout => 60):Redis\.new(\:host => @info\[\:host], \:port => @info\[\:port], \:timeout => 60, \:password => "admin"):g' /usr/bin/redis-trib.rb
+# 挺无奈的现实,gem官方提供的redis工具,该工具设置redis连接的密码为空,所以集群的机器事先设置了密码的话,必须修改gem的redis的工具类,把密码写到工具类里面
+# sed -i 's|password => nil|password => "admin"|g' /usr/local/bundle/gems/redis-4.0.1/lib/redis/client.rb ; 修改后发现创建集群时不起作用
+# 无尽的无奈和死过后的挣扎,命令终于可以了, 在sed命令中需要转义的字段有 . [
+sed -i 's|Redis\.new(:host => @info\[:host], :port => @info\[:port], :timeout => 60)|Redis\.new(:host => @info\[:host], :port => @info\[:port], :timeout => 60, :password => "admin")|g' /usr/bin/redis-trib.rb
 redis-trib.rb create --replicas 1 10.10.57.101:6379 10.10.57.102:6379 10.10.57.103:6379 10.10.57.104:6379 10.10.57.105:6379 10.10.57.106:6379 
 
 

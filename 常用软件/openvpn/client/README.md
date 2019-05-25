@@ -6,8 +6,7 @@ mkdir -p openvpn-2.4.6-r3 && cd openvpn-2.4.6-r3
 echo '''''FROM alpine:3.8
 RUN echo "http://mirrors.aliyun.com/alpine/v3.8/main" > /etc/apk/repositories && \
     echo "http://mirrors.aliyun.com/alpine/v3.8/community" >> /etc/apk/repositories && \
-    apk --no-cache --no-progress update && \
-    apk --no-cache --no-progress add bash openvpn=2.4.6-r3 && \
+    apk update && apk --no-cache --no-progress add bash openvpn=2.4.6-r3 && \
     rm -rf /tmp/*
 
 COPY docker-entrypoint.sh /usr/bin

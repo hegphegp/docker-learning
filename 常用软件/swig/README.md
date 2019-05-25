@@ -13,6 +13,6 @@ echo "deb http://mirrors.aliyun.com/ubuntu/ $(lsb_release -cs)-backports main re
 apt-get update && apt-get install -y openjdk-8-jdk build-essential swig && apt-get clean && apt-get autoclean && apt-get clean && apt-get autoremove
 mkdir -p src/thosttraderapi wrap ctp
 
-# 网上写博客的那些人，都不知道他们自己有没有完整跑起来的，乱写博客，又不给出完整的代码，给的代码都是垃圾
+# 网上写博客的那些人，都不知道他们自己有没有完整跑起来的，不能参考
 
 ```

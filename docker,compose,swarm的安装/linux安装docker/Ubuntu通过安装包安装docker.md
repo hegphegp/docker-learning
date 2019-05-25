@@ -77,7 +77,7 @@ rm -rf /root/hgp/docker-ce/18.09/lock
 rm -rf /root/hgp/docker-ce/18.09/partial
 ```
 
-#### 下载软件安装包及其依赖( apt-get -d install 软件名=版本号 )，对这条命令很绝望，居然不能下载到指定目录，直接下载到/var/cache/apt/archives目录。白白浪费了半天生命各种百度，痛恨一切垃圾命令、工具和设计
+#### 下载软件安装包及其依赖( apt-get -d install 软件名=版本号 )，对这条命令很绝望，居然不能下载到指定目录，直接下载到/var/cache/apt/archives目录。
 ```
 # 列表显示版本库中可以安装的Docker CE
 apt-cache madison docker-ce
