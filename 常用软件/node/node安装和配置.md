@@ -36,20 +36,20 @@ npm -v
 
 ### 配置淘宝源
 ```
-npm config set registry https://registry.npm.taobao.org -verbose
+npm config set registry https://registry.npm.taobao.org --verbose
 ```
 
 ### 安装cnpm(用cnpm替代npm)
 ##### cnpm时阿里定制的命令行工具，用来代替默认的 npm
 ```
-npm install -g cnpm --registry=https://registry.npm.taobao.org -verbose
+npm install -g cnpm --registry=https://registry.npm.taobao.org --verbose
 cnpm -v
 ```
 
 ### 安装yarn(用yarn替代npm)
 ```
 cnpm install -g yarn
-# 或者 npm install -g yarn -verbose
+# 或者 npm install -g yarn --verbose
 ```
 
 ```
