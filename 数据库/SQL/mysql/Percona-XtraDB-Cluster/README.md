@@ -15,8 +15,8 @@
 * 创建集群的方式二: 不使用etcd，可以手动添加环境变量 CLUSTER_JOIN 添加集群
 
 #### docker镜像创建Percona-XtraDB-Cluster集群的方式有两种
-> 一种是使用etcd注册服务，动态创建集群
-> 一种是手动添加环境变量 CLUSTER_JOIN，手动创建集群
+* 一种是使用etcd注册服务，动态创建集群
+* 一种是手动添加环境变量 CLUSTER_JOIN，手动创建集群
 
 #### PerconaXtraDBCluster最少要求三个节点，后续的节点可以动态加入
 
@@ -75,7 +75,5 @@ docker logs -f --tail=1000 mysql-cluster-node01
 
 # 用navicat在其中一个节点创建一个数据库, 然后去另外的节点查看, 发现创建的数据库会同步到所有节点, 形成多主集群
 ```
-
-
 
 #### 官方提供了启动容器的start_node.sh脚本, 在github上面https://github.com/percona/percona-docker/blob/master/pxc-57/start_node.sh
