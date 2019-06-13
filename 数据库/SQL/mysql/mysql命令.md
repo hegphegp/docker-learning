@@ -42,7 +42,7 @@ mysqldump -h localhost -uroot -proot --all-databases > backupfile.sql
 # 备份多个数据库
 mysqldump -h localhost -uroot -proot --databases test mysql > backupfile.sql
 # 备份指定的表
-mysqldump -h localhost -user=root –password=root databasename table1 table2 > tables_file.sql
+mysqldump -h localhost -uroot -proot databasename table1 table2 > tables_file.sql
 # 只导出DDL建表语句
 mysqldump -h localhost -uroot -proot --all-databases --no-data > backupfile.sql
 # 备份到压缩文件

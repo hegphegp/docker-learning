@@ -48,6 +48,8 @@ echo "index-url=http://mirrors.aliyun.com/pypi/simple/" >> ~/.pip/pip.conf
 
 echo "[install]" >> ~/.pip/pip.conf
 echo "trusted-host=mirrors.aliyun.com" >> ~/.pip/pip.conf
+cat ~/.pip/pip.conf
+
 pip install pyecharts_snapshot
 pip install --upgrade pip
 
