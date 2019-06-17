@@ -1,0 +1,98 @@
+version: '3.3'
+
+# docker开启SQL日志，--general_log_file用绝对路时，发现失败了，没有在该路径生成日志文件
+# 查看日志 cat /var/lib/mysql/mysql-sql.log
+# 查看最后100行日志 tail -n 100 /var/lib/mysql/mysql-sql.log
+
+# 死亡的教训，docker-compose配置已存在的网络，下面的方法是正确的，网上的博客都是错误的，害死人的
+# networks:
+#   外部网络的名称:   # 必须是外部docker网卡的名称，被网上的博客害死了，白白浪费几个小时
+#     external: true
+
+# docker network create --subnet=192.168.77.0/24 --gateway=192.168.77.1 percona-xtradb-cluster-network
+services:
+  mysql-cluster-node01:
+    image: percona/percona-xtradb-cluster:5.7.25
+    container_name: mysql-cluster-node01
+    restart: always
+    environment:
+      - TZ=Asia/Shanghai
+      - CLUSTER_NAME=mysql-cluster
+      - MYSQL_ROOT_PASSWORD=password
+      - CMDARG=--character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci --default-time-zone=+8:00 --log-timestamps=SYSTEM --general_log=on --general_log_file=mysql-sql.log
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    networks:
+      percona-xtradb-cluster-network:
+        ipv4_address: 192.168.77.11
+
+  mysql-cluster-node02:
+    image: percona/percona-xtradb-cluster:5.7.25
+    container_name: mysql-cluster-node02
+    restart: always 
+    environment:
+      - TZ=Asia/Shanghai
+      - CLUSTER_NAME=mysql-cluster
+      - MYSQL_ROOT_PASSWORD=password
+      - CLUSTER_JOIN=mysql-cluster-node01
+      - CMDARG=--character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci --default-time-zone=+8:00 --log-timestamps=SYSTEM --general_log=on --general_log_file=mysql-sql.log
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    networks:
+      percona-xtradb-cluster-network:
+        ipv4_address: 192.168.77.12
+
+  mysql-cluster-node03:
+    image: percona/percona-xtradb-cluster:5.7.25
+    container_name: mysql-cluster-node03
+    restart: always
+    environment:
+      - TZ=Asia/Shanghai
+      - CLUSTER_NAME=mysql-cluster
+      - MYSQL_ROOT_PASSWORD=password
+      - CLUSTER_JOIN=mysql-cluster-node01
+      - CMDARG=--character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci --default-time-zone=+8:00 --log-timestamps=SYSTEM --general_log=on --general_log_file=mysql-sql.log
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    networks:
+      percona-xtradb-cluster-network:
+        ipv4_address: 192.168.77.13
+
+  mysql-cluster-node04:
+    image: percona/percona-xtradb-cluster:5.7.25
+    container_name: mysql-cluster-node04
+    restart: always
+    environment:
+      - TZ=Asia/Shanghai
+      - CLUSTER_NAME=mysql-cluster
+      - MYSQL_ROOT_PASSWORD=password
+      - CLUSTER_JOIN=mysql-cluster-node01
+      - CMDARG=--character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci --default-time-zone=+8:00 --log-timestamps=SYSTEM --general_log=on --general_log_file=mysql-sql.log
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    networks:
+      percona-xtradb-cluster-network:
+        ipv4_address: 192.168.77.14
+
+  mysql-cluster-node05:
+    image: percona/percona-xtradb-cluster:5.7.25
+    container_name: mysql-cluster-node05
+    restart: always
+    environment:
+      - TZ=Asia/Shanghai
+      - CLUSTER_NAME=mysql-cluster
+      - MYSQL_ROOT_PASSWORD=password
+      - CLUSTER_JOIN=mysql-cluster-node01
+      - CMDARG=--character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci --default-time-zone=+8:00 --log-timestamps=SYSTEM --general_log=on --general_log_file=mysql-sql.log
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    networks:
+      percona-xtradb-cluster-network:
+        ipv4_address: 192.168.77.15
+
+networks:
+  percona-xtradb-cluster-network:
+    external: true
+
+
+
