@@ -1,15 +1,15 @@
 version: '3.3'
 
+# 一个巨坑，配置了一个docker网络，然后把该名称网络删掉，再新建同名网络但是配置其他IP段，发现该名称网络还是用了之前的IP段，反复删除了很多次，发现都是用了旧的IP段，最后systemctl stop docker，再重启后，才用了新网段IP
 # docker开启SQL日志，--general_log_file用绝对路时，发现失败了，没有在该路径生成日志文件
 # 查看日志 cat /var/lib/mysql/mysql-sql.log
 # 查看最后100行日志 tail -n 100 /var/lib/mysql/mysql-sql.log
 
-# 死亡的教训，docker-compose配置已存在的网络，下面的方法是正确的，网上的博客都是错误的，害死人的
+# 死亡的教训，docker-compose引用已存在的网络，被网上的博客坑了
 # networks:
 #   外部网络的名称:   # 必须是外部docker网卡的名称，被网上的博客害死了，白白浪费几个小时
 #     external: true
 
-# docker network create --subnet=192.168.77.0/24 --gateway=192.168.77.1 percona-xtradb-cluster-network
 services:
   mysql-cluster-node01:
     image: percona/percona-xtradb-cluster:5.7.25
@@ -24,7 +24,7 @@ services:
       - /etc/localtime:/etc/localtime:ro
     networks:
       percona-xtradb-cluster-network:
-        ipv4_address: 192.168.77.11
+        ipv4_address: 172.16.17.11
 
   mysql-cluster-node02:
     image: percona/percona-xtradb-cluster:5.7.25
@@ -40,7 +40,7 @@ services:
       - /etc/localtime:/etc/localtime:ro
     networks:
       percona-xtradb-cluster-network:
-        ipv4_address: 192.168.77.12
+        ipv4_address: 172.16.17.12
 
   mysql-cluster-node03:
     image: percona/percona-xtradb-cluster:5.7.25
@@ -56,7 +56,7 @@ services:
       - /etc/localtime:/etc/localtime:ro
     networks:
       percona-xtradb-cluster-network:
-        ipv4_address: 192.168.77.13
+        ipv4_address: 172.16.17.13
 
   mysql-cluster-node04:
     image: percona/percona-xtradb-cluster:5.7.25
@@ -72,7 +72,7 @@ services:
       - /etc/localtime:/etc/localtime:ro
     networks:
       percona-xtradb-cluster-network:
-        ipv4_address: 192.168.77.14
+        ipv4_address: 172.16.17.14
 
   mysql-cluster-node05:
     image: percona/percona-xtradb-cluster:5.7.25
@@ -88,11 +88,24 @@ services:
       - /etc/localtime:/etc/localtime:ro
     networks:
       percona-xtradb-cluster-network:
-        ipv4_address: 192.168.77.15
+        ipv4_address: 172.16.17.15
 
 networks:
   percona-xtradb-cluster-network:
-    external: true
+    driver: bridge
+    ipam:
+      config:
+       - subnet: 172.16.17.0/24
 
+# docker exec -it mysql-cluster-node01 sh -c 'mysql -u root -ppassword -e "DROP DATABASE IF EXISTS walle; CREATE DATABASE walle DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci; SHOW DATABASES;"'
+# docker exec -it mysql-cluster-node02 sh -c 'mysql -u root -ppassword -e "SHOW DATABASES;"'
+# docker exec -it mysql-cluster-node03 sh -c 'mysql -u root -ppassword -e "SHOW DATABASES;"'
+# docker exec -it mysql-cluster-node04 sh -c 'mysql -u root -ppassword -e "SHOW DATABASES;"'
+# docker exec -it mysql-cluster-node05 sh -c 'mysql -u root -ppassword -e "SHOW DATABASES;"'
+
+# 使用外部定义的docker网络
+# networks:
+#   percona-xtradb-cluster-network:
+#     external: true
 
 
