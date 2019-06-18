@@ -100,6 +100,11 @@ sed -n '1000,3000p' filename  # 显示1000到300行的数据
 apk add python2=2.7.14-r2
 ```
 
+### Linux下iconv转换文件从GBK到UTF-8
+```
+iconv -f gbk -t utf-8 source-file -o target-file
+```
+
 ### Linux禁止删除文件夹
 
 * 在Ubuntu实验时，发现root用户可以chattr命令，普通用户加上sudo也可以使用chattr命令，普通用户直接输入chattr命令，Ubuntu不会提示没权限，提示了人看不懂含义的警告
