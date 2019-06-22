@@ -14,6 +14,7 @@ sudo apt-get update
 sudo apt-get install certbot 
 ```
 
+# 配置SSL证书时，一定先要 --dry-run 参数测试命令成功，为避免遇到操作次数的限制
 ##### Certbot生成证书的两种方式，一种方式是命令包含--webroot参数的，另外一种方式是命令包含--standalone参数的
 * 命令带--webroot参数的方式(不占用443端口进行校验吗)
 ```
@@ -53,7 +54,7 @@ certbot certonly --standalone -d example.com -d www.example.com
 ```
 mkdir -p /etc/letsencrypt
 mkdir -p /var/lib/letsencrypt
-# docker run -it --rm -p 443:443 -p 80:80 -v /etc/letsencrypt:/etc/letsencrypt -v /var/lib/letsencrypt:/var/lib/letsencrypt certbot/certbot:v0.26.1 certonly --standalone  --register-unsafely-without-email -d aaa.javafly.net
+# docker run -it --rm -p 443:443 -p 80:80 -v /etc/letsencrypt:/etc/letsencrypt -v /var/lib/letsencrypt:/var/lib/letsencrypt certbot/certbot:v0.26.1 certonly --standalone --register-unsafely-without-email -d aaa.javafly.net
 
 # 添加 --agree-tos 和 -n 非交互式
 docker run -it --rm -p 443:443 -p 80:80 -v /etc/letsencrypt:/etc/letsencrypt -v /var/lib/letsencrypt:/var/lib/letsencrypt certbot/certbot:v0.26.1 certonly --standalone -n --agree-tos -d aaa.javafly.net --register-unsafely-without-email
