@@ -196,6 +196,6 @@ chmod +x /usr/local/bin/docker-compose
 
 > #### 6.安装docker-machine
 ```
-curl -L https://mirrors.aliyun.com/docker-toolbox/linux/machine/0.15.0/docker-machine-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
+curl -L https://mirrors.aliyun.com/docker-toolbox/linux/machine/0.15.0/docker-machine-`uname -s`-`uname -m` > /usr/local/bin/docker-machine
 chmod +x /usr/local/bin/docker-machine
 ```
