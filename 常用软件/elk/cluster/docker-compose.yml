@@ -1,0 +1,52 @@
+version: '3.3'
+services:
+  elasticsearch:
+    restart: always
+    image: elasticsearch:7.1.1
+    container_name: elasticsearch
+    environment:
+      - discovery.type=single-node
+#       - ES_JAVA_OPTS="-Xms256m -Xmx256" # 教训，这样子写，启动直接抛错
+      - ES_JAVA_OPTS=-Xms256m -Xmx256m
+#     volumes:
+#       - ./data/esdata:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+      - 9300:9300
+    networks:
+      elk-network:
+        ipv4_address: 172.16.18.11
+
+  kibana:
+    restart: always
+    image: kibana:7.1.1
+    container_name: kibana
+    environment:
+      - elasticsearch.hosts=http://elasticsearch:9200
+    depends_on:
+      - elasticsearch
+    ports:
+      - 5601:5601
+    networks:
+      elk-network:
+        ipv4_address: 172.16.18.12
+
+  logstash:
+    restart: always
+    image: logstash:7.1.1
+    container_name: logstash
+    depends_on:
+      - elasticsearch
+    ports:
+      - 9600:9600
+      - 5044:5044
+    networks:
+      elk-network:
+        ipv4_address: 172.16.18.13
+
+networks:
+  elk-network:
+    driver: bridge
+    ipam:
+      config:
+       - subnet: 172.16.18.0/24
