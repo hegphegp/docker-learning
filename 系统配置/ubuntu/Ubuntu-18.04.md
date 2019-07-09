@@ -279,3 +279,33 @@ sudo apt-add-repository "deb https://dl.winehq.org/wine-builds/ubuntu/ bionic ma
 ```
 apt-get install -y build-essential
 ```
+
+
+### 禁用系统的 Ctrl+Alt+左箭头 和 Ctrl+Alt+右箭头 快捷键，网上说 Ctrl+Alt+箭头 的快捷键被 gnome3 占用了
+```
+# 查看组合键是否还被系统占用
+gsettings get org.gnome.desktop.wm.keybindings switch-to-workspace-left
+gsettings get org.gnome.desktop.wm.keybindings switch-to-workspace-right
+gsettings get org.gnome.desktop.wm.keybindings switch-to-workspace-up
+gsettings get org.gnome.desktop.wm.keybindings switch-to-workspace-down
+
+# 将 gnome3快捷键置空
+gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-left "[]"
+gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-right "[]"
+gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-up "[]"
+gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-down "[]"
+
+# 输入ROOT密码，在root模式下也设置禁用
+su -
+
+gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-left "[]"
+gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-right "[]"
+gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-up "[]"
+gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-down "[]"
+
+# 查看组合键是否还被系统占用
+gsettings get org.gnome.desktop.wm.keybindings switch-to-workspace-left
+gsettings get org.gnome.desktop.wm.keybindings switch-to-workspace-right
+gsettings get org.gnome.desktop.wm.keybindings switch-to-workspace-up
+gsettings get org.gnome.desktop.wm.keybindings switch-to-workspace-down
+```
