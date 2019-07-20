@@ -54,6 +54,7 @@
             * [shadowsocks的真实示例](常用软件/shadowsocks/真实示例.md)
         * [curl工具的使用](常用软件/curl/curl使用.md)
         * [keycloak开源的单点登录系统]()
+        * [centos7开启telnet远程登录](常用软件/telnet/telnet使用.md)
         * [zookeeper](常用软件/zookeeper/README.md)
             * [单节点](常用软件/zookeeper/singleNode/README.md)
         * [ELK]
