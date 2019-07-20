@@ -18,7 +18,6 @@ docker run -it --rm -p 443:443 -p 80:80 -v /home/hgp/000000000/etc/letsencrypt:/
 * --manual 表示手动安装插件，Certbot 有很多插件，不同的插件都可以申请证书，用户可以根据需要自行选择, 不要加这个参数, 因为自己不知道有什么插件
 * -d 为那些主机申请证书，如果是通配符，输入 *.xxxx.com (可以替换为你自己的域名)
 * --email 指定邮箱, 如果不想写邮箱, 可以使用 --register-unsafely-without-email 参数
-* 申请生成证书，如果不需要用邮箱 , 可以使用 register-unsafely-without-email 参数
 * -n 非交互式，因此 -n 与 --agree-tos 必须一起用
 * --agree-tos 同意服务协议
 * --server，Let’s Encrypt ACME v2 版本使用的服务器不同于 v1 版本，需要显式指定，v2版本生成的证书目录和v1版本完全不同，v2不往前兼容v1版本的证书，配符数字证书的 ACME V2 版 API 
@@ -51,7 +50,7 @@ server {
 * --preferred-challenges dns，使用 DNS 方式校验域名所有权 , 加了该参数 , 发现没有生成 /etc/letsencrypt/live/域名/fullchain.pem , /etc/letsencrypt/live/域名/privkey.pem , /etc/letsencrypt/live/域名/chain.pem 这些文件, 整个人都懵逼了
 
 
-##### 下面的内容可以忽略,下面的说明可能是错的, 因为笔者能力有限, 网上也没有博客详细介绍那个参数是什么意思, 网上的大牛也没有一边敲命令一边测试每个参数的截图
+##### 下面的内容可以忽略, 下面的说明可能是错的, 因为笔者能力有限, 网上也没有博客详细介绍那个参数是什么意思, 网上的大牛也没有一边敲命令一边测试每个参数的截图
 ##### Certbot生成证书的两种方式，一种方式是命令包含--webroot参数的，另外一种方式是命令包含--standalone参数的
 * 命令带--webroot参数的方式(不占用443端口进行校验吗,--standalone参数方式会使用443端口进行验证)
 ```
@@ -73,8 +72,8 @@ certbot certonly --standalone -d example.com -d www.example.com --dry-run
 * certonly 表示安装模式，Certbot 有安装模式和验证模式两种类型的插件。
 * --manual 表示手动安装插件，Certbot 有很多插件，不同的插件都可以申请证书，用户可以根据需要自行选择
 * -d 为那些主机申请证书，如果是通配符，输入 *.xxxx.com (可以替换为你自己的域名)
-* --email 指定账户
-* -n 非交互式，因此 -n 与 --agree-tos 必须公用
+* --email 指定邮箱, 如果不想写邮箱, 可以使用 --register-unsafely-without-email 参数
+* -n 非交互式，因此 -n 与 --agree-tos 必须一起用
 * --agree-tos 同意服务协议
 * --server，Let’s Encrypt ACME v2 版本使用的服务器不同于 v1 版本，需要显式指定，v2版本生成的证书目录和v1版本完全不同，v2不往前兼容v1版本的证书，配符数字证书的 ACME V2 版 API 
 
@@ -86,7 +85,7 @@ certbot certonly --standalone -d example.com -d www.example.com --dry-run
 
 #### 通过certbot/certbot的docker镜像生成证书
 * 先生成两个文件夹 /etc/letsencrypt ，/var/lib/letsencrypt
-* certbot/certbot的官方dockerfile文件的ENTRYPOINT已经写死了容器的运行命令，不能用cmd后面接sh命令
+* certbot/certbot的官方dockerfile文件的ENTRYPOINT已经写死了容器的运行命令，不能在cmd后面接sh命令
 ```
 mkdir -p /etc/letsencrypt
 mkdir -p /var/lib/letsencrypt
