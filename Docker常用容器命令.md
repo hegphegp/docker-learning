@@ -57,6 +57,10 @@ docker run -itd --restart always -e TZ=Asia/Shanghai -v /etc/localtime:/etc/loca
 docker run -itd --restart always -e TZ=Asia/Shanghai -v /etc/localtime:/etc/localtime:ro -p 5432:5432 -v /cityworks/postgresql:/var/lib/postgresql/data --name postgres -e POSTGRES_USER=sde -e POSTGRES_PASSWORD=postgres postgres:9.6.1
 # MySQL启动命令
 docker run -itd --restart always -e TZ=Asia/Shanghai -v /etc/localtime:/etc/localtime:ro --name mysql -e MYSQL_ROOT_PASSWORD=root -p 3306:3306 mysql:5.7.3
+
+# nginx命令
+docker run -itd --restart always --name nginx -e TZ=Asia/Shanghai -p 80:80 -v /etc/localtime:/etc/localtime:ro -v /var/log/nginx/:/var/log/nginx -v /home/kk/nginx/conf/nginx.conf:/etc/nginx/nginx.conf -v /usr/share/nginx/html/:/usr/share/nginx/html nginx:1.15.4-alpine
+
 ```
 
 #### 通过docker inspect常用名命令
