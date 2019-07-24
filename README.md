@@ -37,7 +37,7 @@
         * [nginx]
             * [参数说明](常用软件/nginx/参数说明/nginx.conf配置文件参数自定义划分为三类.md)
             * [docker-compose创建nginx请求转发的例子](常用软件/nginx/example001/docker-compose.yml)
-            * [阿里云web页面设置二级域名的步骤](常用软件/nginx/nginx.md)
+            * [在阿里云控制台web页面设置域名与公网IP的映射](常用软件/nginx/在阿里云控制台web页面设置域名与公网IP的映射.md)
             * [ssl证书申请](常用软件/nginx/申请证书/ssl证书申请.md)
         * [cfssl生成证书的命令说明](常用软件/cfssl/详细说明.md)
             * [添加cfssl给nginx生成自签名证书的例子](常用软件/cfssl/nginx-examples/example001/README.md)
