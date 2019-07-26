@@ -4,11 +4,77 @@
 
 ### Certbot申请SSL证书时，一定先要加 --dry-run 参数，避免遇到操作次数的限制
 * 使用 --standalone 方式, 需要占用 443端口, 所以先把443端口的服务停止
+
+### 真正可以直接运行生成证书的命令
 ```
-# docker run -it --rm -p 443:443 -p 80:80 -v /home/hgp/000000000/etc/letsencrypt:/etc/letsencrypt -v /home/hgp/000000000/var/lib/letsencrypt:/var/lib/letsencrypt certbot/certbot:v0.26.1 certonly --standalone -n --agree-tos --register-unsafely-without-email --server https://acme-v02.api.letsencrypt.org/directory -d aaa.javafly.net
+docker run -it --rm -p 443:443 -p 80:80 -v /home/hgp/000000000/etc/letsencrypt:/etc/letsencrypt -v /home/hgp/000000000/var/lib/letsencrypt:/var/lib/letsencrypt certbot/certbot:v0.26.1 certonly --standalone -n --agree-tos --register-unsafely-without-email --server https://acme-v02.api.letsencrypt.org/directory -d aaa.javafly.net
+```
+###### 生成单个证书
+```
 rm -rf /home/hgp/000000000/etc/letsencrypt /home/hgp/000000000/var/lib/letsencrypt
 mkdir -p /home/hgp/000000000/etc/letsencrypt /home/hgp/000000000/var/lib/letsencrypt
-docker run -it --rm -p 443:443 -p 80:80 -v /home/hgp/000000000/etc/letsencrypt:/etc/letsencrypt -v /home/hgp/000000000/var/lib/letsencrypt:/var/lib/letsencrypt certbot/certbot:v0.26.1 certonly --standalone -n --agree-tos --register-unsafely-without-email --server https://acme-v02.api.letsencrypt.org/directory -d aaa.javafly.net --dry-run
+docker run -it --rm -p 443:443 -p 80:80 -v /home/hgp/000000000/etc/letsencrypt:/etc/letsencrypt -v /home/hgp/000000000/var/lib/letsencrypt:/var/lib/letsencrypt certbot/certbot:v0.26.1 certonly --standalone -n --agree-tos --register-unsafely-without-email --server https://acme-v02.api.letsencrypt.org/directory -d aaa.javafly.net
+
+docker run -itd --restart always --name nginx -e TZ=Asia/Shanghai -p 80:80 -p 443:443 -v /etc/localtime:/etc/localtime:ro -v /home/hgp/000000000/etc/letsencrypt:/etc/letsencrypt  nginx:1.15.4-alpine
+
+# 不能连续copy,否则会翻车
+
+tee aaa.javafly.net.conf <<-'EOF'
+server {
+      listen       80;
+      listen       443 ssl;
+      server_name  aaa.javafly.net;
+
+      ssl_certificate /etc/letsencrypt/live/aaa.javafly.net/fullchain.pem;
+      ssl_certificate_key /etc/letsencrypt/live/aaa.javafly.net/privkey.pem;
+      ssl_trusted_certificate /etc/letsencrypt/live/aaa.javafly.net/chain.pem;
+
+      location / {
+            root   /usr/share/nginx/html;
+            index  index.html index.htm;
+      }
+}
+EOF
+docker cp aaa.javafly.net.conf nginx:/etc/nginx/conf.d
+docker restart nginx
+ # 然后通过域名访问根路径  https://aaa.javafly.net
+```
+
+###### 生成多个证书
+```
+rm -rf /home/hgp/000000000/etc/letsencrypt /home/hgp/000000000/var/lib/letsencrypt
+mkdir -p /home/hgp/000000000/etc/letsencrypt /home/hgp/000000000/var/lib/letsencrypt
+docker run -it --rm -p 443:443 -p 80:80 -v /home/hgp/000000000/etc/letsencrypt:/etc/letsencrypt -v /home/hgp/000000000/var/lib/letsencrypt:/var/lib/letsencrypt certbot/certbot:v0.26.1 certonly  --webroot --agree-tos   --register-unsafely-without-email -d aaa.javafly.net -d bbb.javafly.net -d ccc.javafly.net --dry-run
+
+docker run -itd --restart always --name nginx -e TZ=Asia/Shanghai -p 80:80 -p 443:443 -v /etc/localtime:/etc/localtime:ro -v /home/hgp/000000000/etc/letsencrypt:/etc/letsencrypt  nginx:1.15.4-alpine
+
+# 不能连续copy,否则会翻车
+
+tee aaa.javafly.net.conf <<-'EOF'
+server {
+      listen       80;
+      listen       443 ssl;
+      server_name  aaa.javafly.net;
+
+      ssl_certificate /etc/letsencrypt/live/aaa.javafly.net/fullchain.pem;
+      ssl_certificate_key /etc/letsencrypt/live/aaa.javafly.net/privkey.pem;
+      ssl_trusted_certificate /etc/letsencrypt/live/aaa.javafly.net/chain.pem;
+
+      location / {
+            root   /usr/share/nginx/html;
+            index  index.html index.htm;
+      }
+}
+EOF
+cp aaa.javafly.net.conf  bbb.javafly.net.conf
+cp aaa.javafly.net.conf  ccc.javafly.net.conf
+sed -i 's|aaa.javafly.net|bbb.javafly.net|g' bbb.javafly.net.conf
+sed -i 's|aaa.javafly.net|ccc.javafly.net|g' ccc.javafly.net.conf
+docker cp aaa.javafly.net.conf nginx:/etc/nginx/conf.d
+docker cp bbb.javafly.net.conf nginx:/etc/nginx/conf.d
+docker cp ccc.javafly.net.conf nginx:/etc/nginx/conf.d
+docker restart nginx
+ # 然后通过域名访问根路径  https://aaa.javafly.net   https://bbb.javafly.net    https://ccc.javafly.net 
 ```
 
 * 使用 --dry-run 参数 不会生成 /etc/letsencrypt/live/域名/fullchain.pem , /etc/letsencrypt/live/域名/privkey.pem , /etc/letsencrypt/live/域名/chain.pem 这些文件
