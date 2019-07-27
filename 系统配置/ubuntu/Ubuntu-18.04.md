@@ -222,6 +222,12 @@ sudo apt-get install -y smplayer
 sudo apt-get install -y vlc
 ```
 
+### 安装kazam录屏软件
+```
+sudo apt-get install kazam
+# 启动软件
+kazam
+```
 ### 安装 audacious 音乐播放器
 ```
 sudo apt-get install audacious
