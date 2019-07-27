@@ -1,9 +1,10 @@
-# 无尽绝望
+# 在阿里云控制台web页面设置域名与公网IP的映射
 
-# nginx命令
-
-### 为什么docker运行nginx需要 "deamon off"
-### 为什么docker-compose运行nginx需要 "deamon off"
+### 为什么docker，docker-compose覆盖cmd命令运行nginx容器做代理时，要加上 "deamon off" ，否则容器运行不起来
+* 用docker命令运行nginx容器，如果在命令行覆盖了镜像的cmd命令，一定要在命令行加上 "deamon off" ，否则nginx容器运行不起来
+```
+docker run -itd --name ccc-domain -p 8083:80 nginx:1.13.12-alpine sh -c 'nginx -g "daemon off;"'
+```
 
 ##### 阿里云web页面设置二级域名的步骤
 [阿里云后台页面https://home.console.aliyun.com](https://home.console.aliyun.com)  
@@ -13,48 +14,10 @@
 步骤02  
 ![avatar](imgs/阿里云设置二级域名的步骤02.png)
 
-### 在阿里云域名生成,必须关闭防火墙
+### 在阿里云服务器用cerbot生成证书前，先关闭firewalld防火墙，同时在阿里云控制台web页把80,443端口加入到策略组，避免防火墙造成困扰
 ```
 systemctl stop firewalld.service
 systemctl disable firewalld.service
-```
-
-```
-# certbot certonly --standalone --email admin@email.com -d aaa.example.com
-# certbot certonly --standalone --email admin@email.com -d aaa.example.com -d bbb.example.com -d ccc.example.com -d ddd.example.com
-# certbot certonly --webroot -w /usr/share/nginx/html/ --email admin@email.com -d aaa.example.com
-
-docker run -it --rm -p 443:443 -p 80:80 -v ${PWD}/letsencrypt:/etc/letsencrypt certbot/certbot certonly --standalone --email admin@email.com -d aaa.example.com
-docker run -it --rm -p 443:443 -p 80:80 -v ${PWD}/letsencrypt:/etc/letsencrypt certbot/certbot certonly --standalone --email admin@email.com -d bbb.example.com
-docker run -it --rm -p 443:443 -p 80:80 -v ${PWD}/letsencrypt:/etc/letsencrypt certbot/certbot certonly --standalone --email admin@email.com -d ccc.example.com
-docker run -it --rm -p 443:443 -p 80:80 -v ${PWD}/letsencrypt:/etc/letsencrypt certbot/certbot certonly --standalone --email admin@email.com -d aaa.example.com -d bbb.example.com -d ccc.example.com
-```
-ssl证书(https证书)
-```
-# docker加了 sh -c 参数后,可以执行多条命令
-# docker stop aaa-domain
-# docker stop bbb-domain
-# docker stop ccc-domain
-# docker rm aaa-domain
-# docker rm bbb-domain
-# docker rm ccc-domain
-# docker run -itd --name aaa-domain -p 8081:80 httpd:2.2.32-alpine sh -c "echo '<h1>aaaaaaaaaa.domain</h1>' > /usr/local/apache2/htdocs/index.html && httpd-foreground"
-# docker run -itd --name bbb-domain -p 8082:80 httpd:2.2.32-alpine sh -c "echo '<h1>bbbbbbbbbb.domain</h1>' > /usr/local/apache2/htdocs/index.html && httpd-foreground"
-# docker run -itd --name ccc-domain -p 8083:80 httpd:2.2.32-alpine sh -c "echo '<h1>cccccccccc.domain</h1>' > /usr/local/apache2/htdocs/index.html && httpd-foreground"
-
-
-docker stop aaa-domain
-docker stop bbb-domain
-docker stop ccc-domain
-docker rm aaa-domain
-docker rm bbb-domain
-docker rm ccc-domain
-docker run -itd --name aaa-domain -p 8081:80 nginx:1.13.12-alpine sh -c 'echo "<h1>aaaaaaaaaa.domain</h1>" > /usr/share/nginx/html/index.html && nginx -g "daemon off;"'
-docker run -itd --name bbb-domain -p 8082:80 nginx:1.13.12-alpine sh -c 'echo "<h1>bbbbbbbbbb.domain</h1>" > /usr/share/nginx/html/index.html && nginx -g "daemon off;"'
-docker run -itd --name ccc-domain -p 8083:80 nginx:1.13.12-alpine sh -c 'echo "<h1>cccccccccc.domain</h1>" > /usr/share/nginx/html/index.html && nginx -g "daemon off;"'
-
-docker run -itd --name mutil-domain -p 80:80 -p 443:443 nginx:1.13.12-alpine sh -c 'echo "<h1>cccccccccc.domain</h1>" > /usr/share/nginx/html/index.html && nginx -g "daemon off;"'
-
 ```
 
 ```
