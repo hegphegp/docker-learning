@@ -82,6 +82,10 @@
             * [mysql的多主集群Percona-XtraDB-Cluster的介绍](数据库/SQL/mysql/Percona-XtraDB-Cluster/README.md)
             * [mysql的多主集群Percona-XtraDB-Cluster的docker-compose脚本](数据库/SQL/mysql/Percona-XtraDB-Cluster/手动加入集群方式/docker-compose.yml)
             * [mysql的多主集群Percona-XtraDB-Cluster的docker搭建](数据库/SQL/mysql/Percona-XtraDB-Cluster/集群创建的命令.md)
+    * [网络]
+        * [ssh内网穿透]
+            * [例子1](网络/ssh内网穿透/场景1/内网穿透.md)
+            * [例子2](网络/ssh内网穿透/场景2/内网穿透.md)
     * [运维]
         * [ansible]
             * [ansible入门例子](运维/ansible/入门例子/README.md)
