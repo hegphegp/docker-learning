@@ -66,6 +66,11 @@ ps huH p  {pid}  | wc -l
 
 ### Linux搜索指定路径下的文件内容
 ```
+# 查找子孙文件夹下包含指定字符串的文件名
+grep   -lr   'import'   .
+# 要将当前目录的下面所有文件中的old都修改成new，这样做：
+sed   -i   's|old|new|g'   `grep   'old'   -rl   .`
+
 # grep加-i参数不区分大小写
 grep -rni "netty" .
 grep -rn -i "netty" /opt/soft
