@@ -235,6 +235,10 @@ sudo apt-get install audacious
 # 解决乱码的操作，在导航菜单依次点击  文件 -> 设置 -> 播放列表 -> 备用字符编码 -> 输入 GBK
 ```
 
+### 安装Ubuntu远程连接windows的软件rdesktop
+```
+sudo apt-get install rdesktop
+```
 
 ### 安装shadowsocks，Ubuntu-18.04(2019年4月2号，此时还没有Ubuntu-18.04-bionic的版本，只能用Ubuntu-16.04-xenial版本)，适用于Ubuntu-16.04
 ```
