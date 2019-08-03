@@ -49,6 +49,7 @@
         * [shell命令行操作json的工具-jq](常用软件/shell命令行操作json的工具-jq/使用说明.md)
         * [shell命令行操作xml的工具-xmlstarlet](常用软件/shell命令行操作xml的工具-xmlstarlet)
         * [nexus3仓库的配置](仓库/搭建本地仓库/nexus3/nexus3.md)
+        * [squid的配置](常用软件/squid/squid.md)
         * [jhipster命令](常用软件/jhipster/jhipster命令.md)s
         * [shadowsocks]()
             * [shadowsocks命令参数](常用软件/shadowsocks/shadowsocks.md)
