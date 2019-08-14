@@ -3,8 +3,23 @@
   remote_user: root
   gather_facts: no
   tasks:
-    - name: test_playbook
-      shell: mkdir -p /tmo && touch /tmp/test.txt
+#    - name: rm /root/.ssh folders
+#      file:
+#        path: /root/.ssh
+#        state: absent
 
-    - name: see_folder
-      shell: ls /tmp
+    - name: check /root/.ssh/id_rsa exists
+      shell: ls /root/.ssh/id_rsa
+      ignore_errors: True
+      register: result
+
+    - name: make /root/.ssh/id_rsa
+      shell: rm -rf /root/.ssh && ssh-keygen -t rsa -N '' -f /root/.ssh/id_rsa -q
+      when: result|failed
+
+    - name: deliver id_rsa.pub
+      authorized_key:
+        user: root
+        key: "{{ lookup('file', '/root/.ssh/id_rsa.pub') }}"
+        state: present
+        exclusive: no

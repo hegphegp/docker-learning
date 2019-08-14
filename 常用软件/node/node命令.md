@@ -31,7 +31,7 @@ npm get registry
 # npm config --help
 # npm config list --json
 # 设置成淘宝镜像
-npm config set registry http://registry.npm.taobao.org/
+npm config set registry https://registry.npm.taobao.org
 
 # 1.查询Yarn当前配置的镜像
 yarn config get registry
@@ -39,5 +39,5 @@ yarn config get registry
 # yarn config --help
 # yarn config list
 # 设置成淘宝镜像
-yarn config set registry http://registry.npm.taobao.org/
+yarn config set registry https://registry.npm.taobao.org/
 ```

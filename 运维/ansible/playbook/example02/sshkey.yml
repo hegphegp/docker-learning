@@ -1,0 +1,38 @@
+---
+- hosts: web
+  remote_user: root
+  gather_facts: no
+  tasks:
+    - name: close ssh check # 关闭初次ssh询问
+      shell: sed -i "s|^.*StrictHostKeyChecking.*$|   StrictHostKeyChecking no|g" /etc/ssh/ssh_config
+
+    - name: check ssh-keygen is generatd # 检测 ssh-key 是否已存在
+      shell: ls ~/.ssh/id_rsa ~/.ssh/id_rsa.pub
+      ignore_errors: True
+      register: result
+
+    - name: generating public/private rsa key pair # 使用ssh-key产生公钥和私钥
+      shell: mkdir -p ~/.ssh && ssh-keygen -t rsa -b 2048 -N '' -f /{{ ansible_user }}/.ssh/id_rsa
+      when: result|failed                   # when: result|succeeded
+
+    # - local_action: wait_for port=22 host="{{ ansible_ssh_host | default(inventory_hostname) }}" search_regex=OpenSSH delay=10    #等待openssh启动，10s检查一次
+    - name: rm and mkdir -p /tmp/sshKey/ # 删除临时公钥目录
+      local_action: command /bin/sh -c "rm -rf /tmp/sshKey/ && mkdir -p /tmp/sshKey/"
+      run_once: true
+
+    - name: fetch copy          # 将其它机器公钥拷贝到ansible所在的主机，而不是其他ansible客户端拷贝到当前ansible的客户端
+      fetch: src=/{{ ansible_user }}/.ssh/id_rsa.pub dest=/tmp/sshKey/{{ ansible_ssh_host }}-{{ ansible_user }}-id_rsa.pub flat=yes # 不加flat=yes时，ansible-playbook的fetch命令没有拷贝文件过来，只拷贝了文件夹，并且全路径拷贝过来，但是文件夹里面没任何文件，世纪巨坑，多少人命都填不了的坑
+
+    - name: ls -l /tmp/sshKey/ | grep "^-" | wc -l # 查看公钥的个数，用于后面判断是否执行公钥推送，如果个数为零，不推送
+      local_action: command /bin/sh -c "ls -l /tmp/sshKey/ | grep '^-' | wc -l"
+      run_once: true
+      register: result
+
+    - name: append file authorized_keys.log # 公钥拼接成一个文件
+      local_action: command /bin/sh -c "cat /tmp/sshKey/* >>/tmp/sshKey/authorized_keys.log"   # local_action表示命令在当前宿主机运行
+      when: result.stdout != "0"
+      run_once: true
+
+    - name: copy authorized_keys # 将处理好的公钥分发给各个机器上
+      copy: src=/tmp/sshKey/authorized_keys.log dest=/{{ ansible_user }}/.ssh/authorized_keys mode=0600
+      when: result.stdout != "0"

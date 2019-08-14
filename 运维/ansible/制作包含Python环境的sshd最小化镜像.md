@@ -14,7 +14,7 @@ RUN apk add --update openssh python2
 RUN echo "root:${ROOT_PASSWORD}" | chpasswd ; \
     sed -ri "s/^#?PermitRootLogin\s+.*/PermitRootLogin yes/" /etc/ssh/sshd_config ; \
     sed -ri "s/UsePAM yes/#UsePAM yes/g" /etc/ssh/sshd_config ; \
-    ssh-keygen -A ; \
+    ssh-keygen -t rsa -N '' -f /root/.ssh/id_rsa -q ; \
     rm -rf /var/cache/apk/* /tmp/*
 
 EXPOSE 22
