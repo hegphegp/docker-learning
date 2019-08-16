@@ -6,8 +6,8 @@
 * yum可以在 /etc/yum.conf配置文件里面设置 proxy=http://ip:port 通过代理下载安装软件
 
 ```
-mkdir -p squid && squid
-tee default.conf <<-'EOF'
+mkdir -p squid
+cat > squid/squid.conf <<EOF
 acl SSL_ports port 443
 acl Safe_ports port 80      # http
 acl Safe_ports port 21      # ftp
@@ -28,21 +28,21 @@ http_access allow localhost
 http_port 3128
 cache_dir ufs /var/spool/squid 100 16 256
 coredump_dir /var/spool/squid
-refresh_pattern ^ftp:		1440	20%	10080
-refresh_pattern ^gopher:	1440	0%	1440
-refresh_pattern -i (/cgi-bin/|\?) 0	0%	0
-refresh_pattern (Release|Packages(.gz)*)$      0       20%     2880
-refresh_pattern .		0	20%	4320
+refresh_pattern ^ftp:     1440  20%  10080
+refresh_pattern ^gopher:     1440  0%  1440
+refresh_pattern -i (/cgi-bin/|\?)  0  0%  0
+refresh_pattern (Release|Packages(.gz)*)$     0  20%  2880
+refresh_pattern .     0  20%  4320
 
 
 cache_mem 64 MB 
 maximum_object_size 4 MB 
 access_log /var/log/squid/access.log 
 http_access allow all
-
 EOF
 
-docker run --name squid -itd --restart=always -p 3128:3128 -v `pwd`/squid.conf:/etc/squid/squid.conf sameersbn/squid:3.5.27-2
+
+docker run --name squid -itd --restart=always -p 3128:3128 -v `pwd`/squid/squid.conf:/etc/squid/squid.conf sameersbn/squid:3.5.27-2
 # 查看日志 
 curl -x localhost:3128 http://www.baidu.com
 curl -x localhost:3128 https://www.baidu.com
