@@ -1,7 +1,17 @@
+### 导入官方的kernel仓库配置参数,发现内核软件都是从香港下载的,国内没有墙香港的网络,下载速度不慢
+```
+# 载入公钥
+rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
+# 安装ELRepo
+rpm -Uvh http://www.elrepo.org/elrepo-release-7.0-3.el7.elrepo.noarch.rpm
+yum --disablerepo=\* --enablerepo=elrepo-kernel list kernel* # 查询内核安装包列表
+yum list kernel*   # 查出来的仓库地址是香港的 hkg.mirror.rackspace.com 
+```
+
 ### 国内终于有kernel镜像源，由中科大提供的
 * 先在在这个地址查询最新的内核版本：http://mirror.rc.usf.edu/compute_lock/elrepo/kernel/el7/x86_64/RPMS/
 ```
-cat > /etc/yum.repos.d/elrepo.repo << EOF
+cat > /etc/yum.repos.d/elrepo.repo << "EOF"
 [elrepo]
 name=ELRepo.org Community Enterprise Linux Repository – el7
 baseurl=https://mirrors.ustc.edu.cn/elrepo/elrepo/el7/$basearch/
