@@ -143,14 +143,46 @@ lsattr $PWD
 # --------------e--- /当前路径/workspace      # 输出结果
 ```
 
-#### 获取kernel-ml离线安装包
+#### 获取kernel-ml离线安装包(内终于有kernel镜像源，由中科大提供的)
 ```
 # 载入公钥
-rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
+# rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
 # 安装ELRepo
-rpm -Uvh http://www.elrepo.org/elrepo-release-7.0-3.el7.elrepo.noarch.rpm
+# rpm -Uvh http://www.elrepo.org/elrepo-release-7.0-3.el7.elrepo.noarch.rpm
 # yum --disablerepo=\* --enablerepo=elrepo-kernel list kernel* # 查询内核安装包列表
-yum list kernel*   # 查出来的仓库地址是香港的 hkg.mirror.rackspace.com 
+# yum list kernel*   # 查出来的仓库地址是香港的 hkg.mirror.rackspace.com 
+cat > /etc/yum.repos.d/elrepo.repo << "EOF"
+[elrepo]
+name=ELRepo.org Community Enterprise Linux Repository – el7
+baseurl=https://mirrors.ustc.edu.cn/elrepo/elrepo/el7/$basearch/
+enabled=1
+gpgcheck=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-elrepo.org
+protect=0
+[elrepo-testing]
+name=ELRepo.org Community Enterprise Linux Testing Repository – el7
+baseurl=https://mirrors.ustc.edu.cn/elrepo/testing/el7/$basearch/
+enabled=1
+gpgcheck=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-elrepo.org
+protect=0
+[elrepo-kernel]
+name=ELRepo.org Community Enterprise Linux Kernel Repository – el7
+baseurl=https://mirrors.ustc.edu.cn/elrepo/kernel/el7/$basearch/
+enabled=1
+gpgcheck=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-elrepo.org
+protect=0
+[elrepo-extras]
+name=ELRepo.org Community Enterprise Linux Extras Repository – el7
+baseurl=https://mirrors.ustc.edu.cn/elrepo/extras/el7/$basearch/
+enabled=1
+gpgcheck=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-elrepo.org
+protect=0
+EOF
+
+
 mkdir -p kernel-ml
 yum --enablerepo=elrepo-kernel install --downloadonly --downloaddir=kernel-ml kernel-ml-devel kernel-ml
 tar -czvf kernel-ml.tar.gz kernel-ml
