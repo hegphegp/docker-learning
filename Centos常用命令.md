@@ -100,6 +100,13 @@ head -n 1000 /aa.txt  # 打印前1000的内容
 sed -n '1000,3000p' filename  # 显示1000到300行的数据
 ```
 
+### 访问nginx时，nginx提示403，日志打印没权限的解决方法
+```
+# chown -R 用户名 .
+# chmod -R 655 .
+chmod -R 655 目录
+```
+
 ### alpine apk 安装指定版本的软件
 ```
 apk add python2=2.7.14-r2
