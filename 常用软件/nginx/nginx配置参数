@@ -1,0 +1,313 @@
+#### default.conf配置参数
+
+```
+# 开启gzip
+gzip on;
+
+# 启用gzip压缩的最小文件，小于设置值的文件将不会压缩
+gzip_min_length 1k;
+
+# gzip 压缩级别，1-9，数字越大压缩的越好，也越占用CPU时间，后面会有详细说明
+gzip_comp_level 5;
+
+# 进行压缩的文件类型。javascript有多种形式。其中的值可以在 mime.types 文件中找到。
+
+gzip_types text/plain application/javascript application/x-javascript text/css application/xml text/javascript application/x-httpd-php image/bmp application/x-bmp image/x-ms-bmp application/vnd.ms-fontobject font/ttf font/opentype font/x-woff;
+
+# 是否在http header中添加Vary: Accept-Encoding，建议开启
+gzip_vary on;
+
+# 禁用IE 6 gzip
+gzip_disable "MSIE [1-6]\.";
+
+# 设置压缩所需要的缓冲区大小 
+gzip_buffers 32 4k;
+
+# 设置gzip压缩针对的HTTP协议版本
+# gzip_http_version 1.0;
+```
+
+
+#### default.conf 的完整例子
+```
+server {
+    listen       80;
+    server_name  localhost;
+
+    location /test-params {
+        default_type "text/html;charset=utf-8";
+        return 200 "<html><p>aaaaaaaaaaaaaa</p></html>";
+    }
+
+    location /examples {
+        proxy_pass http://ip:port;
+        proxy_set_header Host                 $host:$server_port;  # 转发后端口别忘了
+        proxy_set_header X-Real-IP            $remote_addr;
+        proxy_set_header X-Forwarded-For      $proxy_add_x_forwarded_for;
+        proxy_set_header HTTP_X_FORWARDED_FOR $remote_addr;    # 关键句
+        proxy_set_header X-Forwarded-Proto    $scheme;
+    }
+
+    location / {
+        expires 1d;
+        gzip on;
+        gzip_min_length 1k;
+        gzip_comp_level 1;
+        gzip_types text/plain application/javascript application/x-javascript text/css application/xml text/javascript application/x-httpd-php image/bmp application/x-bmp image/x-ms-bmp application/vnd.ms-fontobject font/ttf font/opentype font/x-woff;
+        gzip_vary on;
+        gzip_disable "MSIE [1-6]\.";
+        gzip_buffers 32 4k;
+#        gzip_http_version 1.0;
+#		gzip_types text/plain application/x-javascript application/javascript text/css application/xml text/javascript application/x-httpd-php image/jpeg image/gif image/png;
+        root   /usr/share/nginx/html;
+        index  index.html index.htm;
+    }
+
+    error_page   500 502 503 504  /50x.html;
+    location = /50x.html {
+        expires 1d;
+        gzip on;
+        gzip_min_length 1k;
+        gzip_comp_level 1;
+        gzip_types text/plain application/javascript application/x-javascript text/css application/xml text/javascript application/x-httpd-php image/bmp application/x-bmp image/x-ms-bmp application/vnd.ms-fontobject font/ttf font/opentype font/x-woff;
+        gzip_vary on;
+        gzip_disable "MSIE [1-6]\.";
+        gzip_buffers 32 4k;
+#        gzip_http_version 1.0;
+        root   /usr/share/nginx/html;
+    }
+
+}
+```
+
+
+##### nginx内置变量
+```
+内置变量存放在  ngx_http_core_module 模块中，变量的命名方式和apache 服务器变量是一致的。总而言之，这些变量代表着客户端请求头的内容，例如$http_user_agent, $http_cookie, 等等。下面是nginx支持的所有内置变量：
+$arg_name：请求中的的参数名，即“?”后面的arg_name=arg_value形式的arg_name
+$args：请求中的参数值
+$binary_remote_addr：客户端地址的二进制形式, 固定长度为4个字节
+$body_bytes_sent：传输给客户端的字节数，响应头不计算在内；这个变量和Apache的mod_log_config模块中的“%B”参数保持兼容
+$bytes_sent：传输给客户端的字节数 (1.3.8, 1.2.5)
+$connection：TCP连接的序列号 (1.3.8, 1.2.5)
+$connection_requests：TCP连接当前的请求数量 (1.3.8, 1.2.5)
+$content_length：“Content-Length” 请求头字段
+$content_type：“Content-Type” 请求头字段
+$cookie_name：cookie名称
+$document_root：当前请求的文档根目录或别名
+$document_uri：同 $uri
+$host：优先级如下：HTTP请求行的主机名>”HOST”请求头字段>符合请求的服务器名
+$hostname：主机名
+$http_name：匹配任意请求头字段； 变量名中的后半部分“name”可以替换成任意请求头字段，如在配置文件中需要获取http请求头：“Accept-Language”，那么将“－”替换为下划线，大写字母替换为小写，形如：$http_accept_language即可。
+$https：如果开启了SSL安全模式，值为“on”，否则为空字符串。
+$is_args：如果请求中有参数，值为“?”，否则为空字符串。
+$limit_rate：用于设置响应的速度限制，详见 limit_rate。
+$msec：当前的Unix时间戳 (1.3.9, 1.2.6)
+$nginx_version：nginx版本
+$pid：工作进程的PID
+$pipe：如果请求来自管道通信，值为“p”，否则为“.” (1.3.12, 1.2.7)
+$proxy_protocol_addr：获取代理访问服务器的客户端地址，如果是直接访问，该值为空字符串。(1.5.12)
+$query_string：同 $args
+$realpath_root：当前请求的文档根目录或别名的真实路径，会将所有符号连接转换为真实路径。
+$remote_addr：客户端地址
+$remote_port：客户端端口
+$remote_user：用于HTTP基础认证服务的用户名
+$request：代表客户端的请求地址
+$request_body：客户端的请求主体，此变量可在location中使用，将请求主体通过proxy_pass, fastcgi_pass, uwsgi_pass, 和 scgi_pass传递给下一级的代理服务器。
+$request_body_file：将客户端请求主体保存在临时文件中。文件处理结束后，此文件需删除。如果需要之一开启此功能，需要设置client_body_in_file_only。如果将次文件传递给后端的代理服务器，需要禁用request body，即设置proxy_pass_request_body off，fastcgi_pass_request_body off, uwsgi_pass_request_body off, or scgi_pass_request_body off 。
+$request_completion：如果请求成功，值为”OK”，如果请求未完成或者请求不是一个范围请求的最后一部分，则为空。
+$request_filename：当前连接请求的文件路径，由root或alias指令与URI请求生成。
+$request_length：请求的长度 (包括请求的地址, http请求头和请求主体) (1.3.12, 1.2.7)
+$request_method：HTTP请求方法，通常为“GET”或“POST”
+$request_time：处理客户端请求使用的时间 (1.3.9, 1.2.6); 从读取客户端的第一个字节开始计时。
+$request_uri：这个变量等于包含一些客户端请求参数的原始URI，它无法修改，请查看$uri更改或重写URI，不包含主机名，例如：”/cnphp/test.php?arg=freemouse”。
+$scheme：请求使用的Web协议, “http” 或 “https”
+$sent_http_name：可以设置任意http响应头字段； 变量名中的后半部分“name”可以替换成任意响应头字段，如需要设置响应头Content-length，那么将“－”替换为下划线，大写字母替换为小写，形如：$sent_http_content_length 4096即可
+$server_addr：服务器端地址，需要注意的是：为了避免访问linux系统内核，应将ip地址提前设置在配置文件中。
+$server_name：服务器名，www.cnphp.info
+$server_port：服务器端口
+$server_protocol：服务器的HTTP版本, 通常为 “HTTP/1.0” 或 “HTTP/1.1”
+$status：HTTP响应代码 (1.3.2, 1.2.2)
+$tcpinfo_rtt, $tcpinfo_rttvar, $tcpinfo_snd_cwnd, $tcpinfo_rcv_space：客户端TCP连接的具体信息
+$time_iso8601：服务器时间的ISO 8610格式 (1.3.12, 1.2.7)
+$time_local：服务器时间（LOG Format 格式） (1.3.12, 1.2.7)
+$uri：请求中的当前URI(不带请求参数，参数位于$args)，可以不同于浏览器传递的$request_uri的值，它可以通过内部重定向，或者使用index指令进行修改，$uri不包含主机名，如 "/foo/bar.html"
+```
+
+```
+docker stop nginx 
+docker rm nginx
+docker run -itd --restart always --name nginx -e TZ=Asia/Shanghai -p 10080:80 -v /etc/localtime:/etc/localtime:ro nginx:1.16.0-alpine
+
+tee nginx.conf <<-'EOF'
+
+user  nginx;
+worker_processes  auto;
+
+error_log  /var/log/nginx/error.log warn;
+pid        /var/run/nginx.pid;
+
+
+events {
+    worker_connections  1024;
+}
+
+
+http {
+    include       /etc/nginx/mime.types;
+    default_type  application/octet-stream;
+
+    log_format  main  '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n'
+                      'remote_addr                 =====>>>> $remote_addr                 \n'
+                      'proxy_add_x_forwarded_for   =====>>>> $proxy_add_x_forwarded_for   \n'
+                      'http_host                   =====>>>> $http_host                   \n'
+                      'scheme                      =====>>>> $scheme                      \n'
+                      'remote_addr                 =====>>>> $remote_addr                 \n'
+                      'remote_user                 =====>>>> $remote_user                 \n'
+                      'time_local                  =====>>>> $time_local                  \n'
+                      'request                     =====>>>> $request                     \n'
+                      'status                      =====>>>> $status                      \n'
+                      'body_bytes_sent             =====>>>> $body_bytes_sent             \n'
+                      'http_referer                =====>>>> $http_referer                \n'
+                      'http_user_agent             =====>>>> $http_user_agent             \n'
+                      'http_x_forwarded_for        =====>>>> $http_x_forwarded_for        \n'
+                      'uri                         ====>>>>> $uri                         \n'
+                      'arg_name                    ====>>>>> $arg_name                    \n'
+                      'args                        ====>>>>> $args                        \n'
+                      'binary_remote_addr          ====>>>>> $binary_remote_addr          \n'
+                      'body_bytes_sent             ====>>>>> $body_bytes_sent             \n'
+                      'bytes_sent                  ====>>>>> $bytes_sent                  \n'
+                      'connection                  ====>>>>> $connection                  \n'
+                      'connection_requests         ====>>>>> $connection_requests         \n'
+                      'content_length              ====>>>>> $content_length              \n'
+                      'content_type                ====>>>>> $content_type                \n'
+                      'cookie_name                 ====>>>>> $cookie_name                 \n'
+                      'document_root               ====>>>>> $document_root               \n'
+                      'document_uri                ====>>>>> $document_uri                \n'
+                      'host                        ====>>>>> $host                        \n'
+                      'hostname                    ====>>>>> $hostname                    \n'
+                      'http_name                   ====>>>>> $http_name                   \n'
+                      'https                       ====>>>>> $https                       \n'
+                      'is_args                     ====>>>>> $is_args                     \n'
+                      'limit_rate                  ====>>>>> $limit_rate                  \n'
+                      'msec                        ====>>>>> $msec                        \n'
+                      'nginx_version               ====>>>>> $nginx_version               \n'
+                      'pid                         ====>>>>> $pid                         \n'
+                      'pipe                        ====>>>>> $pipe                        \n'
+                      'proxy_protocol_addr         ====>>>>> $proxy_protocol_addr         \n'
+                      'query_string                ====>>>>> $query_string                \n'
+                      'realpath_root               ====>>>>> $realpath_root               \n'
+                      'remote_addr                 ====>>>>> $remote_addr                 \n'
+                      'remote_port                 ====>>>>> $remote_port                 \n'
+                      'remote_user                 ====>>>>> $remote_user                 \n'
+                      'request                     ====>>>>> $request                     \n'
+                      'request_body                ====>>>>> $request_body                \n'
+                      'request_body_file           ====>>>>> $request_body_file           \n'
+                      'request_completion          ====>>>>> $request_completion          \n'
+                      'request_filename            ====>>>>> $request_filename            \n'
+                      'request_length              ====>>>>> $request_length              \n'
+                      'request_method              ====>>>>> $request_method              \n'
+                      'request_time                ====>>>>> $request_time                \n'
+                      'request_uri                 ====>>>>> $request_uri                 \n'
+                      'scheme                      ====>>>>> $scheme                      \n'
+                      'sent_http_name              ====>>>>> $sent_http_name              \n'
+                      'server_addr                 ====>>>>> $server_addr                 \n'
+                      'server_name                 ====>>>>> $server_name                 \n'
+                      'server_port                 ====>>>>> $server_port                 \n'
+                      'server_protocol             ====>>>>> $server_protocol             \n'
+                      'status                      ====>>>>> $status                      \n'
+                      'tcpinfo_rtt                 ====>>>>> $tcpinfo_rtt                 \n'
+                      'tcpinfo_rttvar              ====>>>>> $tcpinfo_rttvar              \n'
+                      'tcpinfo_snd_cwnd            ====>>>>> $tcpinfo_snd_cwnd            \n'
+                      'tcpinfo_rcv_space           ====>>>>> $tcpinfo_rcv_space           \n'
+                      'time_iso8601                ====>>>>> $time_iso8601                \n'
+                      'time_local                  ====>>>>> $time_local                  \n'
+                      '<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n\n\n\n\n\n\n\n\n';
+
+
+    access_log  /var/log/nginx/access.log  main;
+
+    sendfile        on;
+    #tcp_nopush     on;
+
+    keepalive_timeout  65;
+
+    #gzip  on;
+
+    include /etc/nginx/conf.d/*.conf;
+}
+EOF
+
+docker cp nginx.conf nginx:/etc/nginx
+docker restart nginx
+```
+
+#### 上面nginx的配置日志输出的是
+```
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+remote_addr                 =====>>>> 192.168.0.100                 
+proxy_add_x_forwarded_for   =====>>>> 192.168.0.100   
+http_host                   =====>>>> 192.168.0.100:10080                   
+scheme                      =====>>>> http                      
+remote_addr                 =====>>>> 192.168.0.100                 
+remote_user                 =====>>>> -                 
+time_local                  =====>>>> 20/Aug/2019:22:26:02 +0800                  
+request                     =====>>>> GET / HTTP/1.1                     
+status                      =====>>>> 200                      
+body_bytes_sent             =====>>>> 612             
+http_referer                =====>>>> -                
+http_user_agent             =====>>>> Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.100 Safari/537.36             
+http_x_forwarded_for        =====>>>> -        
+uri                         ====>>>>> /index.html                         
+arg_name                    ====>>>>> -                    
+args                        ====>>>>> -                        
+binary_remote_addr          ====>>>>> \xC0\xA8\x00d          
+body_bytes_sent             ====>>>>> 612             
+bytes_sent                  ====>>>>> 850                  
+connection                  ====>>>>> 1                  
+connection_requests         ====>>>>> 1         
+content_length              ====>>>>> -              
+content_type                ====>>>>> -                
+cookie_name                 ====>>>>> -                 
+document_root               ====>>>>> /usr/share/nginx/html               
+document_uri                ====>>>>> /index.html                
+host                        ====>>>>> 192.168.0.100                        
+hostname                    ====>>>>> 4bdad96e955a                    
+http_name                   ====>>>>> -                   
+https                       ====>>>>>                        
+is_args                     ====>>>>>                      
+limit_rate                  ====>>>>> 0                  
+msec                        ====>>>>> 1566311162.337                        
+nginx_version               ====>>>>> 1.16.0               
+pid                         ====>>>>> 6                         
+pipe                        ====>>>>> .                        
+proxy_protocol_addr         ====>>>>>          
+query_string                ====>>>>> -                
+realpath_root               ====>>>>> /usr/share/nginx/html               
+remote_addr                 ====>>>>> 192.168.0.100                 
+remote_port                 ====>>>>> 50440                 
+remote_user                 ====>>>>> -                 
+request                     ====>>>>> GET / HTTP/1.1                     
+request_body                ====>>>>> -                
+request_body_file           ====>>>>> -           
+request_completion          ====>>>>> OK          
+request_filename            ====>>>>> /usr/share/nginx/html/index.html            
+request_length              ====>>>>> 489              
+request_method              ====>>>>> GET              
+request_time                ====>>>>> 0.000                
+request_uri                 ====>>>>> /                 
+scheme                      ====>>>>> http                      
+sent_http_name              ====>>>>> -              
+server_addr                 ====>>>>> 172.17.0.6                 
+server_name                 ====>>>>> localhost                 
+server_port                 ====>>>>> 80                 
+server_protocol             ====>>>>> HTTP/1.1             
+status                      ====>>>>> 200                      
+tcpinfo_rtt                 ====>>>>> 81                 
+tcpinfo_rttvar              ====>>>>> 47              
+tcpinfo_snd_cwnd            ====>>>>> 10            
+tcpinfo_rcv_space           ====>>>>> 14600           
+time_iso8601                ====>>>>> 2019-08-20T22:26:02+08:00                
+time_local                  ====>>>>> 20/Aug/2019:22:26:02 +0800                  
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+```

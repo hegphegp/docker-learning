@@ -20,9 +20,9 @@ systemctl stop firewalld.service
 systemctl disable firewalld.service
 ```
 
-```
-nginx内置变量
 
+##### nginx内置变量
+```
 内置变量存放在  ngx_http_core_module 模块中，变量的命名方式和apache 服务器变量是一致的。总而言之，这些变量代表着客户端请求头的内容，例如$http_user_agent, $http_cookie, 等等。下面是nginx支持的所有内置变量：
 $arg_name：请求中的的参数名，即“?”后面的arg_name=arg_value形式的arg_name
 $args：请求中的参数值
@@ -62,7 +62,7 @@ $request_method：HTTP请求方法，通常为“GET”或“POST”
 $request_time：处理客户端请求使用的时间 (1.3.9, 1.2.6); 从读取客户端的第一个字节开始计时。
 $request_uri：这个变量等于包含一些客户端请求参数的原始URI，它无法修改，请查看$uri更改或重写URI，不包含主机名，例如：”/cnphp/test.php?arg=freemouse”。
 $scheme：请求使用的Web协议, “http” 或 “https”
-$sent_http_name：可以设置任意http响应头字段； 变量名中的后半部分“name”可以替换成任意响应头字段，如需要设置响应头Content-length，那么将“－”替换为下划线，大写字母替换为小写，形如：$sent_http_content_length 4096即可。
+$sent_http_name：可以设置任意http响应头字段； 变量名中的后半部分“name”可以替换成任意响应头字段，如需要设置响应头Content-length，那么将“－”替换为下划线，大写字母替换为小写，形如：$sent_http_content_length 4096即可
 $server_addr：服务器端地址，需要注意的是：为了避免访问linux系统内核，应将ip地址提前设置在配置文件中。
 $server_name：服务器名，www.cnphp.info
 $server_port：服务器端口
@@ -71,5 +71,5 @@ $status：HTTP响应代码 (1.3.2, 1.2.2)
 $tcpinfo_rtt, $tcpinfo_rttvar, $tcpinfo_snd_cwnd, $tcpinfo_rcv_space：客户端TCP连接的具体信息
 $time_iso8601：服务器时间的ISO 8610格式 (1.3.12, 1.2.7)
 $time_local：服务器时间（LOG Format 格式） (1.3.12, 1.2.7)
-$uri：请求中的当前URI(不带请求参数，参数位于$args)，可以不同于浏览器传递的$request_uri的值，它可以通过内部重定向，或者使用index指令进行修改，$uri不包含主机名，如”/foo/bar.html”。
+$uri：请求中的当前URI(不带请求参数，参数位于$args)，可以不同于浏览器传递的$request_uri的值，它可以通过内部重定向，或者使用index指令进行修改，$uri不包含主机名，如 "/foo/bar.html"
 ```
