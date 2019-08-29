@@ -11,8 +11,17 @@ echo "deb http://mirrors.aliyun.com/ubuntu/ $(lsb_release -cs)-backports main re
 # 下面这句一定要运行，否则会认为国内node加速下载地址是不可信，导致不在国内加速器下载最新版本
 curl -s https://deb.nodesource.com/gpgkey/nodesource.gpg.key | sudo apt-key add -
 
+# 安装 8.X版本
 echo "deb https://mirrors.tuna.tsinghua.edu.cn/nodesource/deb_8.x $(lsb_release -cs) main" > /etc/apt/sources.list.d/nodesource.list
 echo "deb-src https://mirrors.tuna.tsinghua.edu.cn/nodesource/deb_8.x $(lsb_release -cs) main" >> /etc/apt/sources.list.d/nodesource.list
+cat /etc/apt/sources.list.d/nodesource.list 
+apt-get update
+apt-get install nodejs
+
+
+# 安装 10.X版本
+echo "deb https://mirrors.tuna.tsinghua.edu.cn/nodesource/deb_10.x $(lsb_release -cs) main" > /etc/apt/sources.list.d/nodesource.list
+echo "deb-src https://mirrors.tuna.tsinghua.edu.cn/nodesource/deb_10.x $(lsb_release -cs) main" >> /etc/apt/sources.list.d/nodesource.list
 cat /etc/apt/sources.list.d/nodesource.list 
 apt-get update
 apt-get install nodejs
