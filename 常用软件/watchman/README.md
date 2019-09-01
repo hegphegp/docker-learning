@@ -10,4 +10,5 @@ git checkout v4.9.0
 ./configure --openssldir=/usr/local/openssl
 make
 sudo make install
+watchman -v
 ```
