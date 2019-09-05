@@ -7,7 +7,7 @@ git clone https://gitee.com/hegp/watchman.git
 cd watchman
 git checkout v4.9.0
 ./autogen.sh
-./configure --openssldir=/usr/local/openssl
+./configure
 make
 sudo make install
 watchman -v
