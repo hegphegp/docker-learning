@@ -210,34 +210,15 @@ docker logs redis6
 
 docker run -itd --name redis-trib --restart always --net redis-network --ip 10.10.57.90 hegp/redis-trib:4.0.9-alpine sh
 docker exec -it redis-trib sh
-# 挺无奈的现实,gem官方提供的redis工具,该工具设置redis连接的密码为空,如果集群的机器事先设置了密码的话,必须修改gem的redis的工具类,把密码写到工具类里面
-# sed -i 's|password => nil|password => "admin"|g' /usr/local/bundle/gems/redis-4.0.1/lib/redis/client.rb ; 修改后发现创建集群时不起作用
-# 无尽的无奈和死过后的挣扎,命令终于可以了, 在sed命令中需要转义的字段有 . [
-sed -i 's|Redis\.new(:host => @info\[:host], :port => @info\[:port], :timeout => 60)|Redis\.new(:host => @info\[:host], :port => @info\[:port], :timeout => 60, :password => "admin")|g' /usr/bin/redis-trib.rb
+#gem提供的redis工具设置了redis连接密码为空，如果redis集群事先设置了密码，必须修改gem的redis的工具的连接密码
+# 修改 /usr/local/bundle/gems/redis-4.0.1/lib/redis/client.rb  第15行的密码参数
+sed -i 's|password => nil|password => "密码"|g' /usr/local/bundle/gems/redis-4.0.1/lib/redis/client.rb ; # sed替换密码，修改后就可以连接集群了
 redis-trib.rb create --replicas 1 10.10.57.101:6379 10.10.57.102:6379 10.10.57.103:6379 10.10.57.104:6379 10.10.57.105:6379 10.10.57.106:6379 
 
-
-redis-trib的各种命令(博客:https://blog.csdn.net/huwei2003/article/details/50973967)
-1) create命令:创建集群
-2) check命令:检查集群状态的命令，没有其他参数，只需要选择一个集群中的一个节点即可
+# redis-trib的各种命令(博客:https://blog.csdn.net/huwei2003/article/details/50973967)
+# 1) create命令:创建集群
+# 2) check命令:检查集群状态的命令，没有其他参数，只需要选择一个集群中的一个节点即可
 redis-trib.rb check 10.10.57.101:6379
-3) info命令:用来查看集群的信息，没有其他参数，只需要选择一个集群中的一个节点即可
+# 3) info命令:用来查看集群的信息，没有其他参数，只需要选择一个集群中的一个节点即可
 redis-trib.rb info 10.10.57.101:6379
-```
-
-#### 若集群设置了密码，下面二者改其一
-* gem install redis:4.0.1 设置的redis连接密码为空，需要修改
-* redis-4.0.9.tar.gz 自带的 redis-trib.rb 脚本设置redis的密码为空，需要修改
-
-###### 修改 gem install redis:4.0.1 的连接密码是最简单的
-###### 修改 redis-4.0.9.tar.gz 自带的 redis-trib.rb 脚本 的连接密码比较复杂，直接忽略
-```
-# gem提供的redis工具设置了redis连接密码为空，如果redis集群事先设置了密码，必须修改gem的redis的工具类的密码
-# sed -i 's|password => nil|password => "admin"|g' /usr/local/bundle/gems/redis-4.0.1/lib/redis/client.rb ; 修改后就可以连接集群了
-# redis-trib.rb create --replicas 1 10.10.57.101:6379 10.10.57.102:6379 10.10.57.103:6379 10.10.57.104:6379 10.10.57.105:6379 10.10.57.106:6379 
-
-
-# 修改redis-trib文件中redis的连接密码， 用sed命令修改需要转义的字段有 . [
-sed -i 's|Redis\.new(:host => @info\[:host], :port => @info\[:port], :timeout => 60)|Redis\.new(:host => @info\[:host], :port => @info\[:port], :timeout => 60, :password => "admin")|g' /usr/bin/redis-trib.rb
-redis-trib.rb create --replicas 1 10.10.57.101:6379 10.10.57.102:6379 10.10.57.103:6379 10.10.57.104:6379 10.10.57.105:6379 10.10.57.106:6379 
 ```
