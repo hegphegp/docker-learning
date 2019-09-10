@@ -1,0 +1,74 @@
+version: '3.6'
+
+services:
+  consul1:
+    image: consul:1.6.0
+    container_name: consul1
+    restart: always
+    networks: 
+      - consul
+    command: agent -server -client=0.0.0.0 -bootstrap-expect=3 -node=consul1
+
+  consul2:
+    image: consul:1.6.0
+    container_name: consul2
+    networks: 
+      - consul
+    restart: always
+    command: agent -server -client=0.0.0.0 -retry-join=consul1 -node=consul2
+  
+  consul3:
+    image: consul:1.6.0
+    container_name: consul3
+    networks: 
+      - consul
+    restart: always
+    command: agent -server -client=0.0.0.0 -retry-join=consul1 -node=consul3
+  
+  consul4:
+    image: consul:1.6.0
+    container_name: consul4
+    networks: 
+      - consul
+    restart: always
+    ports:
+      - 8500:8500
+    command: agent -client=0.0.0.0 -retry-join=consul1 -ui -node=client1
+  
+  consul5:
+    image: consul:1.6.0
+    container_name: consul5
+    networks: 
+      - consul
+    restart: always
+    command: agent -server -client=0.0.0.0 -bootstrap-expect=3 -node=consul5 -datacenter=dc2
+  
+  consul6:
+    image: consul:1.6.0
+    container_name: consul6
+    networks: 
+      - consul
+    restart: always
+    command: agent -server -client=0.0.0.0 -retry-join=consul5 -node=consul6 -datacenter=dc2
+  
+  consul7:
+    image: consul:1.6.0
+    container_name: consul7
+    networks: 
+      - consul
+    restart: always
+    command: agent -server -client=0.0.0.0 -retry-join=consul5 -node=consul7 -datacenter=dc2
+  
+  consul8:
+    image: consul:1.6.0
+    container_name: consul8
+    networks: 
+      - consul
+    restart: always
+    ports:
+      - 8501:8500
+    command: agent -client=0.0.0.0 -retry-join=consul5 -ui -node=client2
+
+
+networks:
+  consul:
