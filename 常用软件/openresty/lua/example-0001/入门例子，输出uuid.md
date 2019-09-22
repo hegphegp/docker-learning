@@ -9,10 +9,18 @@ server {
     listen       8082;
     server_name  localhost;
 
-   location / {
-            set_by_lua_file $res /usr/local/openresty/nginx/lua/example-0001/uuid.lua;
-            echo $res;
-        }
+   location /uuid {
+        default_type text/html;
+        set_by_lua_file $res /usr/local/openresty/nginx/lua/example-0001/uuid.lua;
+        echo $res;
+    }
+
+    location /hello-world {
+        default_type text/html;
+        content_by_lua '
+            ngx.say("<p>hello, world</p>")
+        ';
+    }
 }
 EOF
 
@@ -42,5 +50,10 @@ return guid()
 EOF
 
 /usr/local/openresty/nginx/sbin/nginx -s reload
-curl localhost:8082
+curl localhost:8082/uuid
+curl localhost:8082/hello-world
+
+apt-get install -y apache2-utils
+ab -c10 -n500 http://localhost:8082/hello-world 
+
 ```
