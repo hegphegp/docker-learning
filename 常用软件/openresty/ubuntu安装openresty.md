@@ -91,5 +91,3 @@ server {
 EOF
 
 ```
-
-/usr/local/openresty/nginx/nginx -t
