@@ -54,6 +54,6 @@ curl localhost:8082/uuid
 curl localhost:8082/hello-world
 
 apt-get install -y apache2-utils
-ab -c10 -n500 http://localhost:8082/hello-world 
+ab -c100 -n5000 http://localhost:8082/hello-world 
 
 ```
