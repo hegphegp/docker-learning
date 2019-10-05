@@ -7,7 +7,7 @@
 cp /etc/apk/repositories /etc/apk/repositories-back
 echo "http://mirrors.aliyun.com/alpine/v3.4/main" > /etc/apk/repositories
 echo "http://mirrors.aliyun.com/alpine/v3.4/community" >> /etc/apk/repositories
-cat /etc/apk/repositories-back >> /etc/apk/repositories
+# cat /etc/apk/repositories-back >> /etc/apk/repositories
 apk update
 ```
 
@@ -16,7 +16,7 @@ apk update
 cp /etc/apk/repositories /etc/apk/repositories-back
 echo "http://mirrors.aliyun.com/alpine/v3.7/main" > /etc/apk/repositories
 echo "http://mirrors.aliyun.com/alpine/v3.7/community" >> /etc/apk/repositories
-cat /etc/apk/repositories-back >> /etc/apk/repositories
+# cat /etc/apk/repositories-back >> /etc/apk/repositories
 apk update
 ```
 
@@ -25,7 +25,7 @@ apk update
 cp /etc/apk/repositories /etc/apk/repositories-back
 echo "http://mirrors.aliyun.com/alpine/v3.8/main" > /etc/apk/repositories
 echo "http://mirrors.aliyun.com/alpine/v3.8/community" >> /etc/apk/repositories
-cat /etc/apk/repositories-back >> /etc/apk/repositories
+# cat /etc/apk/repositories-back >> /etc/apk/repositories
 apk update
 ```
 
@@ -34,7 +34,16 @@ apk update
 cp /etc/apk/repositories /etc/apk/repositories-back
 echo "http://mirrors.aliyun.com/alpine/v3.9/main" > /etc/apk/repositories
 echo "http://mirrors.aliyun.com/alpine/v3.9/community" >> /etc/apk/repositories
-cat /etc/apk/repositories-back >> /etc/apk/repositories
+# cat /etc/apk/repositories-back >> /etc/apk/repositories
+apk update
+```
+# 测试  alpine3.9版本 的软件加速仓库
+```
+docker run --rm -it alpine:3.9 sh
+cp /etc/apk/repositories /etc/apk/repositories-back
+echo "http://mirrors.aliyun.com/alpine/v3.9/main" > /etc/apk/repositories
+echo "http://mirrors.aliyun.com/alpine/v3.9/community" >> /etc/apk/repositories
+# cat /etc/apk/repositories-back >> /etc/apk/repositories
 apk update
 ```
 
