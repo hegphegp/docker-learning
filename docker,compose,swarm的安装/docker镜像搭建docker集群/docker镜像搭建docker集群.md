@@ -43,35 +43,12 @@ docker network create --subnet=10.10.10.0/24 docker-swarm-network
 
 echo '{ "registry-mirrors": ["https://docker.mirrors.ustc.edu.cn"] }' > daemon.json
 
-docker run --privileged -itd --name manager1 --hostname manager1 --net docker-swarm-network --ip 10.10.10.101 --restart always docker:18.09-dind
-docker run --privileged -itd --name manager2 --hostname manager2 --net docker-swarm-network --ip 10.10.10.102 --restart always docker:18.09-dind
-docker run --privileged -itd --name manager3 --hostname manager3 --net docker-swarm-network --ip 10.10.10.103 --restart always docker:18.09-dind
-docker run --privileged -itd --name worker1 --hostname worker1 --net docker-swarm-network --ip 10.10.10.104 --restart always docker:18.09-dind
-docker run --privileged -itd --name worker2 --hostname worker2 --net docker-swarm-network --ip 10.10.10.105 --restart always docker:18.09-dind
-docker run --privileged -itd --name worker3 --hostname worker3 --net docker-swarm-network --ip 10.10.10.106 --restart always docker:18.09-dind
-sleep 3
-docker cp daemon.json manager1:/etc/docker
-docker cp daemon.json manager2:/etc/docker
-docker cp daemon.json manager3:/etc/docker
-docker cp daemon.json worker1:/etc/docker
-docker cp daemon.json worker2:/etc/docker
-docker cp daemon.json worker3:/etc/docker
-
-docker restart manager1 manager2 manager3 worker1 worker2 worker3
-
-# 在宿主机下载 dockersamples/visualizer 镜像
-docker pull dockersamples/visualizer
-docker save dockersamples/visualizer | gzip > visualizer.tar.gz
-# docker load < /visualizer.tar.gz
-
-docker cp visualizer.tar.gz manager1:/ && docker exec -it manager1 sh -c "docker load < /visualizer.tar.gz"
-
-# 停止copy
-docker cp visualizer.tar.gz manager2:/ && docker exec -it manager2 sh -c "docker load < /visualizer.tar.gz"
-
-# 停止copy
-docker cp visualizer.tar.gz manager3:/ && docker exec -it manager3 sh -c "docker load < /visualizer.tar.gz"
-
+docker run --privileged -itd --name manager1 --hostname manager1 --net docker-swarm-network --ip 10.10.10.101 --restart always -v daemon.json:/etc/docker/daemon.json docker:18.09-dind
+docker run --privileged -itd --name manager2 --hostname manager2 --net docker-swarm-network --ip 10.10.10.102 --restart always -v daemon.json:/etc/docker/daemon.json docker:18.09-dind
+docker run --privileged -itd --name manager3 --hostname manager3 --net docker-swarm-network --ip 10.10.10.103 --restart always -v daemon.json:/etc/docker/daemon.json docker:18.09-dind
+docker run --privileged -itd --name worker1 --hostname worker1 --net docker-swarm-network --ip 10.10.10.104 --restart always -v daemon.json:/etc/docker/daemon.json docker:18.09-dind
+docker run --privileged -itd --name worker2 --hostname worker2 --net docker-swarm-network --ip 10.10.10.105 --restart always -v daemon.json:/etc/docker/daemon.json docker:18.09-dind
+docker run --privileged -itd --name worker3 --hostname worker3 --net docker-swarm-network --ip 10.10.10.106 --restart always -v daemon.json:/etc/docker/daemon.json docker:18.09-dind
 ```
 
 ##### 以下是集群搭建的命令
