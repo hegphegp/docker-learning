@@ -32,6 +32,14 @@ npm get registry
 # npm config list --json
 # 设置成淘宝镜像
 npm config set registry https://registry.npm.taobao.org
+npm config set sass_binary_site https://npm.taobao.org/mirrors/node-sass/
+npm config set phantomjs_cdnurl https://npm.taobao.org/mirrors/phantomjs/
+npm config set electron_mirror https://npm.taobao.org/mirrors/electron/
+npm config set sqlite3_binary_host_mirror https://npm.taobao.org/mirrors/sqlite3/
+npm config set profiler_binary_host_mirror https://npm.taobao.org/mirrors/node-inspector/
+npm config set chromedriver_cdnurl https://npm.taobao.org/mirrors/chromedriver/
+npm config set puppeteer_download_host=https://npm.taobao.org/mirrors/
+
 
 # 1.查询Yarn当前配置的镜像
 yarn config get registry
@@ -40,4 +48,12 @@ yarn config get registry
 # yarn config list
 # 设置成淘宝镜像
 yarn config set registry https://registry.npm.taobao.org/
+yarn config set sass_binary_site https://npm.taobao.org/mirrors/node-sass/
+yarn config set phantomjs_cdnurl https://npm.taobao.org/mirrors/phantomjs/
+yarn config set electron_mirror https://npm.taobao.org/mirrors/electron/
+yarn config set sqlite3_binary_host_mirror https://npm.taobao.org/mirrors/sqlite3/
+yarn config set profiler_binary_host_mirror https://npm.taobao.org/mirrors/node-inspector/
+yarn config set chromedriver_cdnurl https://npm.taobao.org/mirrors/chromedriver/
+yarn config set puppeteer_download_host=https://npm.taobao.org/mirrors/
+
 ```
