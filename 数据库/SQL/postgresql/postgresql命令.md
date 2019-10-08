@@ -11,7 +11,7 @@ docker rm postgresql
 docker run -itd --name postgresql --restart always -v /etc/localtime:/etc/localtime:ro -p 5432:5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres postgres:9.6.1 postgres -c max_connections=500
 docker logs postgresql
 
-update 表 set address=replace(address,'茂名','高州')
+update 表 set 字段名=replace(字段名,'旧的字符串','新的字符串')
 
 # 备份数据库
 docker exec -it postgresql sh
