@@ -9,6 +9,7 @@ docker run -itd --name centos --privileged centos:7.6.1810 /usr/sbin/init
 docker exec -it centos sh
 cd /
 curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
+sed -i "/mirrors.cloud.aliyuncs.com/d"  /etc/yum.repos.d/CentOS-Base.repo
 yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
 mkdir -p 18.03.1 && mkdir -p 18.06.3 && mkdir -p 18.09.5 
 yum install --downloadonly --downloaddir=18.03.1 docker-ce-18.03.1.ce
@@ -68,6 +69,7 @@ yum list docker-ce --showduplicates | sort -r
 ```
 mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
 curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
+sed -i "/mirrors.cloud.aliyuncs.com/d"  /etc/yum.repos.d/CentOS-Base.repo
 yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
 mkdir -p hgp/docker-install-packages/18.09
 yum install --downloadonly --downloaddir=hgp/docker-install-packages/18.09 docker-ce-18.09.3
@@ -110,6 +112,7 @@ yum remove docker docker-common docker-selinux docker-engine
 ```
 mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
 curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
+sed -i "/mirrors.cloud.aliyuncs.com/d"  /etc/yum.repos.d/CentOS-Base.repo
 echo "export LC_ALL=en_US.UTF-8" >> /etc/profile
 source /etc/profile
 yum clean all

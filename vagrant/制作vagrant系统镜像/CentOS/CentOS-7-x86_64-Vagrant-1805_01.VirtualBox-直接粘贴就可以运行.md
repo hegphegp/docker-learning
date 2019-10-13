@@ -39,8 +39,8 @@ echo "vagrant" | sudo -S systemctl restart sshd
 # 步骤04 修改的yum源
 echo "vagrant" | sudo -S mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
 echo "vagrant" | sudo -S curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
+echo "vagrant" | sudo -S sed -i "/mirrors.cloud.aliyuncs.com/d"  /etc/yum.repos.d/CentOS-Base.repo
 echo "vagrant" | sudo -S echo "export LC_ALL=en_US.UTF-8"  >>  /etc/profile
-echo "vagrant" | sudo -S source /etc/profile
 echo "vagrant" | sudo -S yum clean all
 echo "vagrant" | sudo -S yum makecache
 echo "vagrant" | sudo -S yum clean all
