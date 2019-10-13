@@ -5,6 +5,15 @@
 systemd-analyze blame
 ```
 
+#### 多线程下载工具 axel , 下载国外资源时比较快
+```
+yum install -y axel
+#  使用方法
+#  限速使用：加上 -s 参数，如 -s 10240，即每秒下载的字节数，这里是 10 Kb
+#  限制连接数：加上 -n 参数，如 -n 5，即打开 5 个连接
+axel -a -n 10 http://downloadUrl
+```
+
 #### 查看具体的Centos版本(下面任意一条命令)
 ```
 cat /etc/redhat-release

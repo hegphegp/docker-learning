@@ -93,6 +93,24 @@ chmod +x /usr/local/bin/docker-compose
 
 ```
 
+#### 多线程下载工具 axel , 下载国外资源时比较快
+```
+sudo apt-get install -y axel
+#  使用方法
+#  限速使用：加上 -s 参数，如 -s 10240，即每秒下载的字节数，这里是 10 Kb
+#  限制连接数：加上 -n 参数，如 -n 5，即打开 5 个连接
+axel -a -n 10 http://downloadUrl
+```
+
+#### 在线安装sublime-text
+```
+wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add -
+echo "deb https://download.sublimetext.com/ apt/stable/" | sudo tee /etc/apt/sources.list.d/sublime-text.list
+sudo apt-get update
+sudo apt-get install sublime-text
+sudo rm -rf /etc/apt/sources.list.d/sublime-text.list
+```
+
 ### 卸载gedit(被gedit坑死过很多次，几十行的文件替换后，再撤销回退，电脑直接卡死，只能拔电源线强制关机，害死人了，打开大文件直接卡死了)，安装notepadqq
 ```
 # 用root用户执行命令
