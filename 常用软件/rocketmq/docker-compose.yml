@@ -1,0 +1,105 @@
+version: '3.3'
+
+
+# rocke有9876
+# 非vip通道端口:10911
+# vip通道端口:10909
+# 10909是VIP通道对应的端口，在JAVA中的消费者对象或者是生产者对象中关闭VIP通道即可无需开放10909端口
+
+
+services:
+  rmqnamesrv-a:
+    image: rocketmqinc/rocketmq:4.4.0
+    command: sh mqnamesrv
+    container_name: rmqnamesrv-a
+    restart: always
+#    ports:
+#      - 9876:9876
+    volumes:
+      - /opt/soft/rocketmq/logs/nameserver-a:/opt/logs
+      - /opt/soft/rocketmq/store/nameserver-a:/opt/store
+    networks:
+      rmq-network:
+        ipv4_address: 172.16.21.15
+
+  rmqnamesrv-b:
+    image: rocketmqinc/rocketmq:4.4.0
+    command: sh mqnamesrv
+    container_name: rmqnamesrv-b
+    restart: always
+#    ports:
+#      - 9877:9877
+    volumes:
+      - /opt/soft/rocketmq/logs/nameserver-b:/opt/logs
+      - /opt/soft/rocketmq/store/nameserver-b:/opt/store
+    networks:
+      rmq-network:
+        ipv4_address: 172.16.21.16
+
+  rmqbroker-a:
+    image: rocketmqinc/rocketmq:4.4.0
+    command: sh mqbroker -c /opt/rocketmq-4.4.0/conf/broker.conf autoCreateTopicEnable=true &
+    container_name: rmqbroker-a
+    restart: always
+#    ports:
+#      - 10911:10911
+    volumes:
+      - /opt/soft/rocketmq/logs/broker-a:/opt/logs
+      - /opt/soft/rocketmq/store/broker-a:/opt/store
+      - /opt/soft/rocketmq/broker-a/broker-a.conf:/opt/rocketmq-4.4.0/conf/broker.conf 
+    environment:
+      - TZ=Asia/Shanghai
+      - NAMESRV_ADDR=rmqnamesrv-a:9876
+      - JAVA_OPTS=-Duser.home=/opt
+      - JAVA_OPT_EXT=" -server -Xms256m -Xmx256m -Xmn256m"
+#    links:
+#      - rmqnamesrv-a:rmqnamesrv-a
+#      - rmqnamesrv-b:rmqnamesrv-b
+    networks:
+      rmq-network:
+        ipv4_address: 172.16.21.17
+
+  rmqbroker-b:
+    image: rocketmqinc/rocketmq:4.4.0
+    command: sh mqbroker -c /opt/rocketmq-4.4.0/conf/broker.conf autoCreateTopicEnable=true &
+    container_name: rmqbroker-b
+    restart: always
+#    ports:
+#      - 10909:10909
+    volumes:
+      - /opt/soft/rocketmq/logs/broker-b:/opt/logs
+      - /opt/soft/rocketmq/store/broker-b:/opt/store
+      - /opt/soft/rocketmq/broker-b/broker-b.conf:/opt/rocketmq-4.4.0/conf/broker.conf 
+    environment:
+      - TZ=Asia/Shanghai
+      - NAMESRV_ADDR=rmqnamesrv-b:9876
+      - JAVA_OPTS=-Duser.home=/opt
+      - JAVA_OPT_EXT=" -server -Xms256m -Xmx256m -Xmn256m"
+#    links:
+#      - rmqnamesrv-a:rmqnamesrv-a
+#      - rmqnamesrv-b:rmqnamesrv-b
+    networks:
+      rmq-network:
+        ipv4_address: 172.16.21.18
+
+  rmqconsole:
+    image: styletang/rocketmq-console-ng
+    container_name: rmqconsole
+#    ports:
+#      - 9001:9001
+    environment:
+      - JAVA_OPTS=" -Drocketmq.namesrv.addr=rmqnamesrv-a:9876;rmqnamesrv-b:9876 -Dcom.rocketmq.sendMessageWithVIPChannel=false"
+    networks:
+      rmq-network:
+        ipv4_address: 172.16.21.10
+
+networks:
+  rmq-network:
+    driver: bridge
+
+networks:
+  rmq-network:
+    driver: bridge
+    ipam:
+      config:
+       - subnet: 172.16.21.0/24
