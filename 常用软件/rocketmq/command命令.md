@@ -20,7 +20,8 @@ tee /opt/soft/rocketmq/broker-a/broker-a.conf <<-'EOF'
 brokerClusterName = rocketmq-cluster
 brokerName = broker-a
 brokerId = 0
-brokerIP1 = 172.16.21.17
+# 这个ip配置为内网访问，让mq只能内网访问,不配置默认为内网
+# brokerIP1 = 172.16.21.17
 deleteWhen = 04
 fileReservedTime = 48
 # 要互联网连接, 要用公网IP
@@ -41,11 +42,12 @@ EOF
 
 
 
-tee /opt/soft/rocketmq/broker-a/broker-b.conf <<-'EOF'
+tee /opt/soft/rocketmq/broker-b/broker-b.conf <<-'EOF'
 brokerClusterName = rocketmq-cluster
 brokerName = broker-b
 brokerId = 0
-brokerIP1 = 172.16.21.18
+# 这个ip配置为内网访问，让mq只能内网访问,不配置默认为内网
+# brokerIP1 = 172.16.21.18
 deleteWhen = 04
 fileReservedTime = 48
 # 要互联网连接, 要用公网IP
