@@ -32,6 +32,21 @@ tar -czvf postgres-idc.tar.gz postgres
 tar -zxvf dapeng.tar.gz -C /data/nginx/html
 ```
 
+#### 批量递归把子孙文件夹的文件转码, 并替换旧的文件
+```
+find 要转码的文件件夹 -type f -exec iconv -f 原来的编码 -t 转码后的编码 {} -o {} \;
+# find 文件夹 -type f -exec iconv -f GBK -t UTF-8 {} -o {} \;
+```
+
+#### 批量递归把子孙文件夹的文件转码到另外的文件夹
+```
+# 递归创建目录结构
+find 要转码的文件件夹 -type d -exec mkdir -p 新文件夹/{} \;
+# find default -type d -exec mkdir -p utf/{} \;
+find 要转码的文件件夹 -type f -exec iconv -f 原来的编码 -t 转码后的编码 {} -o 新文件夹/{} \;
+# find 要转码的文件件夹 -type f -exec iconv -f GBK -t UTF-8 {} -o 新文件夹/{} \;
+```
+
 ### yum下载软件离线安装包和依赖包
 ```
 mkdir -p /opt/packages/dockerRepo/18.06.1
