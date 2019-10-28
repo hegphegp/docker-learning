@@ -11,10 +11,10 @@
         * [Linux安装docker]
             * [Linux通用脚本在线安装最新版的docker](docker,compose,swarm的安装/linux安装docker/Linux通用脚本在线安装.md)
             * [Centos7通过安装包安装18.03和18.09版本](docker,compose,swarm的安装/linux安装docker/Centos7通过安装包安装docker.md)
-            * [Ubuntu16.04通过安装包安装18.03和18.09版本](docker,compose,swarm的安装/linux安装docker/Ubuntu16.04通过安装包安装docker.md)
+            * [Ubuntu16.04通过安装包安装18.03和18.09版本](docker,compose,swarm的安装/linux安装docker/Ubuntu通过安装包安装docker.md)
         * [批量创建虚拟机]
             * [docker-machine批量创建boot2docker虚拟机](docker,compose,swarm的安装/docker-machine搭建swarm集群/shell/create-wms.sh)
-            * [vagrant批量创建虚拟机的Vagrantfile脚本](vagrant/multi/Vagrantfile)
+            * [vagrant批量创建虚拟机的Vagrantfile脚本](vagrant/multi/Vagrantfile.md)
         * [docker-swarm集群搭建]
             * [docker镜像搭建docker集群](docker,compose,swarm的安装/docker镜像搭建docker集群/docker镜像搭建docker集群.md)
             * [docker-machine创建docker-swarm集群](docker,compose,swarm的安装/docker-machine搭建swarm集群/docker-machine创建docker-swarm集群.md)
@@ -40,7 +40,7 @@
             * [在阿里云控制台web页面设置域名与公网IP的映射](常用软件/nginx/在阿里云控制台web页面设置域名与公网IP的映射.md)
             * [ssl证书申请](常用软件/nginx/申请证书/ssl证书申请.md)
         * [openresty]
-            * [ubuntu安装openresty](常用软件/nginx/参数说明/ubuntu安装openresty.md)
+            * [ubuntu安装openresty](常用软件/openresty/ubuntu安装openresty.md)
         * [cfssl生成证书的命令说明](常用软件/cfssl/详细说明.md)
             * [cfssl给nginx生成 通配所有IP和域名的证书 ](常用软件/cfssl/all-ip-domain-通配所有IP和域名的证书.md))
             * [添加cfssl给nginx生成自签名证书的例子](常用软件/cfssl/nginx-examples/example001/README.md)
@@ -61,7 +61,7 @@
             * [shadowsocks的真实示例](常用软件/shadowsocks/真实示例.md)
         * [curl工具的使用](常用软件/curl/curl使用.md)
         * [keycloak开源的单点登录系统]()
-        * [centos7开启telnet远程登录](常用软件/telnet/telnet使用.md)
+        * [centos7开启telnet远程登录](常用软件/telnet/centos7开启telnet远程登录.md)
         * [zookeeper](常用软件/zookeeper/README.md)
             * [单节点](常用软件/zookeeper/singleNode/README.md)
         * [ELK]
@@ -79,8 +79,8 @@
             * [Redis]
                 * [redis博客](数据库/NOSQL/redis/Redis博客.md)
                 * [Redis命令](数据库/NOSQL/redis/Redis命令.md)
-                * [Redis-cluster集群搭建](数据库/NOSQL/redis/Redis-cluster集群搭建.md)
-                * [Redis-trib的常用命令](数据库/NOSQL/redis/Redis-trib的常用命令.md)
+                * [Redis-cluster集群搭建](数据库/NOSQL/redis/redis-5.0.5创建集群/Redis-cluster集群搭建.md)
+                * [Redis-trib的常用命令](数据库/NOSQL/redis/redis-4.0.9创建集群/Redis-trib的常用命令.md)
                 * [Redis性能压测工具redis-benchmark](数据库/NOSQL/redis/性能压测工具redis-benchmark.md)
         * [SQL]
             * [postgresql命令](数据库/SQL/postgresql/postgresql命令.md)
@@ -99,13 +99,13 @@
         * [jenkins]
             * [jenkins的使用](运维/jenkins/使用说明.md)
     * [linux]
-        * [alpine的安装.md](仓库/linux/alpine/alpine的安装.md)
+        * [alpine的安装.md](软件加速仓库/linux/alpine的安装.md)
         * [Linux的磁盘挂载.md](常用知识/Linux的磁盘挂载.md)
     * [预留模块]
         * [大数据]
             * [docker搭建真正的Hadoop集群](预留模块/大数据/hadoop/Hadoop搭建.md)
     * [systemd开机服务设置参数](零散的笔记/systemd开机服务设置参数.md)
     * [各种Linux系统配置国内软件源加速器](https://t.goodrain.com/t/topic/236)
-        * [alpine国内软件源仓库配置](仓库/各种Linux系统的国内软件源仓库/alpine.md)
-        * [debian国内软件源仓库配置](仓库/各种Linux系统的国内软件源仓库/debian.md)
-        * [ubuntu国内软件源仓库配置](仓库/各种Linux系统的国内软件源仓库/ubuntu.md)
+        * [alpine国内软件源仓库配置](软件加速仓库/各种Linux系统的国内软件源仓库/alpine.md)
+        * [debian国内软件源仓库配置](软件加速仓库/各种Linux系统的国内软件源仓库/debian.md)
+        * [ubuntu国内软件源仓库配置](软件加速仓库/各种Linux系统的国内软件源仓库/ubuntu.md)

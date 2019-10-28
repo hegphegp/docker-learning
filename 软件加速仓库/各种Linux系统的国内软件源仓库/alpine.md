@@ -37,6 +37,16 @@ echo "http://mirrors.aliyun.com/alpine/v3.9/community" >> /etc/apk/repositories
 # cat /etc/apk/repositories-back >> /etc/apk/repositories
 apk update
 ```
+
+##### alpine3.10版本
+```
+cp /etc/apk/repositories /etc/apk/repositories-back
+echo "http://mirrors.aliyun.com/alpine/v3.10/main" > /etc/apk/repositories
+echo "http://mirrors.aliyun.com/alpine/v3.10/community" >> /etc/apk/repositories
+# cat /etc/apk/repositories-back >> /etc/apk/repositories
+apk update
+```
+
 # 测试  alpine3.9版本 的软件加速仓库
 ```
 docker run --rm -it alpine:3.9 sh
