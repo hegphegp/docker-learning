@@ -5,6 +5,10 @@ version: '3.3'
 # 查看日志 cat /var/lib/mysql/mysql-sql.log
 # 查看最后100行日志 tail -n 100 /var/lib/mysql/mysql-sql.log
 
+# 死亡的教训，percona/percona-xtradb-cluster:5.7.25镜像要挂载/var/lib/mysql目录到宿主机，宿主机目录要授予 777 的操作权限， 否则挂载目录后， 数据库跑不起来
+# mkdir -p data/mysql-cluster-node01 data/mysql-cluster-node02 data/mysql-cluster-node03 data/mysql-cluster-node04 data/mysql-cluster-node05
+# chmod 777 data/mysql-cluster-node01 data/mysql-cluster-node02 data/mysql-cluster-node03 data/mysql-cluster-node04 data/mysql-cluster-node05
+
 # 死亡的教训，docker-compose引用已存在的网络，被网上的博客坑了
 # networks:
 #   外部网络的名称:   # 必须是外部docker网卡的名称，被网上的博客害死了，白白浪费几个小时
@@ -22,6 +26,7 @@ services:
       - CMDARG=--character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci --default-time-zone=+8:00 --log-timestamps=SYSTEM --general_log=on --general_log_file=mysql-sql.log
     volumes:
       - /etc/localtime:/etc/localtime:ro
+      - ./data/mysql-cluster-node01:/var/lib/mysql
     networks:
       percona-xtradb-cluster-network:
         ipv4_address: 172.16.17.11
@@ -38,6 +43,7 @@ services:
       - CMDARG=--character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci --default-time-zone=+8:00 --log-timestamps=SYSTEM --general_log=on --general_log_file=mysql-sql.log
     volumes:
       - /etc/localtime:/etc/localtime:ro
+      - ./data/mysql-cluster-node02:/var/lib/mysql
     networks:
       percona-xtradb-cluster-network:
         ipv4_address: 172.16.17.12
@@ -54,6 +60,7 @@ services:
       - CMDARG=--character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci --default-time-zone=+8:00 --log-timestamps=SYSTEM --general_log=on --general_log_file=mysql-sql.log
     volumes:
       - /etc/localtime:/etc/localtime:ro
+      - ./data/mysql-cluster-node03:/var/lib/mysql
     networks:
       percona-xtradb-cluster-network:
         ipv4_address: 172.16.17.13
@@ -70,6 +77,7 @@ services:
       - CMDARG=--character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci --default-time-zone=+8:00 --log-timestamps=SYSTEM --general_log=on --general_log_file=mysql-sql.log
     volumes:
       - /etc/localtime:/etc/localtime:ro
+      - ./data/mysql-cluster-node04:/var/lib/mysql
     networks:
       percona-xtradb-cluster-network:
         ipv4_address: 172.16.17.14
@@ -86,6 +94,7 @@ services:
       - CMDARG=--character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci --default-time-zone=+8:00 --log-timestamps=SYSTEM --general_log=on --general_log_file=mysql-sql.log
     volumes:
       - /etc/localtime:/etc/localtime:ro
+      - ./data/mysql-cluster-node05:/var/lib/mysql
     networks:
       percona-xtradb-cluster-network:
         ipv4_address: 172.16.17.15
