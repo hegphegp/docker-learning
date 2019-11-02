@@ -1,5 +1,6 @@
 ## Centos7安装docker
 
+#### docker解压安装包的下载地址  https://mirrors.aliyun.com/docker-ce/linux/static/stable/x86_64/
 #### 全部用centos7的镜像测试纯净centos7安装各种docker版本的软件依赖
 
 ```

@@ -135,10 +135,6 @@ $uri：请求中的当前URI(不带请求参数，参数位于$args)，可以不
 ```
 
 ```
-docker stop nginx 
-docker rm nginx
-docker run -itd --restart always --name nginx -e TZ=Asia/Shanghai -p 10080:80 -v /etc/localtime:/etc/localtime:ro nginx:1.16.0-alpine
-
 tee nginx.conf <<-'EOF'
 
 user  nginx;
@@ -164,6 +160,7 @@ http {
                       'scheme                      =====>>>> $scheme                      \n'
                       'remote_addr                 =====>>>> $remote_addr                 \n'
                       'remote_user                 =====>>>> $remote_user                 \n'
+                      'request_id                  =====>>>> $request_id                  \n'
                       'time_local                  =====>>>> $time_local                  \n'
                       'request                     =====>>>> $request                     \n'
                       'status                      =====>>>> $status                      \n'
@@ -238,8 +235,11 @@ http {
 }
 EOF
 
-docker cp nginx.conf nginx:/etc/nginx
-docker restart nginx
+docker stop nginx 
+docker rm nginx
+docker run -itd --restart always --name nginx -e TZ=Asia/Shanghai -p 10080:80 -v /etc/localtime:/etc/localtime:ro -v $PWD/nginx.conf:/etc/nginx/nginx.conf nginx:1.16.0-alpine
+docker logs -f --tail=300 nginx
+
 ```
 
 #### 上面nginx的配置日志输出的是
