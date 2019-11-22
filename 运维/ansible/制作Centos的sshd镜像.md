@@ -15,13 +15,15 @@ ENV ROOT_PASSWORD root
 
 RUN curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo ; \
     echo "export LC_ALL=en_US.UTF-8" >> /etc/profile ; \
-    yum install -y openssh-server openssh-clients firewalld ; \
+    yum install -y openssh-server openssh-clients firewalld git; \
     ssh-keygen -t rsa -N '' -f /root/.ssh/id_rsa -q ; \
     echo "root:${ROOT_PASSWORD}" | chpasswd ; \
     sed -i 's/UsePAM yes/UsePAM no/g' /etc/ssh/sshd_config; \
     sed -i 's/#UseDNS yes/UseDNS no/g' /etc/ssh/sshd_config; \
     sed -i 's/#PermitRootLogin yes/PermitRootLogin yes/' /etc/ssh/sshd_config; \
-    yum clean all
+    yum clean all  ; \
+    git clone https://www.baidu.com; \
+    
 
 EXPOSE 22
 
