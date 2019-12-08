@@ -40,7 +40,7 @@
             * [在阿里云控制台web页面设置域名与公网IP的映射](常用软件/nginx/在阿里云控制台web页面设置域名与公网IP的映射.md)
             * [ssl证书申请](常用软件/nginx/申请证书/ssl证书申请.md)
         * [openresty]
-            * [ubuntu安装openresty](常用软件/openresty/ubuntu安装openresty.md)
+            * [ubuntu安装openresty](常用软件/nginx/openresty/ubuntu安装openresty.md)
         * [cfssl生成证书的命令说明](常用软件/cfssl/详细说明.md)
             * [cfssl给nginx生成 通配所有IP和域名的证书 ](常用软件/cfssl/all-ip-domain-通配所有IP和域名的证书.md))
             * [添加cfssl给nginx生成自签名证书的例子](常用软件/cfssl/nginx-examples/example001/README.md)

@@ -80,7 +80,6 @@ server {
 }
 ```
 
-
 ##### nginx内置变量
 ```
 内置变量存放在  ngx_http_core_module 模块中，变量的命名方式和apache 服务器变量是一致的。总而言之，这些变量代表着客户端请求头的内容，例如$http_user_agent, $http_cookie, 等等。下面是nginx支持的所有内置变量：
@@ -310,4 +309,26 @@ tcpinfo_rcv_space           ====>>>>> 14600
 time_iso8601                ====>>>>> 2019-08-20T22:26:02+08:00                
 time_local                  ====>>>>> 20/Aug/2019:22:26:02 +0800                  
 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+```
+
+#### nginx清除http响应头的参数
+* nginx重新编译加入模块more_clear_headers，openresty自带这个模块，该模块主要有4个指令，亲测有效
+```
+more_set_headers 用于 添加、修改、清除 响应头
+more_clear_headers 用于 清除 响应头
+more_set_input_headers 用于 添加、修改、清除 请求头
+more_clear_input_headers 用于 清除 请求头
+```
+#### nginx清除请求头的参数
+* fastcgi_hide_header，proxy_hide_header 这两个设置
+
+
+#### nginx抽样日志，记录减少写日志的数量，避免磁盘写爆
+```
+# log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+#                   '$status $body_bytes_sent "$http_referer" '
+#                   '"$http_user_agent" "$http_x_forwarded_for"';
+
+#access_log /path/to/file main ratio=0.01;
+# main这个参数来源于 log_format 后面的main，名称要相同
 ```
