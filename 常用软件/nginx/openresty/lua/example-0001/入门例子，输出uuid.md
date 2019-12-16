@@ -4,7 +4,8 @@
 
 ```
 mkdir -p /usr/local/openresty/nginx/lua/example-0001
-tee /usr/local/openresty/nginx/conf/conf.d/port-8082.conf <<-'EOF'
+mkdir -p /etc/nginx/conf.d
+tee /etc/nginx/conf.d/default.conf <<-'EOF'
 server {
     listen       8082;
     server_name  localhost;
