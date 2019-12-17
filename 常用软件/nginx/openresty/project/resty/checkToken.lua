@@ -7,7 +7,7 @@ if not uid then
     ngx.say("{\"code\":401,\"msg\":\"no login\"}")  --返回错误消息
     ngx.exit(200) -- 跟以上两个连用,固定写法
 else
---    ngx.req.set_header("userId", uid)
---    ngx.var.uid = uid;
+    ngx.req.set_header("userId", uid)
+--    ngx.var.uid = uid; -- ngx.var.uid = uid; 性能低到无法忍受, ngx.var.uid = uid 的qps 只有 ngx.req.set_header("userId", uid) 的1/3, 在高并发下, 可能是 1/20
 end
 
