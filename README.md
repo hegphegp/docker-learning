@@ -39,6 +39,7 @@
             * [docker-compose创建nginx请求转发的例子](常用软件/nginx/example001/docker-compose.yml)
             * [在阿里云控制台web页面设置域名与公网IP的映射](常用软件/nginx/在阿里云控制台web页面设置域名与公网IP的映射.md)
             * [ssl证书申请](常用软件/nginx/申请证书/ssl证书申请.md)
+            * [nginx负载均衡](常用软件/nginx/nginx负载均衡.md)
         * [openresty]
             * [ubuntu安装openresty](常用软件/nginx/openresty/ubuntu安装openresty.md)
         * [cfssl生成证书的命令说明](常用软件/cfssl/详细说明.md)
