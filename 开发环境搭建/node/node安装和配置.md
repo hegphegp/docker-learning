@@ -59,6 +59,10 @@ cnpm -v
 ```
 cnpm install -g yarn
 # 或者 npm install -g yarn --verbose
+# 修改yarn源为淘宝源
+yarn config set registry https://registry.npm.taobao.org/
+# 修改yarn源为官方源
+# yarn config set registry https://registry.yarnpkg.com
 ```
 
 ```
