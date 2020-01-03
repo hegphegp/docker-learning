@@ -43,6 +43,22 @@ npm -v
 # cd /opt/soft/nodejs/node-v8.15.1-linux-x64/bin && ./node -v
 ```
 
+### 普通用户执行 npm 安装命令时，没有把插件安装到 /usr/lib/node_modules/ 目录的权限
+```
+sudo chown -R $(whoami) $(npm config get prefix)/{lib/node_modules,bin,share}
+# npm官方给出的例子是 配置NPM_CONFIG_PREFIX路径，但是亲测无效，没任何效果，由此是否可以看出官方的无能，人世的绝望，只能相信自己曾经执行成功的命令，官方的配置是否可行，不知道，官方是否正确，不知道
+# echo 'NPM_CONFIG_PREFIX=~/.npm-global' >> /etc/profile
+```
+
+### 全局删除所有npm模块
+```
+npm ls -gp --depth=0 | awk -F/ '/node_modules/ && !/\/npm$/ {print $NF}' | xargs npm -g rm
+# 下面是它的工作原理：
+# npm ls -gp --depth=0列出所有全局顶级模块（有关ls，请参阅cli文档）
+# awk -F/ '/node_modules/ && !/\/npm$/ {print $NF}'  #打印实际上不是npm本身的所有模块（不以结尾/npm）
+# xargs npm -g rm 全局删除前一个管道上的所有模块
+```
+
 ### 配置淘宝源
 ```
 npm config set registry https://registry.npm.taobao.org --verbose
