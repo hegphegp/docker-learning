@@ -1,4 +1,4 @@
-## Ubuntu搭建React-native环境
+## Ubuntu搭建React-native-cli环境，禁止安装 react-native，抛了无数次  文件的SHA-1值 not compute，模拟机死活安装不了app
 ##### 操作步骤
 * 安装nodejs，好像react-native需要10.x版本以上的nodejs
 * 配置好 npm，cnpm，yarn的仓库源
@@ -27,6 +27,16 @@ cat /etc/apt/sources.list.d/nodesource.list
 apt-get update
 apt-get install nodejs
 node -v
+```
+
+### 修改 npm 安装插件的目录是 当前用户的 ~/.npm-global目录，用root用户执行下面的命令
+```
+npm config set prefix '~/.npm-global'
+mkdir -p /etc/profile.d
+echo "#set npm environment" > /etc/profile.d/npm-config.sh
+echo 'export PATH=~/.npm-global/bin:$PATH' >> /etc/profile.d/npm-config.sh
+chmod 755 /etc/profile.d/npm-config.sh
+source /etc/profile
 ```
 
 #### 配置好 npm，cnpm，yarn的仓库源
@@ -73,6 +83,7 @@ source /etc/profile
 > 如果出现 /dev/kvm device: permission denied ，给当前用户授权 chown 用户名 /dev/kvm ，也可以配置一个开机授权的脚本
 > 创建一个Android模拟机
 
+
 #### watchman源码编译安装
 ```
 sudo apt-get install -y libtool libssl-dev
@@ -106,18 +117,20 @@ rm -rf ~/.android/adbkey.pub ~/.android/adbkey
 ```
 > 在 Android Studio 可视化界面的AVD Manager界面删除 emulator 模拟机
 
+# 如果是垃圾工具，官方请不要发布出来，不是每个人都是神，都知道怎么解决，我们普通人是在用生命，用光阴去试错，直到有朝一天生命耗尽，人死了才解脱，安装 npm install -g react-native --verbose 工具后，每次创建项目跑 react-native run-android 命令都抛错，在模拟机跑不起来，浪费了无数的生命和光阴，改成 npm install -g react-native-cli --verbose 工具后，又可以跑起来
+## 无尽的噩梦，安装 react-native 模块创建的项目在安卓跑起来的时候哦，每执行一次 react-native run-android 命令，就抛一次错误，在模拟机上完全跑不起来， error: bundling failed: ReferenceError: SHA-1 for file /home/hgp/.npm-global/lib/node_modules/react-native/node_modules/metro/src/lib/polyfills/require.js (/home/hgp/.npm-global/lib/node_modules/react-native/node_modules/metro/src/lib/polyfills/require.js) is not computed
 #### 安装 react-native 插件，并创建项目
 ```
-npm install -g react-native --verbose
+npm install -g react-native-cli --verbose
 mkdir -p react-native-20200102 && cd react-native-20200102
 # 创建项目，等待几分钟
 react-native init test
 cd test
-# 执行下面命令，保持这条命令存活，再新开一个窗口，这条命令默认占用 8081 端口
-rm -rf node_modules/ && npm install && react-native start -- --reset-cache
+# 执行下面命令，保持这条命令存活，再新开一个窗口，这条命令默认占用 8081 端口，安装 npm install -g react-native --verbose 工具，每次执行 react-native start -- --reset-cache命令，都会提示文件的SHA-1值 not compute，在模拟机死活安装不了app
+react-native start -- --reset-cache
 # 新开窗口，执行下面命令
 # 修改项目的gradle仓库   maven { url "http://maven.aliyun.com/nexus/content/groups/public" }
-npm install --verbose && react-native run-android
+react-native run-android
 # 指定设备ID运行
 # npm install --verbose && react-native run-android --deviceId emulator-5554
 ```

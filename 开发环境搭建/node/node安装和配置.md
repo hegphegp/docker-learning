@@ -43,11 +43,14 @@ npm -v
 # cd /opt/soft/nodejs/node-v8.15.1-linux-x64/bin && ./node -v
 ```
 
-### 普通用户执行 npm 安装命令时，没有把插件安装到 /usr/lib/node_modules/ 目录的权限
+### 修改 npm 安装插件的目录是 当前用户的 ~/.npm-global目录，用root用户执行下面的命令
 ```
-sudo chown -R $(whoami) $(npm config get prefix)/{lib/node_modules,bin,share}
-# npm官方给出的例子是 配置NPM_CONFIG_PREFIX路径，但是亲测无效，没任何效果，由此是否可以看出官方的无能，人世的绝望，只能相信自己曾经执行成功的命令，官方的配置是否可行，不知道，官方是否正确，不知道
-# echo 'NPM_CONFIG_PREFIX=~/.npm-global' >> /etc/profile
+npm config set prefix '~/.npm-global'
+mkdir -p /etc/profile.d
+echo "#set npm environment" > /etc/profile.d/npm-config.sh
+echo 'export PATH=~/.npm-global/bin:$PATH' >> /etc/profile.d/npm-config.sh
+chmod 755 /etc/profile.d/npm-config.sh
+source /etc/profile
 ```
 
 ### 全局删除所有npm模块
