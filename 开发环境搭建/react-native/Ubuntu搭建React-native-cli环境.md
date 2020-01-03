@@ -119,7 +119,7 @@ rm -rf ~/.android/adbkey.pub ~/.android/adbkey
 
 # 如果是垃圾工具，官方请不要发布出来，不是每个人都是神，都知道怎么解决，我们普通人是在用生命，用光阴去试错，直到有朝一天生命耗尽，人死了才解脱，安装 npm install -g react-native --verbose 工具后，每次创建项目跑 react-native run-android 命令都抛错，在模拟机跑不起来，浪费了无数的生命和光阴，改成 npm install -g react-native-cli --verbose 工具后，又可以跑起来
 ## 无尽的噩梦，安装 react-native 模块创建的项目在安卓跑起来的时候哦，每执行一次 react-native run-android 命令，就抛一次错误，在模拟机上完全跑不起来， error: bundling failed: ReferenceError: SHA-1 for file /home/hgp/.npm-global/lib/node_modules/react-native/node_modules/metro/src/lib/polyfills/require.js (/home/hgp/.npm-global/lib/node_modules/react-native/node_modules/metro/src/lib/polyfills/require.js) is not computed
-#### 安装 react-native 插件，并创建项目
+#### 安装 react-native-cli 插件，并创建项目
 ```
 npm install -g react-native-cli --verbose
 mkdir -p react-native-20200102 && cd react-native-20200102
@@ -127,6 +127,7 @@ mkdir -p react-native-20200102 && cd react-native-20200102
 react-native init test
 cd test
 # 执行下面命令，保持这条命令存活，再新开一个窗口，这条命令默认占用 8081 端口，安装 npm install -g react-native --verbose 工具，每次执行 react-native start -- --reset-cache命令，都会提示文件的SHA-1值 not compute，在模拟机死活安装不了app
+# rm -rf node_modules && npm install --verbose && react-native start -- --reset-cache
 react-native start -- --reset-cache
 # 新开窗口，执行下面命令
 # 修改项目的gradle仓库   maven { url "http://maven.aliyun.com/nexus/content/groups/public" }
