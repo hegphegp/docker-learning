@@ -43,6 +43,25 @@ npm -v
 # cd /opt/soft/nodejs/node-v8.15.1-linux-x64/bin && ./node -v
 ```
 
+### 修改 npm 安装插件的目录是 当前用户的 ~/.npm-global目录，用root用户执行下面的命令
+```
+npm config set prefix '~/.npm-global'
+mkdir -p /etc/profile.d
+echo "#set npm environment" > /etc/profile.d/npm-config.sh
+echo 'export PATH=~/.npm-global/bin:$PATH' >> /etc/profile.d/npm-config.sh
+chmod 755 /etc/profile.d/npm-config.sh
+source /etc/profile
+```
+
+### 全局删除所有npm模块
+```
+npm ls -gp --depth=0 | awk -F/ '/node_modules/ && !/\/npm$/ {print $NF}' | xargs npm -g rm
+# 下面是它的工作原理：
+# npm ls -gp --depth=0列出所有全局顶级模块（有关ls，请参阅cli文档）
+# awk -F/ '/node_modules/ && !/\/npm$/ {print $NF}'  #打印实际上不是npm本身的所有模块（不以结尾/npm）
+# xargs npm -g rm 全局删除前一个管道上的所有模块
+```
+
 ### 配置淘宝源
 ```
 npm config set registry https://registry.npm.taobao.org --verbose
@@ -59,6 +78,10 @@ cnpm -v
 ```
 cnpm install -g yarn
 # 或者 npm install -g yarn --verbose
+# 修改yarn源为淘宝源
+yarn config set registry https://registry.npm.taobao.org/
+# 修改yarn源为官方源
+# yarn config set registry https://registry.yarnpkg.com
 ```
 
 ```

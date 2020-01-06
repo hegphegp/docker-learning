@@ -113,3 +113,4 @@
         * [alpine国内软件源仓库配置](软件加速仓库/各种Linux系统的国内软件源仓库/alpine.md)
         * [debian国内软件源仓库配置](软件加速仓库/各种Linux系统的国内软件源仓库/debian.md)
         * [ubuntu国内软件源仓库配置](软件加速仓库/各种Linux系统的国内软件源仓库/ubuntu.md)
+    * [Ubuntu-18.04配置React-native-cli开发环境](开发环境搭建/react-native/Ubuntu搭建React-native-cli环境.md)

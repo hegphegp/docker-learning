@@ -1,6 +1,11 @@
 
 ## 都切换到root用户进行命令操作
 
+### 默认情况下，root用户没有拥有 /etc/profile环境变量，要在 ~/.bashrc 添加 source /etc/profile 的命令
+```
+echo "source /etc/profile" >> ~/.bashrc
+```
+
 ### 删除LibreOffice
 ```
 sudo apt remove -y libreoffice-calc libreoffice-draw libreoffice-impress libreoffice-writer libreoffice*
