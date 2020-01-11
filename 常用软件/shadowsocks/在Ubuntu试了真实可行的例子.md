@@ -11,3 +11,8 @@ docker run --restart always -itd --name ssclient -p 1080:1080 mritd/shadowsocks:
 
 * chrome浏览器的SwitchyOmega配置截图
 ![avatar](imgs/images0001.png)
+
+* 浏览器在线安装SwitchyOmega
+```
+https://proxy-switchyomega.com/
+```
