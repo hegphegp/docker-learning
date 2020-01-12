@@ -1,5 +1,30 @@
 ## Centos7安装docker
 
+```
+yum remove docker docker-common docker-selinux docker-engine
+mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
+curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
+sed -i "/mirrors.aliyuncs.com/d"  /etc/yum.repos.d/CentOS-Base.repo
+sed -i "/mirrors.cloud.aliyuncs.com/d"  /etc/yum.repos.d/CentOS-Base.repo
+yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+echo "export LC_ALL=en_US.UTF-8" >> /etc/profile
+source /etc/profile
+yum clean all
+yum makecache
+systemctl stop firewalld
+systemctl disable firewalld
+systemctl stop firewalld
+yum install -y docker-ce
+mkdir -p /etc/docker
+tee /etc/docker/daemon.json <<-'EOF'
+{
+  "registry-mirrors": ["https://docker.mirrors.ustc.edu.cn"]
+}
+EOF
+systemctl enable docker #设置docker服务开机自启动
+systemctl restart docker
+```
+
 #### docker解压安装包的下载地址  https://mirrors.aliyun.com/docker-ce/linux/static/stable/x86_64/
 #### 全部用centos7的镜像测试纯净centos7安装各种docker版本的软件依赖
 

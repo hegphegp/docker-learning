@@ -104,8 +104,8 @@
             * [jenkins的使用](运维/jenkins/使用说明.md)
     * [linux]
         * [alpine的安装](软件加速仓库/linux/alpine的安装.md)
-        * [Linux磁盘挂载](常用知识/Linux磁盘/Linux磁盘挂载.md)
-        * [Linux磁盘扩容](常用知识/Linux磁盘/Linux磁盘扩容.md)
+        * [Linux磁盘挂载](常用知识/linux磁盘/linux磁盘挂载.md)
+        * [Linux磁盘扩容](常用知识/linux磁盘/linux磁盘扩容.md)
     * [预留模块]
         * [大数据]
             * [docker搭建真正的Hadoop集群](预留模块/大数据/hadoop/Hadoop搭建.md)

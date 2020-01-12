@@ -102,3 +102,41 @@ repositories {
     mavenCentral()
 }
 ```
+
+#### gradle全局代理
+```
+mkdir -p $HOME/.gradle
+touch $HOME/.gradle/gradle.properties
+# 添加http代理
+#systemProp.socks.proxyHost=127.0.0.1
+#systemProp.socks.proxyPort=7077
+#systemProp.https.nonProxyHosts=10.*|localhost
+
+
+# 添加https代理
+#systemProp.https.proxyHost=127.0.0.1
+#systemProp.https.proxyPort=7077
+#systemProp.https.nonProxyHosts=10.*|localhost
+
+# 添加socks代理
+# org.gradle.jvmargs=-DsocksProxyHost=127.0.0.1 -DsocksProxyPort=1080
+``` 
+
+
+#### gradle某个项目单独代理
+```
+# 去到项目目录的 .gradle/gradle.properties 文件下，添加配置
+# 添加http代理
+#systemProp.socks.proxyHost=127.0.0.1
+#systemProp.socks.proxyPort=7077
+#systemProp.https.nonProxyHosts=10.*|localhost
+
+
+# 添加https代理
+#systemProp.https.proxyHost=127.0.0.1
+#systemProp.https.proxyPort=7077
+#systemProp.https.nonProxyHosts=10.*|localhost
+
+# 添加socks代理
+# org.gradle.jvmargs=-DsocksProxyHost=127.0.0.1 -DsocksProxyPort=1080
+``` 

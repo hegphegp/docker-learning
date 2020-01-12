@@ -283,7 +283,9 @@ tmpfs                   tmpfs     100M     0  100M   0% /run/user/0
 [root@storage ~]# 
 ```
 
-> mkfs.xfs /dev/sdb1                    # mkfs  -t  ext3  /dev/sdb1  mkfs.ext4 /dev/sdb1 
+> mkfs.xfs /dev/sdb1
+* mkfs  -t  ext3  /dev/sdb1
+* mkfs.ext4 /dev/sdb1 
 * 格式化分区与对应要扩容分区的文件系统格式
 ```
 [root@storage ~]# mkfs.xfs /dev/sdb1
@@ -452,17 +454,26 @@ WARNING: xfs signature detected on /dev/sdb1 at offset 0. Wipe it? [y/n]: y
 > xfs_growfs /dev/centos/root
 * 告知系统 "/" 分区扩容了，如果遇到错误 xfs_growfs: /dev/centos/root is not a mounted XFS filesystem , 用命令 resize2fs /dev/centos/root 告知系统 "/" 分区扩容了
 ```
+# 第一种情况，遇到  xfs_growfs: /dev/centos/root is not a mounted XFS filesystem 问题后，改成 resize2fs 命令
 [root@storage ~]# xfs_growfs /dev/centos/root
 xfs_growfs: /dev/centos/root is not a mounted XFS filesystem
 [root@storage ~]# resize2fs /dev/centos/root
-meta-data=/dev/mapper/centos-root isize=512    agcount=4, agsize=1637888 blks
-         =                       sectsz=512   attr=2, projid32bit=1
-         =                       crc=1        finobt=0 spinodes=0
-data     =                       bsize=4096   blocks=6551552, imaxpct=25
-         =                       sunit=0      swidth=0 blks
-naming   =version 2              bsize=4096   ascii-ci=0 ftype=1
-log      =internal               bsize=4096   blocks=3199, version=2
-         =                       sectsz=512   sunit=0 blks, lazy-count=1
+resize2fs 1.42.9 (28-Dec-2013)
+Filesystem at /dev/centos/root is mounted on /u01; on-line resizing required
+old desc_blocks = 3, new_desc_blocks = 15
+Performing an on-line resize of /dev/centos/root to 3930112 (4k) blocks.
+The filesystem on /dev/centos/root is now 3930112 blocks long.
+
+ # 第二种情况是，使用 xfs_growfs /dev/centos/root 命令不提示任何有问题的
+ [root@storage ~]# xfs_growfs /dev/centos/root
+ meta-data=/dev/mapper/centos-root isize=512    agcount=4, agsize=1637888 blks
+                       =                       sectsz=512   attr=2, projid32bit=1
+                       =                       crc=1        finobt=0 spinodes=0
+data              =                       bsize=4096   blocks=6551552, imaxpct=25
+                       =                       sunit=0      swidth=0 blks
+naming       =version 2              bsize=4096   ascii-ci=0 ftype=1
+log                =internal               bsize=4096   blocks=3199, version=2
+                      =                       sectsz=512   sunit=0 blks, lazy-count=1
 realtime =none                   extsz=4096   blocks=0, rtextents=0
 data blocks changed from 6551552 to 9172992
 [root@storage ~]# 
