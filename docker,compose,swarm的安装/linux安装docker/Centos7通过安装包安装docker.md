@@ -132,11 +132,17 @@ yum clean all
 yum makecache
 ```
 
-> #### 3.升级内核，并把该内核启动顺序设置为第一(有个坑,香港的内核仓库只保留最新的两个版本，先要去到网站查看最先的安装包)
+> #### 3.升级内核，并把该内核启动顺序设置为第一
 ```
 rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
-yum install -y http://hkg.mirror.rackspace.com/elrepo/kernel/el7/x86_64/RPMS/kernel-lt-4.4.169-1.el7.elrepo.x86_64.rpm    //香港镜像仓库
+rpm -Uvh https://mirrors.tuna.tsinghua.edu.cn/elrepo/kernel/el7/x86_64/RPMS/elrepo-release-7.0-4.el7.elrepo.noarch.rpm
+# yum install -y http://hkg.mirror.rackspace.com/elrepo/kernel/el7/x86_64/RPMS/kernel-lt-4.4.169-1.el7.elrepo.x86_64.rpm    //香港镜像仓库
+yum --enablerepo=elrepo-kernel install kernel-lt -y
+# 查看当前默认内核
+grub2-editenv list
+# 查看所有内核版本
 awk -F\' '$1=="menuentry " {print $2}' /etc/grub2.cfg
+# 设置刚刚安装的内核版本启动顺序为第一
 grub2-set-default 0
 ```
 
