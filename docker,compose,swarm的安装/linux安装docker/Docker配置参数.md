@@ -1,3 +1,6 @@
+> 查看docker进程日志    journalctl -fu docker.service
+> 查看docker进程日志    systemctl status docker
+
 * 在配置/usr/lib/systemd/system/docker.service的参数时，通用的配置方法是：在EnvironmentFile的参数配置/etc/sysconfig/docker（基本配置）、/etc/sysconfig/docker-storage（存储）、/etc/sysconfig/docker-network（网络），我们想要/etc/default/docker 生效，就需要添加EnvironmentFile=-/etc/default/docker，让后在ExecStart这个配置中，添加引用的参数$DOCKER_OPTS
 * 默认情况下，/etc/default/docker配置了不会生效的，我们需要手动添加到docker的环境设定中，需要配置的文件是/usr/lib/systemd/system/docker.service，需要添加EnvironmentFile=-/etc/default/docker，让后在ExecStart这个配置中，添加引用的参数$DOCKER_OPTS。
 
@@ -20,7 +23,6 @@ Type=notify
 NotifyAccess=all
 KillMode=process
 #添加我们自定义的配置文件
-EnvironmentFile=-/etc/default/docker #添加配置文件，（-代表ignore error）
 EnvironmentFile=-/etc/sysconfig/docker
 EnvironmentFile=-/etc/sysconfig/docker-storage
 EnvironmentFile=-/etc/sysconfig/docker-network
@@ -31,9 +33,6 @@ ExecStart=/usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
           $OPTIONS \
           $DOCKER_STORAGE_OPTIONS \
           $DOCKER_NETWORK_OPTIONS \
-          $ADD_REGISTRY \
-          $BLOCK_REGISTRY \
-          $INSECURE_REGISTRY \
           $DOCKER_OPTS #需要引用的参数，也是网卡设定参数
 ExecReload=/bin/kill -s HUP $MAINPID
 LimitNOFILE=1048576
