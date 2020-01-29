@@ -87,7 +87,7 @@ docker cp aaa.javafly.net.conf nginx:/etc/nginx/conf.d
 docker cp bbb.javafly.net.conf nginx:/etc/nginx/conf.d
 docker cp ccc.javafly.net.conf nginx:/etc/nginx/conf.d
 docker restart nginx
- # 然后通过域名访问根路径  https://aaa.javafly.net   https://bbb.javafly.net    https://ccc.javafly.net 
+# 然后通过域名访问根路径  https://aaa.javafly.net   https://bbb.javafly.net    https://ccc.javafly.net 
 ```
 
 * 使用 --dry-run 参数 不会生成 /etc/letsencrypt/live/域名/fullchain.pem , /etc/letsencrypt/live/域名/privkey.pem , /etc/letsencrypt/live/域名/chain.pem 这些文件
