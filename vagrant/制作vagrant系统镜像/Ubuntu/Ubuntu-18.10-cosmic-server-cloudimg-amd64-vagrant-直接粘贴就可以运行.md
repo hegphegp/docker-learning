@@ -16,7 +16,7 @@ tee Vagrantfile <<-'EOF'
 Vagrant.configure("2") do |config|
   config.vm.define :ubuntu1810 do |ubuntu1810|
     ubuntu1810.vm.box = "Ubuntu-18.10-cosmic-server-cloudimg-amd64"
-    ubuntu1810.vm.hostname = "centos-1811"
+    ubuntu1810.vm.hostname = "ubuntu-1810"
 # 官方镜像都不能设置账号密码登录，因为官方原始镜像的/etc/ssh/sshd_config文件配置都是不允许任何账号远程登录的
     ubuntu1810.vm.synced_folder ".", "/vagrant", disabled: true
     ubuntu1810.vm.network :private_network, ip: "192.168.35.11"

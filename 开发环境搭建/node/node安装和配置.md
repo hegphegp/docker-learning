@@ -1,5 +1,40 @@
 # Linux下，node的安装和配置
 
+### 直接copy运行，不要浪费时间
+```
+echo "deb http://mirrors.aliyun.com/ubuntu/ $(lsb_release -cs) main restricted universe multiverse" > /etc/apt/sources.list
+echo "deb http://mirrors.aliyun.com/ubuntu/ $(lsb_release -cs)-security main restricted universe multiverse" >> /etc/apt/sources.list
+echo "deb http://mirrors.aliyun.com/ubuntu/ $(lsb_release -cs)-updates main restricted universe multiverse" >> /etc/apt/sources.list
+echo "deb http://mirrors.aliyun.com/ubuntu/ $(lsb_release -cs)-proposed main restricted universe multiverse" >> /etc/apt/sources.list
+echo "deb http://mirrors.aliyun.com/ubuntu/ $(lsb_release -cs)-backports main restricted universe multiverse" >> /etc/apt/sources.list
+
+# 下面这句一定要运行，否则会认为国内node加速下载地址是不可信，导致不在国内加速器下载最新版本
+curl -s https://deb.nodesource.com/gpgkey/nodesource.gpg.key | sudo apt-key add -
+
+# 安装 10.X版本
+echo "deb https://mirrors.tuna.tsinghua.edu.cn/nodesource/deb_10.x $(lsb_release -cs) main" > /etc/apt/sources.list.d/nodesource.list
+echo "deb-src https://mirrors.tuna.tsinghua.edu.cn/nodesource/deb_10.x $(lsb_release -cs) main" >> /etc/apt/sources.list.d/nodesource.list
+cat /etc/apt/sources.list.d/nodesource.list 
+apt-get update
+apt-get install -y nodejs
+
+npm config set registry https://registry.npm.taobao.org --verbose
+npm install -g cnpm --registry=https://registry.npm.taobao.org --verbose
+cnpm -v
+cnpm install -g yarn
+yarn config set registry https://registry.npm.taobao.org/
+
+# 部分软件单独设置加速地址
+npm config set registry https://registry.npm.taobao.org
+npm config set sass_binary_site https://npm.taobao.org/mirrors/node-sass/
+npm config set phantomjs_cdnurl https://npm.taobao.org/mirrors/phantomjs/
+npm config set electron_mirror https://npm.taobao.org/mirrors/electron/
+npm config set sqlite3_binary_host_mirror https://npm.taobao.org/mirrors/sqlite3/
+npm config set profiler_binary_host_mirror https://npm.taobao.org/mirrors/node-inspector/
+npm config set chromedriver_cdnurl https://npm.taobao.org/mirrors/chromedriver/
+npm config set puppeteer_download_host=https://npm.taobao.org/mirrors/
+```
+
 ### 方法一:二进制在线下载安装,可以多用户使用(不行的话，再用方法二下载)
 ```
 echo "deb http://mirrors.aliyun.com/ubuntu/ $(lsb_release -cs) main restricted universe multiverse" > /etc/apt/sources.list
@@ -16,7 +51,7 @@ echo "deb https://mirrors.tuna.tsinghua.edu.cn/nodesource/deb_8.x $(lsb_release 
 echo "deb-src https://mirrors.tuna.tsinghua.edu.cn/nodesource/deb_8.x $(lsb_release -cs) main" >> /etc/apt/sources.list.d/nodesource.list
 cat /etc/apt/sources.list.d/nodesource.list 
 apt-get update
-apt-get install nodejs
+apt-get install -y nodejs
 
 
 # 安装 10.X版本
@@ -24,7 +59,7 @@ echo "deb https://mirrors.tuna.tsinghua.edu.cn/nodesource/deb_10.x $(lsb_release
 echo "deb-src https://mirrors.tuna.tsinghua.edu.cn/nodesource/deb_10.x $(lsb_release -cs) main" >> /etc/apt/sources.list.d/nodesource.list
 cat /etc/apt/sources.list.d/nodesource.list 
 apt-get update
-apt-get install nodejs
+apt-get install -y nodejs
 ```
 
 ### 方法二：压缩包下载安装，只能当前用户使用
