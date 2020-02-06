@@ -14,9 +14,10 @@ yum makecache
 systemctl stop firewalld && systemctl disable firewalld && systemctl stop firewalld
 yum install -y docker-ce
 mkdir -p /etc/docker
+# https://docker.mirrors.ustc.edu.cn 是中国科学技术大学的docker仓库加速器，好像是实时代理的，但是时好时坏
 tee /etc/docker/daemon.json <<-'EOF'
 {
-  "registry-mirrors": ["https://docker.mirrors.ustc.edu.cn"]
+  "registry-mirrors": ["https://kfp63jaj.mirror.aliyuncs.com"]
 }
 EOF
 systemctl enable docker #设置docker服务开机自启动
@@ -155,17 +156,21 @@ yum install -y https://mirrors.aliyun.com/docker-ce/linux/centos/7/x86_64/stable
 
 mkdir -p /etc/docker
 tee /etc/docker/daemon.json <<-'EOF'
+# https://docker.mirrors.ustc.edu.cn 是中国科学技术大学的docker仓库加速器，好像是实时代理的，但是时好时坏
+tee /etc/docker/daemon.json <<-'EOF'
 {
-  "registry-mirrors": ["https://docker.mirrors.ustc.edu.cn"]
+  "registry-mirrors": ["https://kfp63jaj.mirror.aliyuncs.com"]
 }
+EOF
 EOF
 systemctl enable docker #设置docker服务开机自启动
 sudo systemctl restart docker
 
 # 生产环境一定要加graph选项，指定docker镜像和日志的目录为大空间的目录，否则死的时候武眼睇
 # echo $PASSWD | sudo tee /etc/docker/daemon.json <<-'EOF'
+# https://docker.mirrors.ustc.edu.cn 是中国科学技术大学的docker仓库加速器，好像是实时代理的，但是时好时坏
 # {
-#    "registry-mirrors": ["https://docker.mirrors.ustc.edu.cn"],
+#    "registry-mirrors": ["https://kfp63jaj.mirror.aliyuncs.com"],
 #    "graph": "/opt/data/docker"
 # }
 # EOF

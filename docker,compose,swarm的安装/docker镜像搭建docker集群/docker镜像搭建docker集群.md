@@ -44,7 +44,7 @@ mkdir -p manager1 manager2 manager3 worker1 worker2 worker3
 docker network rm docker-swarm-network
 docker network create --subnet=10.10.10.0/24 docker-swarm-network
 
-echo '{ "registry-mirrors": ["https://docker.mirrors.ustc.edu.cn"] }' > daemon.json
+echo '{ "registry-mirrors": ["https://kfp63jaj.mirror.aliyuncs.com"] }' > daemon.json
 
 docker run --privileged -itd --name manager1 --hostname manager1 --net docker-swarm-network --ip 10.10.10.101 --restart always -v $PWD/daemon.json:/etc/docker/daemon.json -v $PWD/manager1:/var/lib/docker docker:18.09-dind
 docker run --privileged -itd --name manager2 --hostname manager2 --net docker-swarm-network --ip 10.10.10.102 --restart always -v $PWD/daemon.json:/etc/docker/daemon.json -v $PWD/manager2:/var/lib/docker docker:18.09-dind

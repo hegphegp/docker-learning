@@ -22,9 +22,10 @@ sudo apt-get -y install docker-ce
 
 
 mkdir -p /etc/docker
+# https://docker.mirrors.ustc.edu.cn 是中国科学技术大学的docker仓库加速器，好像是实时代理的，但是时好时坏
 tee /etc/docker/daemon.json <<-'EOF'
 {
-  "registry-mirrors": ["https://docker.mirrors.ustc.edu.cn"]
+  "registry-mirrors": ["https://kfp63jaj.mirror.aliyuncs.com"]
 }
 EOF
 systemctl enable docker #设置docker服务开机自启动

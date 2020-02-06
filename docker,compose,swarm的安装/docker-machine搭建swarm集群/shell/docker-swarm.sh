@@ -11,7 +11,7 @@
 manager=(manager1 manager2 manager3)
 worker=(worker1 worker2 worker3)
 iso_relative_path=iso/boot2docker-17.11.0-ce-rc2.iso
-mirror_addr=https://docker.mirrors.ustc.edu.cn
+mirror_addr=https://kfp63jaj.mirror.aliyuncs.com
 # <<<<<<<<<<<<<定义开始变量
 
 

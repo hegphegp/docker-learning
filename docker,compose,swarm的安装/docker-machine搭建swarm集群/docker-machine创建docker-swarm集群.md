@@ -17,20 +17,21 @@ chmod +x /usr/local/bin/docker-machine
 
 #### [对应的docker-machine创建docker-swarm集群的shell脚本](shell/docker-swarm.sh)  
 
+
 #### docker-machine创建虚拟机的参数说明
 * 1) 指定驱动为virtualbox，--driver virtualbox 
 * 2) 指定ISO的文件路径， --virtualbox-boot2docker-url为本地路径的boot2docker的ISO文件，不指定会在官网下载最新的，国内的网络够呛的
 * 3) 指定每台虚拟机的内存，--virtualbox-memory 1024
 * 4) 指定每台虚拟机的CPU，--virtualbox-cpu-count 2
-* 5) 指定国内docker仓库的加速器，--engine-registry-mirror https://docker.mirrors.ustc.edu.cn
+* 5) 指定国内docker仓库的加速器，--engine-registry-mirror https://kfp63jaj.mirror.aliyuncs.com
 ```
-docker-machine create --driver virtualbox --virtualbox-boot2docker-url file:/home/hgp/install-packages/docker-swarm/iso/boot2docker-17.11.0-ce-rc2.iso --virtualbox-cpu-count 2 --virtualbox-memory 1024 --engine-registry-mirror https://docker.mirrors.ustc.edu.cn worker2
+docker-machine create --driver virtualbox --virtualbox-boot2docker-url file:/home/hgp/install-packages/docker-swarm/iso/boot2docker-17.11.0-ce-rc2.iso --virtualbox-cpu-count 2 --virtualbox-memory 1024 --engine-registry-mirror https://kfp63jaj.mirror.aliyuncs.com worker2
 ```
 
 #### 集群搭建的几条命令
 ```
 # docker-machine创建虚拟机的命令
-docker-machine create --driver virtualbox --virtualbox-boot2docker-url file:/home/hgp/install-packages/docker-swarm/iso/boot2docker-17.11.0-ce-rc2.iso --virtualbox-cpu-count 2 --virtualbox-memory 1024 --engine-registry-mirror https://docker.mirrors.ustc.edu.cn worker2
+docker-machine create --driver virtualbox --virtualbox-boot2docker-url file:/home/hgp/install-packages/docker-swarm/iso/boot2docker-17.11.0-ce-rc2.iso --virtualbox-cpu-count 2 --virtualbox-memory 1024 --engine-registry-mirror https://kfp63jaj.mirror.aliyuncs.com worker2
 # 选择一台docker虚拟机作为管理节点，并初始化swarm集群(因为docker虚拟机可能存在多个网卡，初始化时要选择集群监听的网卡)
 docker-machine ip manager1 
 docker-machine ssh manager1 docker swarm init --advertise-addr 192.168.99.106
