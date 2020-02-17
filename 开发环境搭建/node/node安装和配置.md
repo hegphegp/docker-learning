@@ -1,5 +1,12 @@
 # Linux下，node的安装和配置
 
+* npm, cnpm, yarn 去掉加速器配置
+```
+npm config delete registry
+cnpm config delete registry
+yarn config delete registry
+```
+
 ### 直接copy运行，不要浪费时间
 ```
 echo "deb http://mirrors.aliyun.com/ubuntu/ $(lsb_release -cs) main restricted universe multiverse" > /etc/apt/sources.list
@@ -14,14 +21,12 @@ curl -s https://deb.nodesource.com/gpgkey/nodesource.gpg.key | sudo apt-key add 
 # 安装 10.X版本
 echo "deb https://mirrors.tuna.tsinghua.edu.cn/nodesource/deb_10.x $(lsb_release -cs) main" > /etc/apt/sources.list.d/nodesource.list
 echo "deb-src https://mirrors.tuna.tsinghua.edu.cn/nodesource/deb_10.x $(lsb_release -cs) main" >> /etc/apt/sources.list.d/nodesource.list
-cat /etc/apt/sources.list.d/nodesource.list 
 apt-get update
 apt-get install -y nodejs
 
 npm config set registry https://registry.npm.taobao.org --verbose
 npm install -g cnpm --registry=https://registry.npm.taobao.org --verbose
-cnpm -v
-cnpm install -g yarn
+npm install -g yarn --verbose
 yarn config set registry https://registry.npm.taobao.org/
 
 # 部分软件单独设置加速地址
