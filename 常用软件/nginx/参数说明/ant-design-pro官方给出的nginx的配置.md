@@ -13,6 +13,10 @@ server {
 
     root /usr/share/nginx/html;
 
+    location /aaa {
+        rewrite ^ $scheme://$http_host/aaa/ redirect;
+    }
+    
     location / {
         # 用于配合 browserHistory使用
         try_files $uri $uri/ /index.html;
@@ -34,7 +38,7 @@ server {
     # 如果有资源，建议使用 https + http2，配合按需加载可以获得更好的体验
     listen 443 ssl http2 default_server;
 
-    # 证书的公私钥
+    # 证书的公私钥
     ssl_certificate /path/to/public.crt;
     ssl_certificate_key /path/to/private.key;
 

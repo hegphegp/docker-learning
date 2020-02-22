@@ -1,5 +1,23 @@
 ## 常用的docker容器命令
 
+
+#### 查看本地docker的network的所有网段信息
+```
+docker network inspect --format='{{.IPAM.Config}} {{.Name}}' $(docker network ls -q)
+# [{192.168.32.0/20  192.168.32.1 map[]}] aa_default
+# [{10.10.58.0/24  10.10.58.1 map[]}] ansible-network
+# [{172.17.0.0/16  172.17.0.1 map[]}] bridge
+# [{172.16.18.0/24  172.16.18.1 map[]}] cluster_elk-network
+# [{172.20.0.0/16  172.20.0.1 map[]}] compose_default
+# [{172.23.0.0/16  172.23.0.1 map[]}] console_default
+# [{172.26.0.0/16  172.26.0.1 map[]}] consul_consul
+# [{10.10.10.0/24  10.10.10.1 map[]}] docker-swarm-network
+# [{172.29.0.0/16  172.29.0.1 map[]}] docker_gwbridge
+# [{172.21.0.0/16  172.21.0.1 map[]}] document_default
+# [{172.19.0.0/16  172.19.0.1 map[]}] example_default
+# [{172.25.0.0/16  172.25.0.1 map[]}] harbor_harbor
+```
+
 ```
 # 列出所有容器对应的名称，ip以及端口
 docker inspect --format='{{.Name}} {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $(docker ps -aq)
@@ -12,6 +30,7 @@ docker inspect --format='{{.Name}} {{.NetworkSettings.IPAddress}} {{.HostConfig.
 # docker inspect -f '{{.Name}} {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}} {{.HostConfig.PortBindings}}' $(docker ps -aq)
 # docker inspect -f='{{.Name}} {{.NetworkSettings.IPAddress}} {{.HostConfig.PortBindings}}' $(docker ps -aq)
 ```
+
 ```
 # postgre启动命令，并且设置连接数
 docker run -itd --name postgresql --restart always -e TZ=Asia/Shanghai -v /etc/localtime:/etc/localtime:ro -v /opt/data/postgresql:/var/lib/postgresql/data -p 5432:5432 -e POSTGRES_USER=sde -e POSTGRES_PASSWORD=postgres postgres:9.6.1 postgres -c max_connections=500
