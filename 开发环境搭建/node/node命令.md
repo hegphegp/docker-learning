@@ -32,6 +32,7 @@ npm get registry
 # npm config list --json
 # 设置成淘宝镜像
 npm config set registry https://registry.npm.taobao.org
+npm set disturl https://npm.taobao.org/dist # node-gyp 编译依赖的 node 源码镜像
 npm config set sass_binary_site https://npm.taobao.org/mirrors/node-sass/
 npm config set phantomjs_cdnurl https://npm.taobao.org/mirrors/phantomjs/
 npm config set electron_mirror https://npm.taobao.org/mirrors/electron/
@@ -39,6 +40,9 @@ npm config set sqlite3_binary_host_mirror https://npm.taobao.org/mirrors/sqlite3
 npm config set profiler_binary_host_mirror https://npm.taobao.org/mirrors/node-inspector/
 npm config set chromedriver_cdnurl https://npm.taobao.org/mirrors/chromedriver/
 npm config set puppeteer_download_host=https://npm.taobao.org/mirrors/
+npm set operadriver_cdnurl https://npm.taobao.org/mirrors/operadriver
+npm set selenium_cdnurl https://npm.taobao.org/mirrors/selenium
+npm set node_inspector_cdnurl https://npm.taobao.org/mirrors/node-inspector 
 
 
 # 1.查询Yarn当前配置的镜像

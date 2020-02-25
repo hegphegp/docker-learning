@@ -1,5 +1,21 @@
 ## 常用的docker容器命令
 
+### 在生产线上，被容器日志占满硬盘坑了无数次
+* 
+* 查看已有容器的日志大小    ll -h $(find /var/lib/docker/containers/ -name *-json.log)
+* max-file=3，意味着一个容器有三个日志，分别是id+.json、id+1.json、id+2.json，亲测，有每秒2万多的请求压测nginx容器，好像没有生成3个日志文件，不知道是高版本不适用，还是参数改了，还是nginx请求太多，没能及时生成3
+```
+tee /etc/docker/daemon.json <<-'EOF'
+{
+    "registry-mirrors": ["https://kfp63jaj.mirror.aliyuncs.com"],
+    "log-driver": "json-file",
+    "log-opts": {
+        "max-size": "300m",
+        "max-file":"3"
+    }
+}
+EOF
+```
 
 #### 查看本地docker的network的所有网段信息
 ```

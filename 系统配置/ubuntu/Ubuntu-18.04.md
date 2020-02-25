@@ -246,11 +246,22 @@ sudo apt-get install kazam
 # 启动软件
 kazam
 ```
+
 ### 安装 audacious 音乐播放器
 ```
 sudo apt-get install audacious
 # 解决乱码的操作，在导航菜单依次点击  文件 -> 设置 -> 播放列表 -> 自动检测下拉编码 -> 选中汉语
 # 解决乱码的操作，在导航菜单依次点击  文件 -> 设置 -> 播放列表 -> 备用字符编码 -> 输入 GBK
+```
+
+### 解决Ubuntu的SSH自动断线问题
+```
+# 依赖ssh客户端定时发送心跳检测，配置/etc/ssh/ssh_config文件，在末尾添加上
+ServerAliveInterval 20
+ServerAliveCountMax 999
+
+# ServerAliveInterval 20        # 每隔20秒向服务器发出一次心跳检测
+# ServerAliveCountMax 999 # 若超过50次请求都没有成功，就主动断开与服务器端的连接
 ```
 
 ### 安装Ubuntu远程连接windows的软件rdesktop
