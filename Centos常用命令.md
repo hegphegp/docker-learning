@@ -1,8 +1,28 @@
 # Centos常用命令
 
+#### git的Socket5代理, 无法忍受超级慢的网速
+```
+# 优先使用临时代理
+ALL_PROXY=socks5://127.0.0.1:1080 git clone git@github.com:hegphegp/docker-learning.git
+
+# git全局配置socks5代理
+# # git config --global http.proxy 'socks5://127.0.0.1:1080'
+# # git config --global https.proxy 'socks5://127.0.0.1:1080'
+
+
+# git清除socks5代理
+# # git config --global --unset http.proxy
+# # git config --global --unset https.proxy
+```
+
 #### Centos和Ubuntu查看软件开机的启动时间
 ```
 systemd-analyze blame
+```
+
+#### 查看centos的版本号
+```
+cat /etc/redhat-release
 ```
 
 #### 多线程下载工具 axel , 下载国外资源时比较快
