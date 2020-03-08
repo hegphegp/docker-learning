@@ -24,6 +24,25 @@ echo "deb-src https://mirrors.tuna.tsinghua.edu.cn/nodesource/deb_10.x $(lsb_rel
 apt-get update
 apt-get install -y nodejs
 
+# 安装 11.X版本
+# echo "deb https://mirrors.tuna.tsinghua.edu.cn/nodesource/deb_11.x $(lsb_release -cs) main" > /etc/apt/sources.list.d/nodesource.list
+# echo "deb-src https://mirrors.tuna.tsinghua.edu.cn/nodesource/deb_11.x $(lsb_release -cs) main" >> /etc/apt/sources.list.d/nodesource.list
+# apt-get update
+# apt-get install -y nodejs
+
+# 安装 12.X版本
+# echo "deb https://mirrors.tuna.tsinghua.edu.cn/nodesource/deb_12.x $(lsb_release -cs) main" > /etc/apt/sources.list.d/nodesource.list
+# echo "deb-src https://mirrors.tuna.tsinghua.edu.cn/nodesource/deb_12.x $(lsb_release -cs) main" >> /etc/apt/sources.list.d/nodesource.list
+# apt-get update
+# apt-get install -y nodejs
+
+# 安装 13.X版本
+# echo "deb https://mirrors.tuna.tsinghua.edu.cn/nodesource/deb_13.x $(lsb_release -cs) main" > /etc/apt/sources.list.d/nodesource.list
+# echo "deb-src https://mirrors.tuna.tsinghua.edu.cn/nodesource/deb_13.x $(lsb_release -cs) main" >> /etc/apt/sources.list.d/nodesource.list
+# apt-get update
+# apt-get install -y nodejs
+
+
 npm config set registry https://registry.npm.taobao.org --verbose
 npm install -g cnpm --registry=https://registry.npm.taobao.org --verbose
 npm install -g yarn --verbose

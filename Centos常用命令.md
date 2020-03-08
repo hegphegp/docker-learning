@@ -121,6 +121,8 @@ grep -rn -i "netty" /opt/soft
 # grep指定搜索指定的后缀名
 grep -R -n -i --include="*.java" "netty" .
 grep -R -n -i --include="*.java" "netty" /opt/soft
+# 忽略指定的目录
+grep --exclude-dir="node_modules" -rni "netty" .
 ```
 
 ### 被坑死过的命令

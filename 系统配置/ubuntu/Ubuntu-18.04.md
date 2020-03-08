@@ -186,6 +186,12 @@ sudo apt --fix-broken -y install    # 自动修复包的依赖
 dpkg -i vagrant_2.2.4_x86_64.deb
 ```
 
+##### 设置dns解析服务器，没配置时，互联网ddns动态IP域名绑定，导致本地还是用了旧的IP地址，重启家里的路由器，按照网上教程刷新dns都不行，搞了一个多小时还没解决，后面在/etc/resolv.conf加了dns解析服务器后，10秒就生效了，域名可以解析到新的IP地址了
+```
+echo "nameserver 8.8.8.8">> /etc/resolv.conf
+echo "nameserver 114.114.114.114">> /etc/resolv.conf
+```
+
 ### 截图工具
 ```
 apt-get install -y shutter
