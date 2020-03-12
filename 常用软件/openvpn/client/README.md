@@ -47,8 +47,8 @@ openvpn --config ${CONFIG_FILE_NAME} --auth-user-pass /etc/openvpn/auth.txt --au
 docker build -t openvpn:2.4.6-r3 .
 cd .. && rm -rf openvpn-2.4.6-r3
 
-docker run -itd --privileged --net=host --name openvpn -e USERNAME=aaa -e PASSWORD="Aaaa\$123" -e CONFIG_FILE_NAME=client.ovpn -v /opt/soft/openvpn-client:/openvpn openvpn:2.4.6-r3
-# docker run -itd --privileged --net=host --name openvpn -e USERNAME=aaa -e PASSWORD='Aaaa$123' -e CONFIG_FILE_NAME=client.ovpn -v /opt/soft/openvpn-client:/openvpn openvpn:2.4.6-r3
+docker run -itd --privileged --net=host --name openvpn -e USERNAME=aaa -e PASSWORD="Aaaa\$123" -e CONFIG_FILE_NAME=client.ovpn -v /etc/localtime:/etc/localtime -v /opt/soft/openvpn-client:/openvpn openvpn:2.4.6-r3
+# docker run -itd --privileged --net=host --name openvpn -e USERNAME=aaa -e PASSWORD='Aaaa$123' -e CONFIG_FILE_NAME=client.ovpn -v /etc/localtime:/etc/localtime -v /opt/soft/openvpn-client:/openvpn openvpn:2.4.6-r3
 
 docker logs -f --tail=300 openvpn
 ```
