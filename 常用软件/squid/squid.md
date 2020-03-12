@@ -4,6 +4,7 @@
 * nginx自带的功能只支持 http 的正向代理, 不支持https的正向代理,要非常麻烦地下载nginx插件,然后加入该模块,重新编译nginx
 * squid自带的功能就支持 http和http的正向代理
 * yum可以在 /etc/yum.conf配置文件里面设置 proxy=http://ip:port 通过代理下载安装软件
+* curl走代理下载文件  curl --proxy 10.36.72.18:3128 -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
 
 ```
 mkdir -p squid
@@ -47,5 +48,12 @@ docker run --name squid -itd --restart=always -p 3128:3128 -v `pwd`/squid/squid.
 curl -x localhost:3128 http://www.baidu.com
 curl -x localhost:3128 https://www.baidu.com
 curl -x localhost:3128 https://www.taobao.com
+curl -x localhost:3128 https://www.taobao.com
+
+curl --proxy localhost:3128 http://www.baidu.com
+curl --proxy localhost:3128 https://www.baidu.com
+curl --proxy localhost:3128 https://www.taobao.com
+curl --proxy localhost:3128 https://www.taobao.com
+
 docker exec -it squid cat /var/log/squid/access.log
 ```

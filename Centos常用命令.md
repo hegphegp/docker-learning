@@ -15,14 +15,17 @@ ALL_PROXY=socks5://127.0.0.1:1080 git clone git@github.com:hegphegp/docker-learn
 # # git config --global --unset https.proxy
 ```
 
+#### 查看目录的使用空间的大小
+```
+# 查看所有首层文件夹的大小
+du -h / --max-depth=1
+# 查看/var路径下的首层文件夹的大小
+du -h /var --max-depth=1
+```
+
 #### Centos和Ubuntu查看软件开机的启动时间
 ```
 systemd-analyze blame
-```
-
-#### 查看centos的版本号
-```
-cat /etc/redhat-release
 ```
 
 #### 多线程下载工具 axel , 下载国外资源时比较快
@@ -41,10 +44,34 @@ rpm -q centos-release
 lsb_release -a   # 事先必须先安装好 lsb_release 这个工具
 ```
 
+#### 在/etc/profile.d目录下配置环境变量
 ```
-# 压缩命令，参数z是压缩
-# tar压缩当前目录(如果目录有空格的话，命令会执行失败)
-WORKPATH=$PWD && tar -czvf $(basename `pwd`).tar.gz -C $WORKPATH $(ls -all $WORKPATH)
+# 配置gradle环境
+mkdir -p /etc/profile.d
+tee /etc/profile.d/gradle.sh <<-'EOF'
+# set gradle environment
+export GRADLE_HOME=/opt/soft/gradle/gradle-4.10.3
+export PATH=$PATH:$GRADLE_HOME/bin
+EOF
+chmod a+x /etc/profile.d/gradle.sh
+
+# 配置gradle环境
+mkdir -p /etc/profile.d
+tee /etc/profile.d/java.sh <<-'EOF'
+# set java environment
+export JAVA_HOME=/opt/soft/java/jdk1.8.0_222
+export JRE_HOME=/opt/soft/java/jdk1.8.0_222/jre
+export PATH=$PATH:$JAVA_HOME/bin:$JAVA_HOME/lib:$JRE_HOME/bin:$JRE_HOME/lib
+EOF
+chmod a+x /etc/profile.d/java.sh
+```
+
+#### 解压缩文件夹目录
+```
+# 压缩命令，参数z是压缩, 加上z参数, 大文件目录打包压缩会很慢
+# tar压缩当前目录
+tar -czvf ../$(basename `pwd`).tar.gz .
+
 # 压缩指定文件夹
 tar -czvf postgres-idc.tar.gz postgres
 
