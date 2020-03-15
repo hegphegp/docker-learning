@@ -1,9 +1,15 @@
 # Centos常用命令
 
-#### git的Socket5代理, 无法忍受超级慢的网速
+* [目录]
+    * [git的Socket5代理](git的Socket5代理)
+    * [tree忽略某些文件夹](tree忽略某些文件夹)
+
+#### git的Socket5代理 , tree忽略某些文件夹
 ```
-# 优先使用临时代理
-ALL_PROXY=socks5://127.0.0.1:1080 git clone git@github.com:hegphegp/docker-learning.git
+# 优先使用临时代理，亲测，好像该代理只对git命令生效，对curl命令不生效
+ALL_PROXY=socks5://127.0.0.1:1080 git clone git@github.com:hegphegp/docker-learning.git  # 对git命令生效
+ALL_PROXY=socks5://127.0.0.1:1080 git clone https://github.com/pkaq/ant-design-pro.git  # 对git命令生效
+ALL_PROXY=socks5://127.0.0.1:1080 curl https://www.google.com/ # 对curl命令无效
 
 # git全局配置socks5代理
 # # git config --global http.proxy 'socks5://127.0.0.1:1080'
@@ -13,6 +19,16 @@ ALL_PROXY=socks5://127.0.0.1:1080 git clone git@github.com:hegphegp/docker-learn
 # git清除socks5代理
 # # git config --global --unset http.proxy
 # # git config --global --unset https.proxy
+```
+
+#### tree忽略某些文件夹
+```
+# -I 命令使用正则匹配来排除文件夹
+tree -I "node_modules"
+# 也可以使用 | 同时排除多个文件夹
+tree -I "node_modules|cache|test_*"
+# 只看两级目录
+tree -L 2
 ```
 
 #### 查看目录的使用空间的大小
@@ -27,6 +43,8 @@ du -h /var --max-depth=1
 ```
 systemd-analyze blame
 ```
+
+tree -I "node_modules"
 
 #### 多线程下载工具 axel , 下载国外资源时比较快
 ```
