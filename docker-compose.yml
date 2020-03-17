@@ -1,0 +1,38 @@
+version: '3.3'
+
+# 这个世界太可怕，有些参数写上去，启动就死掉，但是却不抛是哪个参数错误，导致一个个测试，太可怕了，人生有多少时间可以浪费呢
+services:
+  mysql:
+    restart: always
+    # privileged: true # 加了privileged: true参数后，启动就死掉了，启动就死人了，太可怕了
+    image: mysql:5.7.28
+    # container_name: mysql
+    # command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --init-connect='SET NAMES utf8mb4;' --default-time-zone='+8:00' --innodb-flush-log-at-trx-commit=0 --log-timestamps=SYSTEM --sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' --general_log=on --general_log_file=mysql-sql.log
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --init-connect='SET NAMES utf8mb4;' --default-time-zone='+8:00' --innodb-flush-log-at-trx-commit=0 --log-timestamps=SYSTEM --sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION'
+    ports:
+      - 3306:3306
+    environment:
+      - TZ=Asia/Shanghai
+      - MYSQL_ROOT_PASSWORD=password
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./data/mysql:/var/lib/mysql
+    # docker开启SQL日志，--general_log_file用绝对路时，发现失败了，没有在该路径生成日志文件，现在改成相对路径
+    # 查看日志 cat /var/lib/mysql/mysql-sql.log
+    # 查看最后100行日志 tail -n 100 /var/lib/mysql/mysql-sql.log
+
+  postgres:
+    restart: always
+    privileged: true
+    image: postgres:10.7-alpine
+    # container_name: postgres
+    command: postgres -c max_connections=100 -c shared_buffers=200MB
+    ports:
+      - 5432:5432
+    environment:
+      - TZ=Asia/Shanghai
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=password
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./data/postgres:/var/lib/postgresql/data

@@ -1,10 +1,13 @@
 # Centos常用命令
 
 * [目录]
-    * [git的Socket5代理](git的Socket5代理)
-    * [tree忽略某些文件夹](tree忽略某些文件夹)
+    * [git的Socket5代理](#git的Socket5代理)
+    * [tree忽略某些文件夹](#tree忽略某些文件夹)
+    * [查看目录的使用空间的大小](#查看目录的使用空间的大小)
+    * [解压缩文件夹](#解压缩文件夹)
+    * [批量递归把文件夹子孙文件转码](#批量递归把文件夹子孙文件转码)
 
-#### git的Socket5代理 , tree忽略某些文件夹
+#### git的Socket5代理
 ```
 # 优先使用临时代理，亲测，好像该代理只对git命令生效，对curl命令不生效
 ALL_PROXY=socks5://127.0.0.1:1080 git clone git@github.com:hegphegp/docker-learning.git  # 对git命令生效
@@ -39,14 +42,16 @@ du -h / --max-depth=1
 du -h /var --max-depth=1
 ```
 
-#### Centos和Ubuntu查看软件开机的启动时间
+#### linux查看开机时间
 ```
-systemd-analyze blame
+# Centos和Ubuntu查看开机时间
+who -b
+# 查看Linux系统历史启动的时间
+last reboot
+# systemd-analyze blame
 ```
 
-tree -I "node_modules"
-
-#### 多线程下载工具 axel , 下载国外资源时比较快
+#### linux多线程下载工具 axel
 ```
 yum install -y axel
 #  使用方法
@@ -55,7 +60,7 @@ yum install -y axel
 axel -a -n 10 http://downloadUrl
 ```
 
-#### 查看具体的Centos版本(下面任意一条命令)
+#### 查看具体的Centos版本
 ```
 cat /etc/redhat-release
 rpm -q centos-release
@@ -84,7 +89,7 @@ EOF
 chmod a+x /etc/profile.d/java.sh
 ```
 
-#### 解压缩文件夹目录
+#### 解压缩文件夹
 ```
 # 压缩命令，参数z是压缩, 加上z参数, 大文件目录打包压缩会很慢
 # tar压缩当前目录
@@ -97,26 +102,25 @@ tar -czvf postgres-idc.tar.gz postgres
 tar -zxvf dapeng.tar.gz -C /data/nginx/html
 ```
 
-#### 批量递归把子孙文件夹的文件转码, 并替换旧的文件
+#### 批量递归把文件夹子孙文件转码
 ```
+# 批量递归把文件夹子孙文件转码, 并替换旧的文件
 find 要转码的文件件夹 -type f -exec iconv -f 原来的编码 -t 转码后的编码 {} -o {} \;
 # find 文件夹 -type f -exec iconv -f GBK -t UTF-8 {} -o {} \;
+
+# 批量递归把子孙文件夹的文件转码到另外的文件夹，先递归创建目录路径，再批量转码 
+find 要转码的文件夹 -type d -exec mkdir -p 新文件夹/{} \;     # 递归创建目录结构
+find 要转码的文件夹 -type f -exec iconv -f 原来的编码 -t 转码后的编码 {} -o 新文件夹/{} \;
+# find default -type d -exec mkdir -p utf/{} \;
+# find 要转码的文件夹 -type f -exec iconv -f GBK -t UTF-8 {} -o 新文件夹/{} \;
 ```
 
-#### 批量递归把子孙文件夹的文件转码到另外的文件夹
-```
-# 递归创建目录结构
-find 要转码的文件件夹 -type d -exec mkdir -p 新文件夹/{} \;
-# find default -type d -exec mkdir -p utf/{} \;
-find 要转码的文件件夹 -type f -exec iconv -f 原来的编码 -t 转码后的编码 {} -o 新文件夹/{} \;
-# find 要转码的文件件夹 -type f -exec iconv -f GBK -t UTF-8 {} -o 新文件夹/{} \;
-```
 
 ### yum下载软件离线安装包和依赖包
 ```
 mkdir -p /opt/packages/dockerRepo/18.06.1
 yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
-yum install --downloadonly --downloaddir=/opt/packages/dockerRepo/18.06.1 docker-ce-18.06.1.ce-3.el7.x86_64
+yum install --downloadonly --downloaddir=/opt/packages/dockerRepo/18.06.3 docker-ce-18.06.3.ce
 ```
 
 ##### 查看指定端口服务的PID

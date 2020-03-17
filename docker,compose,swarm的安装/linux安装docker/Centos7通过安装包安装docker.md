@@ -155,13 +155,11 @@ yum install -y https://mirrors.aliyun.com/docker-ce/linux/centos/7/x86_64/stable
 # yum install -y https://mirrors.aliyun.com/docker-ce/linux/centos/7/x86_64/stable/Packages/docker-ce-18.09.0-3.el7.x86_64.rpm 
 
 mkdir -p /etc/docker
-tee /etc/docker/daemon.json <<-'EOF'
 # https://docker.mirrors.ustc.edu.cn 是中国科学技术大学的docker仓库加速器，好像是实时代理的，但是时好时坏
 tee /etc/docker/daemon.json <<-'EOF'
 {
   "registry-mirrors": ["https://kfp63jaj.mirror.aliyuncs.com"]
 }
-EOF
 EOF
 systemctl enable docker #设置docker服务开机自启动
 sudo systemctl restart docker

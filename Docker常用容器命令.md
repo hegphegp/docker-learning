@@ -20,18 +20,10 @@ EOF
 #### 查看本地docker的network的所有网段信息
 ```
 docker network inspect --format='{{.IPAM.Config}} {{.Name}}' $(docker network ls -q)
-# [{192.168.32.0/20  192.168.32.1 map[]}] aa_default
 # [{10.10.58.0/24  10.10.58.1 map[]}] ansible-network
 # [{172.17.0.0/16  172.17.0.1 map[]}] bridge
-# [{172.16.18.0/24  172.16.18.1 map[]}] cluster_elk-network
 # [{172.20.0.0/16  172.20.0.1 map[]}] compose_default
-# [{172.23.0.0/16  172.23.0.1 map[]}] console_default
-# [{172.26.0.0/16  172.26.0.1 map[]}] consul_consul
 # [{10.10.10.0/24  10.10.10.1 map[]}] docker-swarm-network
-# [{172.29.0.0/16  172.29.0.1 map[]}] docker_gwbridge
-# [{172.21.0.0/16  172.21.0.1 map[]}] document_default
-# [{172.19.0.0/16  172.19.0.1 map[]}] example_default
-# [{172.25.0.0/16  172.25.0.1 map[]}] harbor_harbor
 ```
 
 ```
