@@ -7,6 +7,8 @@
     * [常用的docker容器命令](Docker常用容器命令.md)
     * [Centos常用知识](Centos常用命令.md)
     * [Java常用知识](常用知识/Java常用知识.md)
+    * [部署运维]
+        *[docker-compose一键部署的脚本](部署运维/服务部署/examples/docker-compose.yml)
     * [Linux系统安装docker]
         * [Linux安装docker]
             * [Linux通用脚本在线安装最新版的docker](docker,compose,swarm的安装/linux安装docker/Linux通用脚本在线安装.md)
@@ -36,6 +38,7 @@
         * [node使用命令](常用软件/node/node命令.md)
         * [nginx]
             * [参数说明](常用软件/nginx/参数说明/nginx.conf配置文件参数自定义划分为三类.md)
+            * [nginx代理访问路径的问题](常用软件/nginx/访问路径的问题.md)
             * [docker-compose创建nginx请求转发的例子](常用软件/nginx/example001/docker-compose.yml)
             * [在阿里云控制台web页面设置域名与公网IP的映射](常用软件/nginx/在阿里云控制台web页面设置域名与公网IP的映射.md)
             * [ssl证书申请](常用软件/nginx/申请证书/ssl证书申请.md)

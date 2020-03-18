@@ -36,3 +36,36 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ./data/postgres:/var/lib/postgresql/data
+
+  redis:
+    restart: always
+    privileged: true
+    image: redis:5.0.5-alpine
+    # container_name: redis
+    command: redis-server --port 6379 --protected-mode no --pidfile redis.pid --appendonly yes --bind 0.0.0.0 --requirepass admin --bind 0.0.0.0
+    ports:
+      - 16379:6379
+    environment:
+      - TZ=Asia/Shanghai
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./data/redis/data:/data
+
+  nginx:
+    restart: always
+    privileged: true
+    image: nginx:1.17.6-alpine
+    ports:
+      - 80:80
+      - 443:443
+    environment:
+      - TZ=Asia/Shanghai
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      # - ./services/nginx/web1/dist:/usr/share/nginx/html1
+      # - ./services/nginx/web2/dist:/usr/share/nginx/html2
+      - ./services/nginx/conf.d:/etc/nginx/conf.d
+      - ./services/nginx/certs/:/etc/nginx/certs/
+    extra_hosts:
+      - "api-server1:192.168.4.160"  # 使用hostname和IP映射, default.conf 配置了的hostname别名不用改成IP地址
+      - "api-server2:192.168.4.160"  # 使用hostname和IP映射, default.conf 配置了的hostname别名不用改成IP地址

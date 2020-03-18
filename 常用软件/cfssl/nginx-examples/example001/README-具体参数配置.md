@@ -96,7 +96,6 @@ docker stop nginx-ca1
 docker rm nginx-ca1
 docker network rm nginx-ca-network
 docker network create --subnet=10.123.58.0/24 nginx-ca-network
-docker run -itd --restart always --name nginx-ca1 --net nginx-ca-network --ip 10.123.58.2 nginx:1.15.4-alpine
 
 tee default.conf <<-'EOF'
 server {
@@ -138,6 +137,7 @@ server {
 }
 EOF
 
+docker run -itd --restart always --name nginx-ca1 --net nginx-ca-network --ip 10.123.58.2 nginx:1.15.4-alpine
 docker exec -it nginx-ca1 mkdir -p /etc/nginx/certs/
 # 不能连续copy
 docker cp 10.123.58.pem nginx-ca1:/etc/nginx/certs/
