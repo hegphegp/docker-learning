@@ -99,7 +99,8 @@ docker network create --subnet=10.123.58.0/24 nginx-ca-network
 
 tee default.conf <<-'EOF'
 server {
-    listen       443    ssl;
+    # 阿里的ant-design-pro给出的nginx静态资源部署建议 # 如果有资源，建议使用 https + http2，配合按需加载可以获得更好的体验
+    listen  443  ssl  http2 default_server;
     ssl_certificate /etc/nginx/certs/10.123.58.pem;
     ssl_certificate_key /etc/nginx/certs/10.123.58-key.pem;
     ssl_protocols TLSv1 TLSv1.1 TLSv1.2;

@@ -28,9 +28,12 @@ server {
 
     location /api {
         proxy_pass https://ant-design-pro.netlify.com;
-        proxy_set_header   X-Forwarded-Proto $scheme;
-        proxy_set_header   X-Real-IP         $remote_addr;
-        proxy_set_header   Host                 $http_host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-Uri $uri;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Host $http_host;
+        proxy_set_header Host $http_host;  # 阿里 ant-design-pro官方给出的nginx部署的配置是 Host 参数, 而不是 X-Forwarded-Host
     }
 }
 
@@ -49,9 +52,12 @@ server {
 
     location /api {
         proxy_pass https://ant-design-pro.netlify.com;
-        proxy_set_header   X-Forwarded-Proto $scheme;
-        proxy_set_header   Host                  $http_host;
-        proxy_set_header   X-Real-IP         $remote_addr;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-Uri $uri;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Host $http_host;
+        proxy_set_header Host $http_host;  # 阿里 ant-design-pro官方给出的nginx部署的配置是 Host 参数, 而不是 X-Forwarded-Host
     }
 }
 ```

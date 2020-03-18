@@ -36,7 +36,8 @@ docker run -itd --restart always --name nginx -e TZ=Asia/Shanghai -p 80:80 -p 44
 tee aaa.javafly.net.conf <<-'EOF'
 server {
       listen       80;
-      listen       443 ssl;
+      # 阿里的ant-design-pro给出的nginx静态资源部署建议 # 如果有资源，建议使用 https + http2，配合按需加载可以获得更好的体验
+      listen  443  ssl  http2 default_server;
       server_name  aaa.javafly.net;
 
       ssl_certificate /etc/letsencrypt/live/aaa.javafly.net/fullchain.pem;
@@ -66,7 +67,8 @@ docker run -itd --restart always --name nginx -e TZ=Asia/Shanghai -p 80:80 -p 44
 tee aaa.javafly.net.conf <<-'EOF'
 server {
       listen       80;
-      listen       443 ssl;
+      # 阿里的ant-design-pro给出的nginx静态资源部署建议 # 如果有资源，建议使用 https + http2，配合按需加载可以获得更好的体验
+      listen  443  ssl  http2 default_server;
       server_name  aaa.javafly.net;
 
       ssl_certificate /etc/letsencrypt/live/aaa.javafly.net/fullchain.pem;
@@ -104,7 +106,8 @@ docker restart nginx
 ```
 server {
     listen       80;
-    listen       443 ssl;
+    # 阿里的ant-design-pro给出的nginx静态资源部署建议 # 如果有资源，建议使用 https + http2，配合按需加载可以获得更好的体验
+    listen  443  ssl  http2 default_server;
     server_name  aaa.javafly.net;
 
     ssl_certificate /etc/letsencrypt/live/aaa.javafly.net/fullchain.pem;
@@ -183,7 +186,8 @@ docker run -it --rm -p 443:443 -p 80:80 -v /etc/letsencrypt:/etc/letsencrypt cer
 ```
 server {
     listen       80;
-    listen       443 ssl;
+    # 阿里的ant-design-pro给出的nginx静态资源部署建议 # 如果有资源，建议使用 https + http2，配合按需加载可以获得更好的体验
+    listen  443  ssl  http2 default_server;
     server_name  aaa.javafly.net;
 
     ssl_certificate /etc/letsencrypt/live/aaa.javafly.net/fullchain.pem;

@@ -98,7 +98,8 @@ docker run -itd --restart always --name nginx-ca1 --net nginx-ca-network --ip 10
 
 tee default.conf <<-'EOF'
 server {
-    listen       443    ssl;
+    # 阿里的ant-design-pro给出的nginx静态资源部署建议 # 如果有资源，建议使用 https + http2，配合按需加载可以获得更好的体验
+    listen   443  ssl  http2 default_server;
     ssl_certificate /etc/nginx/certs/all-ip-domain.pem;
     ssl_certificate_key /etc/nginx/certs/all-ip-domain-key.pem;
     ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
