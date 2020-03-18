@@ -32,7 +32,7 @@ server {
         proxy_set_header X-Forwarded-Uri $uri;
         proxy_set_header X-Forwarded-Proto $scheme;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Host $http_host;
+        # proxy_set_header X-Forwarded-Host $http_host; # X-Forwarded-Host 和 Host头部配置, 只能配置一个, 否则读取 request.getHeader("x-forwarded-host") 会有两个host用逗号拼接
         proxy_set_header Host $http_host;  # 阿里 ant-design-pro官方给出的nginx部署的配置是 Host 参数, 而不是 X-Forwarded-Host
     }
 }
@@ -56,7 +56,7 @@ server {
         proxy_set_header X-Forwarded-Uri $uri;
         proxy_set_header X-Forwarded-Proto $scheme;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Host $http_host;
+        # proxy_set_header X-Forwarded-Host $http_host; # X-Forwarded-Host 和 Host头部配置, 只能配置一个, 否则读取 request.getHeader("x-forwarded-host") 会有两个host用逗号拼接
         proxy_set_header Host $http_host;  # 阿里 ant-design-pro官方给出的nginx部署的配置是 Host 参数, 而不是 X-Forwarded-Host
     }
 }
