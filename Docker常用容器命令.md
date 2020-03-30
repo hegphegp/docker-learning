@@ -106,8 +106,11 @@ docker inspect -f '{{.Name}} - {{.NetworkSettings.IPAddress }}' $(docker ps -aq)
 ```
 # --hostname ：指定hostname;
 # docker run -itd --restart always --name redis --hostname=redis -p 6379:6379 redis:4.0.9-alpine
-docker run -itd --restart always --name redis --hostname redis -p 6379:6379 redis:4.0.9-alpine
+docker run -itd --restart always --name redis --hostname redis -p 6379:6379 redis:5.0.5-alpine redis-server --port 6379 --protected-mode no --pidfile redis.pid --appendonly yes --bind 0.0.0.0 --requirepass $redisPassword --bind 0.0.0.0
 ```
+
+docker run -itd --restart always --name redis --hostname redis -p 6379:6379 redis:5.0.5-alpine redis-server --port 6379 --protected-mode no --pidfile redis.pid --appendonly yes --bind 0.0.0.0 --requirepass 'icityRedis!@#' --bind 0.0.0.0
+
 
 #### 往容器的/etc/hosts里添加hosts
 ```
@@ -121,7 +124,7 @@ docker network create --subnet=10.10.10.0/24 docker-swarm-network
 docker run -itd --name manager1 --net docker-swarm-network --ip 10.10.10.101 --restart always docker:18.03.1-ce
 ```
 
-> docker跑的服务都不应该以后台的形式运行,docker检测不了后台运行服务的状态,是否是成功或者失败,导致docker启动的时候不断地restart, 例如redis以后台形式运行, docker run -itd --restart always redis redis-server --daemonize yes , 该命令启动的redis服务会失败
+> docker跑的服务都不应该以后台的形式运行,docker检测不了后台运行服务的状态,是否是成功或者失败,导致docker启动的时候不断地restart, 例如redis以后台形式运行, docker run -itd --restart always redis redis-server --daemonize yes , 该命令启动的redis服务会失败, --daemonize参数表示以后台进程方式启动redis
 
 #### 查找容器名的部分名词字段
 ```

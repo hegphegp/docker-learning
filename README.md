@@ -8,7 +8,7 @@
     * [Centos常用知识](Centos常用命令.md)
     * [Java常用知识](常用知识/Java常用知识.md)
     * [部署运维]
-        *[docker-compose一键部署的脚本](部署运维/服务部署/examples/docker-compose.yml)
+        * [docker-compose一键部署的脚本](部署运维/服务部署/examples/docker-compose.yml)
     * [Linux系统安装docker]
         * [Linux安装docker]
             * [Linux通用脚本在线安装最新版的docker](docker,compose,swarm的安装/linux安装docker/Linux通用脚本在线安装.md)
