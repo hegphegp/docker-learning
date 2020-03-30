@@ -47,9 +47,10 @@ CALL apoc.export.cypherAll("exported.cypher",{})
 docker cp neo4j:/var/lib/neo4j/exported.cypher .
 
 # 导入本地数据库, neo4j-shell是可以免密导入脚本的数据, 免密导入远程服务器的数据, 远程服务器必须开启dbms_shell_enabled=true
+# neo4j-shell可以导入 apoc导出的cypher脚本, 里面有 BEGIN COMMIT 命令, neo4j-shell可以识别 BEGIN COMMIT 命令, cypher-shell识别不了 BEGIN COMMIT 命令
 docker run -it --rm -e NEO4J_AUTH=neo4j/admin123 --name neo4j -v $PWD/cypher-shell.cypher:/cypher-shell.cypher neo4j:3.4.5 sh -c "neo4j start && sleep 6 && cat /cypher-shell.cypher | cypher-shell -a bolt://localhost:7687 --format verbose -u neo4j -p admin123"
 
-
+# cypher-shell导入数据
 docker run -itd --restart always --name neo4j -e NEO4J_AUTH=neo4j/admin123 -p 7474:7474 -p 7473:7473 -p 7687:7687 -v $PWD/cypher-shell.cypher:/cypher-shell.cypher neo4j:3.4.5
 sleep 5
 docker exec -it neo4j sh -c "cat /cypher-shell.cypher | cypher-shell -a bolt://localhost:7687 --format verbose -u neo4j -p admin123";
