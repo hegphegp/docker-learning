@@ -1,0 +1,20 @@
+version: '3.3'
+
+# docker run -itd --name postgresql --restart always -e TZ=Asia/Shanghai -v /etc/localtime:/etc/localtime:ro -v `pwd`/docker-entrypoint-initdb.d/:/docker-entrypoint-initdb.d/ -p 5432:5432 -e POSTGRES_USER=sde -e POSTGRES_PASSWORD=postgres postgres:10.7-alpine postgres -c max_connections=500
+
+services:
+  postgresql:
+    image: postgres:10.7-alpine
+    command: postgres -c max_connections=500
+    restart: always
+    environment:
+      - TZ=Asia/Shanghai
+      - POSTGRES_USER=sde
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./docker-entrypoint-initdb.d/:/docker-entrypoint-initdb.d/
+#     - ./data/postgres:/var/lib/postgresql/data
+

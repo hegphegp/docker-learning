@@ -6,7 +6,11 @@
     * [查看目录的使用空间的大小](#查看目录的使用空间的大小)
     * [解压缩文件夹](#解压缩文件夹)
     * [批量递归把文件夹子孙文件转码](#批量递归把文件夹子孙文件转码)
-
+    * [查看具体的Centos版本](#查看具体的Centos版本)
+    * [搜索子子孙孙的文件内容](#搜索子子孙孙的文件内容)
+    * [批量替换子子孙孙的文件内容](#搜索子子孙孙的文件内容)
+    * [查找子子孙孙的文件名](#查找子子孙孙的文件名)
+    * [查看服务监听的端口](#查看服务监听的端口)
 #### git的Socket5代理
 ```
 # 优先使用临时代理，亲测，好像该代理只对git命令生效，对curl命令不生效
@@ -130,17 +134,28 @@ netstat -nlp | grep :8080 | awk '{print $7}' | awk -F"/" '{ print $1 }'
 
 ##### 关掉指定端口的服务
 ```
+# 强推 lsof 这条命令，这条命令的参数配置不反人类
+kill -9 `lsof -i:3000 | awk 'NR!=1{print $2}'`
+kill -9 `lsof -i:3000-3006 | awk 'NR!=1{print $2}'`
 kill -9 $(netstat -nlp | grep :8080 | awk '{print $7}' | awk -F"/" '{ print $1 }')
+# awk 打印非第一行的所有第2列
+docker ps | awk 'NR!=1{print $1}'
 ```
 
-### Linux查看服务监听的端口
+### 查看服务监听的端口
 ```
+# 强推 lsof 这条命令，这条命令的参数配置不反人类
+lsof -i:9898
+# 查看多个端口的经常情况 3000-3006端口的情况
+lsof -i:3000-3006
+lsof -i:3000,3001,3002,3003,3004,3005,3006
+
+# 查看多个端口
 yum install net-tools
 netstat -antu
 netstat -tunlp
 netstat -antu | grep LISTEN
-# Ubuntu查看指定的端口占用情况
-# lsof -i:9898
+
 
 netstat -ntpl # 等同于 netstat -antu | grep LISTEN  或者等同于  netstat -tunlp | grep LISTEN 
 # Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
@@ -157,7 +172,7 @@ top -H -p {pid}
 ps huH p  {pid}  | wc -l
 ```
 
-### Linux搜索指定路径下的文件内容
+### 搜索子子孙孙的文件内容
 ```
 # 查找子孙文件夹下包含指定字符串的文件名
 grep   -lr   'import'   .
@@ -172,6 +187,17 @@ grep -R -n -i --include="*.java" "netty" .
 grep -R -n -i --include="*.java" "netty" /opt/soft
 # 忽略指定的目录
 grep --exclude-dir="node_modules" -rni "netty" .
+```
+
+### 查找子子孙孙的文件名
+```
+find /home/hgp -name hgp
+# 忽略搜索当前路径的某个文件夹
+find  .  -not -path "./node_modules/*" -name  locales
+# 忽略多个文件夹
+find  .  -not -path "./node_modules/*" -not -path "./config/*" -name  locales
+# 忽略搜索全路径的某个文件夹
+find  /home/hgp/nodejs -not -path "/home/hgp/nodejs/node_modules/*" -name  locales
 ```
 
 ### 被坑死过的命令
