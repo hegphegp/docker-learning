@@ -91,6 +91,8 @@ EOF
 
 ##### 各种maven名利
 ```
+# mvn配置sock5代理
+export MAVEN_OPTS="-DsocksProxyHost=127.0.0.1 -DsocksProxyPort=1080"
 mvn -v                     //查看版本  
 mvn archetype:create       //创建 Maven 项目  
 mvn compile                //编译源代码  

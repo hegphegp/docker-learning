@@ -4,7 +4,7 @@ version: '3.3'
 services:
   mysql:
     restart: always
-    # privileged: true # 加了privileged: true参数后，启动就死掉了，启动就死人了，太可怕了
+    # privileged: true # 加了privileged: true参数后，mysql启动就死掉了，启动就死人了，太可怕了，postgresql加这个参数可以正常启动
     image: mysql:5.7.28
     # container_name: mysql
     # command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --init-connect='SET NAMES utf8mb4;' --default-time-zone='+8:00' --innodb-flush-log-at-trx-commit=0 --log-timestamps=SYSTEM --sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' --general_log=on --general_log_file=mysql-sql.log
@@ -42,11 +42,12 @@ services:
     privileged: true
     image: redis:5.0.5-alpine
     # container_name: redis
-    command: redis-server --port 6379 --protected-mode no --pidfile redis.pid --appendonly yes --bind 0.0.0.0 --requirepass admin --bind 0.0.0.0
+    command: redis-server --port 6379 --protected-mode no --pidfile redis.pid --appendonly yes --bind 0.0.0.0 --requirepass $redisPassword --bind 0.0.0.0
     ports:
       - 16379:6379
     environment:
       - TZ=Asia/Shanghai
+      - redisPassword=admin
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ./data/redis/data:/data

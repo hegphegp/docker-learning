@@ -28,4 +28,10 @@ sudo mv /home/hgp/database/postgres/user_event.sql /data
 
 # psql导入数据
 psql -h localhost -U postgres -d 数据库名 -f /user_event.sql
+
+# 查询字段内容是否包含大小写字母和数字, 用到正则匹配查询
+select * from sys_user where username ~ '[a-zA-Z1-9]';
+select * from sys_user where username ~ '[a-z]';
+select * from sys_user where username ~ '[A-Z]';
+select * from sys_user where username ~ '[0-9]';
 ```
