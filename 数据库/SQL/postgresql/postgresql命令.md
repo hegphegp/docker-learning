@@ -1,5 +1,15 @@
 ## postgresql命令
 
+##### postgresql可视化管理页面
+```
+docker run -itd --restart always --name pgadmin4 -e UPGRADE_CHECK_ENABLED=false -e PGADMIN_DEFAULT_EMAIL=testhgp@hgp.com -e PGADMIN_DEFAULT_PASSWORD=password -p 5050:80 dpage/pgadmin4:4.20
+### pgadmin4有默认变量控制是否访问官网获取最新版本，但是国外网络不通，比较麻烦，所以禁止掉，可能还有很多访问国外的地方，但是不知道怎么全部找出来修改
+docker exec -it -u root pgadmin4 sh -c "sed -i '/UPGRADE_CHECK_ENABLED/d' /pgadmin4/config.py; echo 'UPGRADE_CHECK_ENABLED = False' >> /pgadmin4/config.py"
+docker restart pgadmin4
+
+# docker run -itd --restart always --name pgadmin4 -e UPGRADE_CHECK_ENABLED=false -e PGADMIN_DEFAULT_EMAIL=testhgp@hgp.com -e PGADMIN_DEFAULT_PASSWORD=password -v /home/robert/data:/data -p 5050:80 dpage/pgadmin4:4.20
+```
+
 ```shell
 # docker stop postgresql
 # docker rm postgresql
