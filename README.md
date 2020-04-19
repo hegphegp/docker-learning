@@ -6,11 +6,11 @@
 * [简介]
     * [常用的docker容器命令](Docker常用容器命令.md)
     * [Centos常用知识](Centos常用命令.md)
-    * [Java常用知识](常用知识/Java常用知识.md)
+    * [Java常用知识](常用知识/java/Java常用知识.md)
     * [部署运维]
         * [docker-compose一键部署的脚本](部署运维/服务部署/examples/docker-compose.yml)
     * [Linux系统安装docker]
-        * [Linux安装docker]
+        * [Linux各种操作系统安装docker]
             * [Linux通用脚本在线安装最新版的docker](docker,compose,swarm的安装/linux安装docker/Linux通用脚本在线安装.md)
             * [Centos7通过安装包安装18.03和18.09版本](docker,compose,swarm的安装/linux安装docker/Centos7通过安装包安装docker.md)
             * [Ubuntu16.04通过安装包安装18.03和18.09版本](docker,compose,swarm的安装/linux安装docker/Ubuntu通过安装包安装docker.md)
@@ -94,6 +94,8 @@
                 * [Redis性能压测工具redis-benchmark](数据库/NOSQL/redis/性能压测工具redis-benchmark.md)
         * [SQL]
             * [postgresql命令](数据库/SQL/postgresql/postgresql命令.md)
+            * [postgresql可视化管理页面](数据库/SQL/postgresql/postgresql命令.md)
+            * [docker-entrypoint-initdb.d的postgresql开箱即用的初始化数据库例子](数据库/SQL/postgresql/initdb/docker-compose.yml)
             * [mysql命令](数据库/SQL/mysql/mysql命令.md)
             * [mysql的多主集群Percona-XtraDB-Cluster的介绍](数据库/SQL/mysql/Percona-XtraDB-Cluster/README.md)
             * [mysql的多主集群Percona-XtraDB-Cluster的docker-compose脚本](数据库/SQL/mysql/Percona-XtraDB-Cluster/手动加入集群方式/docker-compose.yml)
