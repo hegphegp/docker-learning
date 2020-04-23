@@ -106,23 +106,23 @@ http {
 tee cut_ngnix_log.sh <<-'EOF'
 #/bin/bash
 
-log_savepath='/var/log/nginx/'
-ng_log_path='/var/log/nginx/'
+ng_log_path='/var/log/nginx'
 ng_access_log_name='access.log'
 ng_error_log_name='error.log'
 
 day=$(date +%Y-%m-%d)  # 取得服务器当前时间
-mkdir -p ${log_savepath}
 
-if [ -f "${ng_log_path}${ng_access_log_name}" ]; then
-    cd ${ng_log_path}
+cd ${ng_log_path}
+if [ -f "${ng_access_log_name}" ]; then
+    rm -rf access_${day}.tar.gz
     tar -czvf access_${day}.tar.gz ${ng_access_log_name}
     rm -rf ${ng_access_log_name}
 fi
 
-if [ -f "${ng_log_path}${ng_error_log_name}" ]; then
-    cd ${ng_log_path}
-    tar -czvf access_${day}.tar.gz ${ng_error_log_name}
+cd ${ng_log_path}
+if [ -f "${ng_error_log_name}" ]; then
+    rm -rf error_${day}.tar.gz
+    tar -czvf error_${day}.tar.gz ${ng_error_log_name}
     rm -rf ${ng_error_log_name}
 fi
 
