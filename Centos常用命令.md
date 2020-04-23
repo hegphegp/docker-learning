@@ -28,6 +28,11 @@ ALL_PROXY=socks5://127.0.0.1:1080 curl https://www.google.com/ # 对curl命令�
 # # git config --global --unset https.proxy
 ```
 
+#### Ubuntu16.04重启网络
+```
+sudo service networking restart
+```
+
 #### tree忽略某些文件夹
 ```
 # -I 命令使用正则匹配来排除文件夹

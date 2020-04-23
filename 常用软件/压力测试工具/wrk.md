@@ -24,7 +24,7 @@ sudo cp wrk /usr/local/bin/wrk
 
 #### 例子，要谨慎，压测可能会导致局域网内美妙产生几十或者几百兆的流量
 ```
-wrk -t 12 -c 20 -d 20s -H "token:token" -H "Referer:http://localhost:16081/"--latency http://localhost:16081/
+wrk -t 12 -c 20 -d 20s -H "token:token" -H "Referer:http://localhost:16081/" --latency http://localhost:16081/
 ```
 
 ![avatar](imgs/example0002.jpg)

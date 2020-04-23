@@ -12,8 +12,8 @@ cat > squid/squid.conf <<EOF
 acl SSL_ports port 443
 acl Safe_ports port 80      # http
 acl Safe_ports port 21      # ftp
-acl Safe_ports port 443    # https
-acl Safe_ports port 70       # gopher
+acl Safe_ports port 443     # https
+acl Safe_ports port 70      # gopher
 acl Safe_ports port 210	    # wais
 acl Safe_ports port 1025-65535  # unregistered ports
 acl Safe_ports port 280	    # http-mgmt
@@ -43,7 +43,7 @@ http_access allow all
 EOF
 
 
-docker run --name squid -itd --restart=always -p 3128:3128 -v `pwd`/squid/squid.conf:/etc/squid/squid.conf sameersbn/squid:3.5.27-2
+docker run --name squid -itd --restart=always -p 23128:3128 -v `pwd`/squid/squid.conf:/etc/squid/squid.conf sameersbn/squid:3.5.27-2
 # 查看日志 
 curl -x localhost:3128 http://www.baidu.com
 curl -x localhost:3128 https://www.baidu.com
