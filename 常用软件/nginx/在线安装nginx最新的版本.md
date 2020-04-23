@@ -62,11 +62,9 @@ worker_processes  1;
 error_log  /var/log/nginx/error.log warn;
 pid        /var/run/nginx.pid;
 
-
 events {
     worker_connections  1024;
 }
-
 
 http {
     include       /etc/nginx/mime.types;
@@ -101,5 +99,43 @@ http {
 
     include /etc/nginx/conf.d/*.conf;
 }
+```
+
+
+```
+tee cut_ngnix_log.sh <<-'EOF'
+#/bin/bash
+
+log_savepath='/var/log/nginx/'
+ng_log_path='/var/log/nginx/'
+ng_access_log_name='access.log'
+ng_error_log_name='error.log'
+
+day=$(date +%Y-%m-%d)  # 取得服务器当前时间
+mkdir -p ${log_savepath}
+
+if [ -f "${ng_log_path}${ng_access_log_name}" ]; then
+    cd ${ng_log_path}
+    tar -czvf access_${day}.tar.gz ${ng_access_log_name}
+    rm -rf ${ng_access_log_name}
+fi
+
+if [ -f "${ng_log_path}${ng_error_log_name}" ]; then
+    cd ${ng_log_path}
+    tar -czvf access_${day}.tar.gz ${ng_error_log_name}
+    rm -rf ${ng_error_log_name}
+fi
+
+kill -USR1 $(cat /var/run/nginx.pid)  # 通知nginx重新生成新的日志
+
+EOF
+
+chmod a+x cut_ngnix_log.sh
+
+3.做定时任务
+
+crontab –e
+
+59 23 * * * bash /usr/local/nginx/shell/cut_ngnix_log.sh
 
 ```
