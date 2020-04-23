@@ -1,5 +1,11 @@
 # Java常用命令
 
+#### 好记性不如烂笔头，jvm部分最优参数可视化生成网站 https://opts.console.perfma.com/
+```
+# 2核4G内存的生成的最优配置参数例子
+-Xmx2688M -Xms2688M -Xmn960M -XX:MaxMetaspaceSize=512M -XX:MetaspaceSize=512M -XX:+UseConcMarkSweepGC -XX:+UseCMSInitiatingOccupancyOnly -XX:CMSInitiatingOccupancyFraction=70 -XX:+ExplicitGCInvokesConcurrentAndUnloadsClasses -XX:+CMSClassUnloadingEnabled -XX:+ParallelRefProcEnabled -XX:+CMSScavengeBeforeRemark -XX:ErrorFile=/opt/soft/services/hs_err_pid%p.log   -Xloggc:/opt/soft/services/gc.log -XX:+PrintGCDetails -XX:+PrintGCDateStamps -verbose:class -XX:+PrintCommandLineFlags
+```
+
 #### 后台运行Java服务的脚本命令
 ```
 nohup java -Xmx64m -Xms64m -Xmn32m -Xss256k -jar -XX:ParallelGCThreads=2 -Djava.compiler=NONE springboot-web-memory-test-0.0.1-SNAPSHOT.jar > log.file  2>&1 &
