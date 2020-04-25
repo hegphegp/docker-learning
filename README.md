@@ -6,7 +6,6 @@
 * [简介]
     * [常用的docker容器命令](Docker常用容器命令.md)
     * [Centos常用知识](Centos常用命令.md)
-    * [Java常用知识](常用知识/java/Java常用知识.md)
     * [charles的https抓包](常用软件/charles/README.md)
     * [部署运维]
         * [部署打包](部署运维/打包/打包.md)
@@ -125,3 +124,5 @@
         * [debian国内软件源仓库配置](软件加速仓库/各种Linux系统的国内软件源仓库/debian.md)
         * [ubuntu国内软件源仓库配置](软件加速仓库/各种Linux系统的国内软件源仓库/ubuntu.md)
     * [Ubuntu-18.04配置React-native-cli开发环境](开发环境搭建/react-native/Ubuntu搭建React-native-cli环境.md)
+    * [Java常用知识](常用知识/java/Java常用知识.md)
+    * [Python常用知识](开发环境搭建/python/必须掌握的.md)

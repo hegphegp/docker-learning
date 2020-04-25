@@ -14,11 +14,10 @@ nohup java -Xmx64m -Xms64m -Xmn32m -Xss256k -jar -XX:ParallelGCThreads=2 springb
 ```
 #!/bin/bash
 
-# vi run.sh
 java -Xmx2560m -Xms256m -Xmn128m -Xss1m -jar ureport2-springboot-1.0.0.jar --server.port=9898 >> log.log &
+# chmod a+x run.sh
 
 # http://localhost:9898/ureport/designer
-# chmod a+x run.sh
 ```
 
 #### java内存压榨
