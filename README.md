@@ -1,8 +1,5 @@
 ## Docker学习文档
 
-* #### 虽然我知道，大部分人都是来了直接下载笔记后就潇洒的离开，并且只有等到要用的时候才突然想到“我的天~~我得去学学docker”的时候才会重新来到这儿，写得不好，希望大家多多包含
-
-
 * [简介]
     * [常用的docker容器命令](Docker常用容器命令.md)
     * [Centos常用知识](Centos常用命令.md)
@@ -42,10 +39,10 @@
             * [nginx代理访问路径的问题](常用软件/nginx/访问路径的问题.md)
             * [docker-compose创建nginx请求转发的例子](常用软件/nginx/example001/docker-compose.yml)
             * [在阿里云控制台web页面设置域名与公网IP的映射](常用软件/nginx/在阿里云控制台web页面设置域名与公网IP的映射.md)
-            * [ssl证书申请](常用软件/nginx/申请证书/ssl证书申请.md)
             * [nginx负载均衡](常用软件/nginx/nginx负载均衡.md)
             * [nginx的ssh流量转发的例子](常用软件/nginx/流量转发/ssh流量转发.md)
-            * [亲测的命令](常用软件/nginx/申请证书/亲测生成证书的命令.md)
+            * [ssl证书申请](常用软件/nginx/申请证书/Certbot申请ssl证书.md)
+            * [Cerbot申请证书实验](常用软件/nginx/申请证书/Cerbot申请证书实验.md)
         * [openresty]
             * [ubuntu安装openresty](常用软件/nginx/openresty/ubuntu安装openresty.md)
         * [cfssl生成证书的命令说明](常用软件/cfssl/详细说明.md)

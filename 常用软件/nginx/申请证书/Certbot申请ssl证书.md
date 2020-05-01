@@ -1,13 +1,13 @@
 # Certbot申请ssl证书
 
-* 好无奈的现实，发现低版本v0.26.1的certbot的 --dry-run 参数不能用，导致做不了自动化，本身对certbot就不熟，出错后完全不知道怎么搞
+* 可能配置参数有变更，发现低版本v0.26.1的certbot的docker镜像添加 --dry-run 参数不能使用，本身对certbot就不熟，出错后不知道怎么改
 ```
-# 在 2018年6月份的时候，certbot/certbot:v0.26.1 版本可以加 --dry-run 参数
+# 在 2018年6月份的时候，certbot/certbot:v0.26.1 版本的docker镜像可以加 --dry-run 参数
 # 但是到了 2020年01月28号时，再用该版本 certbot/certbot:v0.26.1 加 --dry-run 参数，出错了 An unexpected error occurred: The request message was malformed :: Method not allowed
 # 此时用 certbot/certbot:v0.37.2 版本加 --dry-run 参数，却不抛错
 ```
 
-* 上次折腾时，Let's Encrypt 还叫 Let's Encrypt，现在已经改名为 Certbot 了
+* 之前该工具叫 Let's Encrypt，现在已经改名为 Certbot 了
 * 配置 email 的用处是：Let's Encrypt 证书有效期是 90 天，Let's Encrypt 会在证书快过期的时候，发送邮件通知。
 
 ### Certbot申请SSL证书时，一定先要加 --dry-run 参数，避免遇到操作次数的限制
@@ -55,7 +55,7 @@ docker restart nginx
  # 然后通过域名访问根路径  https://aaa.javafly.net
 ```
 
-###### 生成多个证书，用certbot/certbot:v0.37.2亲测，发现只生成
+###### 生成多个证书，用certbot/certbot:v0.37.2亲测
 ```
 mkdir -p /etc/letsencrypt
 docker run -it --rm -p 443:443 -p 80:80 -v /etc/letsencrypt:/etc/letsencrypt certbot/certbot:v0.37.2 certonly --standalone -n --agree-tos --register-unsafely-without-email --server https://acme-v02.api.letsencrypt.org/directory -d aaa.javafly.net -d bbb.javafly.net -d ccc.javafly.net --dry-run
@@ -132,7 +132,7 @@ server {
 * --preferred-challenges dns，使用 DNS 方式校验域名所有权 , 加了该参数 , 发现没有生成 /etc/letsencrypt/live/域名/fullchain.pem , /etc/letsencrypt/live/域名/privkey.pem , /etc/letsencrypt/live/域名/chain.pem 这些文件, 整个人都懵逼了
 
 
-##### 下面的内容可以忽略, 下面的说明可能是错的, 因为笔者能力有限, 网上也没有博客详细介绍那个参数是什么意思, 网上的大牛也没有一边敲命令一边测试每个参数的截图
+##### 下面的内容可以忽略, 下面的说明可能是错的, 因为笔者能力有限, 网上也没有博客详细介绍这些参数的含义和意思, 是笔者自己揣测的
 ##### Certbot生成证书的两种方式，一种方式是命令包含--webroot参数的，另外一种方式是命令包含--standalone参数的
 * 命令带--webroot参数的方式(不占用443端口进行校验吗,--standalone参数方式会使用443端口进行验证)
 ```

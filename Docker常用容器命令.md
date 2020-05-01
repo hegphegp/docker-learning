@@ -1,9 +1,8 @@
 ## 常用的docker容器命令
 
-### 在生产线上，被容器日志占满硬盘坑了无数次
-* 
-* 查看已有容器的日志大小    ll -h $(find /var/lib/docker/containers/ -name *-json.log)
-* max-file=3，意味着一个容器有三个日志，分别是id+.json、id+1.json、id+2.json，亲测，有每秒2万多的请求压测nginx容器，好像没有生成3个日志文件，不知道是高版本不适用，还是参数改了，还是nginx请求太多，没能及时生成3
+### 在生产线上，试过容器日志占满硬盘，导致服务异常，决定限制每个容器的日志文件的大小
+* 如果没改容器的默认日志目录，查看容器的日志大小命令    ll -h $(find /var/lib/docker/containers/ -name *-json.log)
+* max-file=3表示一个容器有三个日志，分别是id+.json、id+1.json、id+2.json，亲测，每秒十万多的请求压测nginx容器，没生成3个日志文件，不知道该参数在docker高版本是否适用，还是参数改了
 ```
 tee /etc/docker/daemon.json <<-'EOF'
 {
@@ -107,16 +106,16 @@ docker inspect -f '{{.Name}} - {{.NetworkSettings.IPAddress }}' $(docker ps -aq)
 # --hostname ：指定hostname;
 # docker run -itd --restart always --name redis --hostname=redis -p 6379:6379 redis:4.0.9-alpine
 docker run -itd --restart always --name redis --hostname redis -p 6379:6379 redis:5.0.5-alpine redis-server --port 6379 --protected-mode no --pidfile redis.pid --appendonly yes --bind 0.0.0.0 --requirepass $redisPassword --bind 0.0.0.0
-```
 
 docker run -itd --restart always --name redis --hostname redis -p 6379:6379 redis:5.0.5-alpine redis-server --port 6379 --protected-mode no --pidfile redis.pid --appendonly yes --bind 0.0.0.0 --requirepass 'icityRedis!@#' --bind 0.0.0.0
-
+```
 
 #### 往容器的/etc/hosts里添加hosts
 ```
 # --add-host ：指定往/etc/hosts添加的host
 docker run --restart always -itd --name hadoop1 --hostname hadoop1 --net hadoop-network --ip 10.2.2.1 --add-host hadoop2:10.2.2.2 --add-host hadoop3:10.2.2.3 hadoop:master
 ```
+
 #### 通过docker创建网段，分配容器IP
 ```
 docker network rm docker-swarm-network
@@ -124,7 +123,7 @@ docker network create --subnet=10.10.10.0/24 docker-swarm-network
 docker run -itd --name manager1 --net docker-swarm-network --ip 10.10.10.101 --restart always docker:18.03.1-ce
 ```
 
-> docker跑的服务都不应该以后台的形式运行,docker检测不了后台运行服务的状态,是否是成功或者失败,导致docker启动的时候不断地restart, 例如redis以后台形式运行, docker run -itd --restart always redis redis-server --daemonize yes , 该命令启动的redis服务会失败, --daemonize参数表示以后台进程方式启动redis
+> docker容器里面跑的命令都不应该以后台的形式运行，docker检测不了后台运行服务的状态是否是成功或者失败，导致docker启动的时候不断地restart，例如redis以后台形式运行，docker run -itd --restart always redis redis-server --daemonize yes ，该命令启动的redis服务会失败，--daemonize参数表示以后台进程方式启动redis
 
 #### 查找容器名的部分名词字段
 ```
@@ -166,8 +165,4 @@ nsenter --target 2567 --mount --uts --ipc --net --pid
 
 #### docker的常见问题
 * Failed to get D-Bus connection: Operation not permitted
-- 报这个错的原因是dbus-daemon没启动。并不是容器里不能使用systemctl命令
-```
-# docker run的时候加 --privileged 参数
-# CMD或者entrypoint设置 /usr/sbin/init 即可。docker容器会自动将dbus等服务启动起来。
-```
+- 报这个错的原因是dbus-daemon没启动，要启动容器 /usr/sbin/init 的服务，并不是容器里不能使用systemctl命令

@@ -1,11 +1,9 @@
 ### 亲测生成证书的命令
 
-## 做下面的东西时扑街了，太折腾了，以后不要浪费生命去搞了，生命太宝贵了
-* 通配符证书测试证书续期时，加上 --dry-run 参数就会扑街，做不了免交互，真的很难用，每次都要手动操作，去掉 --dry-run 参数后可以
+* 通配符证书续期时，加上 --dry-run 参数就会扑街，做不了免交互，因为通配符证书，certbot要求当前用户在域名厂商添加一条DNS记录证明该通配符域名是自己的。
 ```
 docker run -it --rm -p 443:443 -p 80:80 -v /etc/letsencrypt:/etc/letsencrypt certbot/certbot:v0.37.2 renew --manual --preferred-challenges dns --dry-run
 ```
-
 
 #### 查看 /etc/letsencrypt 有多少证书，包括通配符证书和普通证书
 ```

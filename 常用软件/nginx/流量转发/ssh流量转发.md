@@ -37,6 +37,6 @@ stream {
 
 EOF
 
-docker run -itd --restart always --name ssh-nginx -p 35753:80 -p 35753:80/udp -v `pwd`/ssh-nginx/nginx.conf:/etc/nginx/nginx.conf nginx:1.15.4-alpine
+docker run -itd --restart always --name ssh-nginx -p 35753:80 -p 35753:80/udp -v `pwd`/ssh-nginx/nginx.conf:/etc/nginx/nginx.conf nginx:1.17.6-alpine
 
 ```

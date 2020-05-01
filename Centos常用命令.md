@@ -78,16 +78,7 @@ lsb_release -a   # 事先必须先安装好 lsb_release 这个工具
 
 #### 在/etc/profile.d目录下配置环境变量
 ```
-# 配置gradle环境
-mkdir -p /etc/profile.d
-tee /etc/profile.d/gradle.sh <<-'EOF'
-# set gradle environment
-export GRADLE_HOME=/opt/soft/gradle/gradle-4.10.3
-export PATH=$PATH:$GRADLE_HOME/bin
-EOF
-chmod a+x /etc/profile.d/gradle.sh
-
-# 配置gradle环境
+# 配置java环境
 mkdir -p /etc/profile.d
 tee /etc/profile.d/java.sh <<-'EOF'
 # set java environment
@@ -96,6 +87,15 @@ export JRE_HOME=/opt/soft/java/jdk1.8.0_222/jre
 export PATH=$PATH:$JAVA_HOME/bin:$JAVA_HOME/lib:$JRE_HOME/bin:$JRE_HOME/lib
 EOF
 chmod a+x /etc/profile.d/java.sh
+
+# 配置gradle环境
+mkdir -p /etc/profile.d
+tee /etc/profile.d/gradle.sh <<-'EOF'
+# set gradle environment
+export GRADLE_HOME=/opt/soft/gradle/gradle-4.10.3
+export PATH=$PATH:$GRADLE_HOME/bin
+EOF
+chmod a+x /etc/profile.d/gradle.sh
 ```
 
 #### 解压缩文件夹
@@ -111,6 +111,13 @@ tar -czvf postgres-idc.tar.gz postgres
 tar -zxvf dapeng.tar.gz -C /data/nginx/html
 ```
 
+### yum下载软件离线安装包和依赖包
+```
+mkdir -p /opt/packages/dockerRepo/18.06.1
+yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+yum install --downloadonly --downloaddir=/opt/packages/dockerRepo/18.06.3 docker-ce-18.06.3.ce
+```
+
 #### 批量递归把文件夹子孙文件转码
 ```
 # 批量递归把文件夹子孙文件转码, 并替换旧的文件
@@ -122,14 +129,6 @@ find 要转码的文件夹 -type d -exec mkdir -p 新文件夹/{} \;     # 递�
 find 要转码的文件夹 -type f -exec iconv -f 原来的编码 -t 转码后的编码 {} -o 新文件夹/{} \;
 # find default -type d -exec mkdir -p utf/{} \;
 # find 要转码的文件夹 -type f -exec iconv -f GBK -t UTF-8 {} -o 新文件夹/{} \;
-```
-
-
-### yum下载软件离线安装包和依赖包
-```
-mkdir -p /opt/packages/dockerRepo/18.06.1
-yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
-yum install --downloadonly --downloaddir=/opt/packages/dockerRepo/18.06.3 docker-ce-18.06.3.ce
 ```
 
 ##### 查看指定端口服务的PID
@@ -188,8 +187,8 @@ sed   -i   's|old|new|g'   `grep   'old'   -rl   .`
 grep -rni "netty" .
 grep -rn -i "netty" /opt/soft
 # grep指定搜索指定的后缀名
-grep -R -n -i --include="*.java" "netty" .
-grep -R -n -i --include="*.java" "netty" /opt/soft
+grep -R -ni --include="*.java" "netty" .
+grep -R -ni --include="*.java" "netty" /opt/soft
 # 忽略指定的目录
 grep --exclude-dir="node_modules" -rni "netty" .
 ```
@@ -325,7 +324,6 @@ awk -F\' '$1=="menuentry " {print $2}' /etc/grub2.cfg
 # 新安装的内核在列表中排第一位，把新安装的内核启动顺序设置为第一
 grub2-set-default 0
 ```
-
 
 #### shell脚本关闭指定端口的服务
 ```
