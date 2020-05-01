@@ -164,7 +164,7 @@ EOF
 systemctl enable docker #设置docker服务开机自启动
 sudo systemctl restart docker
 
-# 生产环境一定要加graph选项，指定docker镜像和日志的目录为大空间的目录，否则死的时候武眼睇
+# 生产环境一定要加graph选项，指定docker镜像和日志的目录为大空间的目录，否则扑街的时候武眼睇
 # echo $PASSWD | sudo tee /etc/docker/daemon.json <<-'EOF'
 # https://docker.mirrors.ustc.edu.cn 是中国科学技术大学的docker仓库加速器，好像是实时代理的，但是时好时坏
 # {

@@ -128,7 +128,7 @@ server {
 }
 ```
 
-## 因为自己是菜鸡, 搞不懂下面参数的含义, 生成证书时绝对不可以加下面参数, 加了, 害死自己怨不了人
+## 因为自己是菜鸡, 搞不懂下面参数的含义, 生成证书时绝对不可以加下面参数, 加了, 扑街了，怨不了人
 * --preferred-challenges dns，使用 DNS 方式校验域名所有权 , 加了该参数 , 发现没有生成 /etc/letsencrypt/live/域名/fullchain.pem , /etc/letsencrypt/live/域名/privkey.pem , /etc/letsencrypt/live/域名/chain.pem 这些文件, 整个人都懵逼了
 
 

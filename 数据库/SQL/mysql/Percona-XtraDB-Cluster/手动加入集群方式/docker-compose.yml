@@ -6,13 +6,13 @@ version: '3.3'
 # 查看日志 cat /var/lib/mysql/mysql-sql.log
 # 查看最后100行日志 tail -n 100 /var/lib/mysql/mysql-sql.log
 
-# 死亡的教训，percona/percona-xtradb-cluster:5.7.25镜像要挂载/var/lib/mysql目录到宿主机，宿主机目录要授予 777 的操作权限， 否则挂载目录后， 数据库跑不起来
+# 扑街的教训，percona/percona-xtradb-cluster:5.7.25镜像要挂载/var/lib/mysql目录到宿主机，宿主机目录要授予 777 的操作权限， 否则挂载目录后， 数据库跑不起来
 # mkdir -p data/mysql-cluster-node01 data/mysql-cluster-node02 data/mysql-cluster-node03 data/mysql-cluster-node04 data/mysql-cluster-node05
 # chmod 777 data/mysql-cluster-node01 data/mysql-cluster-node02 data/mysql-cluster-node03 data/mysql-cluster-node04 data/mysql-cluster-node05
 
-# 死亡的教训，docker-compose引用已存在的网络，被网上的博客坑了
+# 扑街的教训，docker-compose引用已存在的网络，格式如下，亲测过的，被网上的博客坑了
 # networks:
-#   外部网络的名称:   # 必须是外部docker网卡的名称，被网上的博客害死了，白白浪费几个小时
+#   外部网络的名称:   # 必须是外部docker网卡的名称，被网上的博客坑了，白白浪费几个小时
 #     external: true
 
 services:

@@ -117,7 +117,7 @@ rm -rf ~/.android/adbkey.pub ~/.android/adbkey
 ```
 > 在 Android Studio 可视化界面的AVD Manager界面删除 emulator 模拟机
 
-# 如果是垃圾工具，官方请不要发布出来，不是每个人都是神，都知道怎么解决，我们普通人是在用生命，用光阴去试错，直到有朝一天生命耗尽，人死了才解脱，安装 npm install -g react-native --verbose 工具后，每次创建项目跑 react-native run-android 命令都抛错，在模拟机跑不起来，浪费了无数的生命和光阴，改成 npm install -g react-native-cli --verbose 工具后，又可以跑起来
+# 安装 npm install -g react-native --verbose 工具后，每次创建项目跑 react-native run-android 命令都抛错，在模拟机跑不起来，浪费了无数的生命和光阴，改成 npm install -g react-native-cli --verbose 工具后，又可以跑起来
 ## 无尽的噩梦，安装 react-native 模块创建的项目在安卓跑起来的时候哦，每执行一次 react-native run-android 命令，就抛一次错误，在模拟机上完全跑不起来， error: bundling failed: ReferenceError: SHA-1 for file /home/hgp/.npm-global/lib/node_modules/react-native/node_modules/metro/src/lib/polyfills/require.js (/home/hgp/.npm-global/lib/node_modules/react-native/node_modules/metro/src/lib/polyfills/require.js) is not computed
 #### 安装 react-native-cli 插件，并创建项目
 ```
