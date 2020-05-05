@@ -20,6 +20,8 @@ curl -sSL https://get.docker.com/ | sh
 ##### 阿里云在线安装docker-compose
 ```
 curl -L https://mirrors.aliyun.com/docker-toolbox/linux/compose/1.21.2/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
+# mirrors.aliyun.com的docker-compose版本落后 https://github.com/docker/compose/releases 了两年
+# ALL_PROXY=socks5://127.0.0.1:1080 curl -L https://github.com/docker/compose/releases/download/1.25.5/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
 chmod +x /usr/local/bin/docker-compose
 ```
 

@@ -35,7 +35,7 @@
         * [calico使用命令](常用软件/calico/calico.md)
         * [node使用命令](常用软件/node/node命令.md)
         * [nginx]
-            * [参数说明](常用软件/nginx/参数说明/nginx.conf配置文件参数自定义划分为三类.md)
+            * [参数说明](常用软件/nginx/nginx配置参数.md)
             * [nginx代理访问路径的问题](常用软件/nginx/访问路径的问题.md)
             * [docker-compose创建nginx请求转发的例子](常用软件/nginx/example001/docker-compose.yml)
             * [在阿里云控制台web页面设置域名与公网IP的映射](常用软件/nginx/在阿里云控制台web页面设置域名与公网IP的映射.md)

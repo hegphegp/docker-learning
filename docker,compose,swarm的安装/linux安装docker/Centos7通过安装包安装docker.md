@@ -23,6 +23,8 @@ EOF
 systemctl enable docker #设置docker服务开机自启动
 systemctl restart docker
 curl -L https://mirrors.aliyun.com/docker-toolbox/linux/compose/1.21.2/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
+# mirrors.aliyun.com的docker-compose版本落后 https://github.com/docker/compose/releases 了两年
+# ALL_PROXY=socks5://127.0.0.1:1080 curl -L https://github.com/docker/compose/releases/download/1.25.5/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
 chmod +x /usr/local/bin/docker-compose
 ```
 
@@ -177,6 +179,8 @@ sudo systemctl restart docker
 > #### 5.安装docker-compose
 ```
 curl -L https://mirrors.aliyun.com/docker-toolbox/linux/compose/1.21.2/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
+# mirrors.aliyun.com的docker-compose版本落后 https://github.com/docker/compose/releases 了两年
+# ALL_PROXY=socks5://127.0.0.1:1080 curl -L https://github.com/docker/compose/releases/download/1.25.5/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
 chmod +x /usr/local/bin/docker-compose
 ```
 
