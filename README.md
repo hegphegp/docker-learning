@@ -45,6 +45,8 @@
             * [Cerbot申请证书实验](常用软件/nginx/申请证书/Cerbot申请证书实验.md)
         * [openresty]
             * [ubuntu安装openresty](常用软件/nginx/openresty/ubuntu安装openresty.md)
+        * [keepalived]
+            * [keepalived配置nginx的高可用](常用软件/keepalived/配置keepalived和nginx.md)
         * [cfssl生成证书的命令说明](常用软件/cfssl/详细说明.md)
             * [cfssl给nginx生成 通配所有IP和域名的证书 ](常用软件/cfssl/all-ip-domain-通配所有IP和域名的证书.md))
             * [添加cfssl给nginx生成自签名证书的例子](常用软件/cfssl/nginx-examples/example001/README.md)
