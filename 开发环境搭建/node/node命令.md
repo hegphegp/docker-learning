@@ -61,3 +61,11 @@ yarn config set chromedriver_cdnurl https://npm.taobao.org/mirrors/chromedriver/
 yarn config set puppeteer_download_host=https://npm.taobao.org/mirrors/
 
 ```
+
+
+### npm-查看依赖库最新版本及历史版本指令记录
+```
+npm view <packagename> versions
+npm view antd versions
+npm view babel-plugin-import versions
+```

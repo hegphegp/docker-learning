@@ -127,6 +127,7 @@ if [ -f "${ng_error_log_name}" ]; then
 fi
 
 kill -USR1 $(cat /var/run/nginx.pid)  # 通知nginx重新生成新的日志
+find . -mtime +30 -name "*.tar.gz" -exec rm -rf {} \;
 
 EOF
 
