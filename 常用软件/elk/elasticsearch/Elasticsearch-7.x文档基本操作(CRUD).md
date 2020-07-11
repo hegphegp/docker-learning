@@ -1,5 +1,7 @@
 ## Elasticsearch-7.x文档基本操作(CRUD)
 
+* term应用在不可分割字段上，match对text类型字段模糊查询
+
 #### docker搭建服务
 ```
 docker pull elasticsearch:7.8.0
@@ -141,40 +143,6 @@ curl -XGET localhost:9200/blog/_doc/_mget?pretty -H 'content-Type:application/js
 }'
 ```
 
-#### 简单搜索，词项查询，也称term查询
-```
-curl -XGET localhost:9200/blog/_search?pretty -H 'content-Type:application/json' -d '{
-    "query": {
-        "term": {
-            "title": "centos"
-        }
-    }
-}'
-```
-
-```
-curl -XGET localhost:9200/blog/_search?pretty -H 'content-Type:application/json' -d '{
-    "query": {
-        "term": {
-            "title": "远程"
-        }
-    }
-}'
-```
-
-#### 匹配查询，也称match查询，与term精确查询不同，对于match查询，只要被查询字段中存在任何一个词项被匹配，就会搜索到该文档。
-```
-curl -XGET localhost:9200/blog/_search?pretty -H 'content-Type:application/json' -d '{
-    "query": {
-        "match": {
-            "title": {
-                "query": "远程"
-            }
-        }
-    }
-}'
-```
-
 #### 指定分片数和副本数
 ```
 curl -XPUT localhost:9200/website?pretty -H 'content-Type:application/json' -d '{
@@ -192,5 +160,221 @@ curl -XPUT localhost:9200/website?pretty -H 'content-Type:application/json' -d '
 curl -XPUT "localhost:9200/website/_doc/5?pretty&version=5&version_type=external" -H 'content-Type:application/json' -d '{
     "title": "My first external blog entry",
     "text":  "Starting to get the hang of this..."
+}'
+```
+
+#### 简单搜索，词项查询，也称term查询
+```
+curl -XGET localhost:9200/blog/_search?pretty -H 'content-Type:application/json' -d '{
+    "query": {
+        "term": {
+            "title": "centos"
+        }
+    }
+}'
+```
+
+#### 匹配查询，也称match查询，与term精确查询不同，对于match查询，只要被查询字段中存在任何一个词项被匹配，就会搜索到该文档。
+```
+curl -XGET localhost:9200/blog/_search?pretty -H 'content-Type:application/json' -d '{
+    "query": {
+        "match": {
+            "title": "远程"
+        }
+    }
+}'
+```
+
+#### 准确匹配“菜谱入门”则用match_phrase
+```
+curl -XGET localhost:9200/blog/_search?pretty -H 'content-Type:application/json' -d '{
+    "query": {
+        "match_phrase": {
+            "title": "远程"
+        }
+    }
+}'
+```
+
+#### 多个字段匹配查询
+```
+curl -XGET localhost:9200/blog/_search?pretty -H 'content-Type:application/json' -d '{
+    "query": {
+        "multi_match": {
+            "query": "远程",
+            "fields":["author","title"]
+        }
+    }
+}'
+```
+
+#### query_string 既查有“办公”又有“娱乐”的数据
+```
+curl -XGET localhost:9200/blog/_search?pretty -H 'content-Type:application/json' -d '{
+    "query": {
+        "query_string": {
+            "query": "办公 AND 娱乐"
+        }
+    }
+}'
+```
+
+#### query_string 匹配“办公”AND "娱乐" 或者匹配“菜谱”
+```
+curl -XGET localhost:9200/blog/_search?pretty -H 'content-Type:application/json' -d '{
+    "query": {
+        "query_string": {
+            "query": "(办公 AND 娱乐) OR 菜谱"
+        }
+    }
+}'
+```
+
+#### 指定context和song字段，查询"办公"或“娱乐”
+```
+curl -XGET localhost:9200/blog/_search?pretty -H 'content-Type:application/json' -d '{
+    "query": {
+        "query_string": {
+            "query": "办公 OR 娱乐",
+            "fields":["context","author"]
+        }
+    }
+}'
+```
+
+#### 按照范围查询，查询书籍字段在2000到5000的数据有哪些
+```
+curl -XGET localhost:9200/blog/_search?pretty -H 'content-Type:application/json' -d '{
+    "query": {
+        "range": {
+            "word_count": {
+                "gte":2000,
+                "lte":5000
+            }
+        }
+    }
+}'
+```
+
+#### 子条件查询中的Filter context
+```
+curl -XGET localhost:9200/blog/_search?pretty -H 'content-Type:application/json' -d '{
+    "query": {
+        "bool": {
+            "filter": {
+                "term": {
+                    "word_count":2000
+                }
+            }
+        }
+    }
+}'
+```
+
+```
+curl -XGET localhost:9200/blog/_search?pretty -H 'content-Type:application/json' -d '{
+    "query": {
+        "bool": {
+            "filter": {
+                "term": {
+                    "title": "办公"
+                }
+            }
+        }
+    }
+}'
+```
+
+#### 综合query和filter的符合条件查询，复合查询有： 固定分数查询、布尔查询等等
+```
+# 从根路径全文检索，从 localhost:9200/_search 根路径进行全文检索
+# 指定 score 分数大于2的查询
+curl -XGET localhost:9200/_search?pretty -H 'content-Type:application/json' -d '{
+    "query": {
+        "constant_score": {
+            "filter": {
+                "match": {
+                    "title": "办公"
+                }
+            },
+            "boost":2
+        }
+    }
+}'
+```
+
+
+#### 布尔查询，关键词should 匹配中match条件的一种即返回数据，是或的关系
+```
+curl -XGET localhost:9200/_search?pretty -H 'content-Type:application/json' -d '{
+    "query": {
+        "bool": {
+            "should": [
+                {
+                    "match": {
+                        "title": "办公"
+                    }
+                },
+                {
+                    "match": {
+                        "content": "娱乐"
+                    }
+                }
+            ]
+        }
+    }
+}'
+```
+
+#### 布尔查询还有一个 must关键词，即两条必须同时满足，是与的关系
+```
+curl -XGET localhost:9200/_search?pretty -H 'content-Type:application/json' -d '{
+    "query": {
+        "bool": {
+            "must": [
+                {
+                    "match": {
+                        "title": "办公"
+                    }
+                }, {
+                    "match": {
+                        "content": "娱乐"
+                    }
+                }
+            ]
+        }
+    }
+}'
+```
+
+#### must还可以和filter进行组合
+```
+curl -XGET localhost:9200/_search?pretty -H 'content-Type:application/json' -d '{
+    "query": {
+        "bool": {
+            "must": [
+                {
+                    "match": {
+                        "title": "办公"
+                    }
+                }, {
+                    "match": {
+                        "content": "娱乐"
+                    }
+                }
+            ],
+            "filter": [
+                {
+                    "term": {
+                        "word_count": 2000
+                    }
+                }, {
+                    "match": {
+                        "publish_date":"2018-09-09"
+                    }
+                }
+            ]
+        }
+    }
 }'
 ```
