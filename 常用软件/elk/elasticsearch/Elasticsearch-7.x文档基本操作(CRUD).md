@@ -378,3 +378,34 @@ curl -XGET localhost:9200/_search?pretty -H 'content-Type:application/json' -d '
     }
 }'
 ```
+
+```
+curl -XGET localhost:9200/_search?pretty -H 'content-Type:application/json' -d '{
+    "size": 10,
+    "query": {
+        "bool": {
+            "should": [{
+                    "match": {
+                        "content": "要搜索的内容"
+                    }
+                },
+                {
+                    "match": {
+                        "title": "要搜搜索的标题"
+                    }
+                }
+            ]
+        }
+    },
+    "highlight": {
+        "fields": {
+            "title": {},
+            "content": {
+                "type": "plain"
+            }
+        }
+    }
+}'
+
+
+```
