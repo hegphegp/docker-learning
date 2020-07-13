@@ -1,0 +1,71 @@
+version: '3.3'
+
+# elasticsearch:7.7.1的docker-compose的永世难忘的坑，environment的每个变量前加横线 - ，这个 - ES_JAVA_OPTS="-Xms256m -Xmx512m" 导致服务启不启来， 但是 docker run却没事，docker run -itd -e ES_JAVA_OPTS="-Xms256m -Xmx512m"  elasticsearch:7.7.1
+
+services:
+  elasticsearch:
+    image: elasticsearch:7.7.1
+    restart: always
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      - TZ=Asia/Shanghai
+      - ELASTIC_PASSWORD=changeme
+      - discovery.type=single-node
+#      environment的每个变量前加横线 - ，这个 - ES_JAVA_OPTS="-Xms256m -Xmx512m" 导致服务启不启来， 但是 docker run却没事，docker run -itd --restart always -p 9200:9200 -p 9300:9300 -e ES_JAVA_OPTS="-Xms256m -Xmx512m" -e "discovery.type=single-node" --name elasticsearch elasticsearch:7.7.1
+      - "ES_JAVA_OPTS=-Xms256m -Xmx512m"
+      - xpack.security.enabled=true
+      # Use single node discovery in order to disable production mode and avoid bootstrap checks
+      # see https://www.elastic.co/guide/en/elasticsearch/reference/current/bootstrap-checks.html
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    cap_add:
+      - IPC_LOCK
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+#     - ./data/esdata:/usr/share/elasticsearch/data
+
+  logstash:
+    image: logstash:7.7.1
+    restart: always
+    ports:
+      - "5000:5000/tcp"
+      - "5000:5000/udp"
+      - "9600:9600"
+    environment:
+      - TZ=Asia/Shanghai
+      - "LS_JAVA_OPTS=-Xms256m -Xmx256m"
+      - http.host=0.0.0.0
+      - xpack.monitoring.enabled=true
+      - xpack.monitoring.elasticsearch.username=elastic
+      - xpack.monitoring.elasticsearch.password=changeme
+      - xpack.monitoring.elasticsearch.hosts=http://elasticsearch:9200
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    links:
+      - elasticsearch:elasticsearch
+
+  kibana:
+    image: kibana:7.7.1
+    restart: always
+    ports:
+      - "5601:5601"
+    environment:
+      - TZ=Asia/Shanghai
+      - server.name=kibana
+      - server.host=0.0.0.0
+      - i18n.locale=zh-CN
+      - elasticsearch.url=http://elasticsearch:9200
+      - elasticsearch.username=elastic
+      - elasticsearch.password=changeme
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    links:
+      - elasticsearch:elasticsearch
+# 我被官方的 kibana:7.7.1 气到七孔流血，气到痛不欲生，kibana启动老是不成功，我绝望啊，我绝望啊
