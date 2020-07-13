@@ -61,11 +61,12 @@ services:
       - server.name=kibana
       - server.host=0.0.0.0
       - i18n.locale=zh-CN
-      - elasticsearch.url=http://elasticsearch:9200
-      - elasticsearch.username=elastic
-      - elasticsearch.password=changeme
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+      - ELASTICSEARCH_USERNAME=elastic
+      - ELASTICSEARCH_PASSWORD=changeme
     volumes:
       - /etc/localtime:/etc/localtime:ro
     links:
       - elasticsearch:elasticsearch
 # 我被官方的 kibana:7.7.1 气到七孔流血，气到痛不欲生，kibana启动老是不成功，我绝望啊，我绝望啊
+# elasticsearch.password and elasticsearch.username that should be ELASTICSEARCH_PASSWORD and ELASTICSEARCH_USERNAME instead 
