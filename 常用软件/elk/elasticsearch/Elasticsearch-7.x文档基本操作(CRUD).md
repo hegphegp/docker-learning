@@ -409,3 +409,43 @@ curl -XGET localhost:9200/_search?pretty -H 'content-Type:application/json' -d '
 
 
 ```
+
+#### must还可以和filter进行组合
+```
+# es-6.X至7.X版本创建查询模板的唯一格式
+* {es_path}替换为es的路径；{template_id}替换为模板名；{index_name}替换为索引名
+
+# 1 创建模板
+curl -XPOST http://{es_path}/_scripts/{template_id}?pretty -H "Content-Type: application/json" -d '{
+    "script": {
+        "lang": "mustache",
+        "source": {
+            "query": {
+                "match": {
+                    "text": "{{query_string}}"
+                }
+            }
+        }
+    }
+}'
+
+# 2 查看模板
+curl -XGET http://{es_path}/_scripts/{template_id}?pretty
+
+# 3 解析模板
+curl -XGET http://{es_path}/_render/template?pretty -H "Content-Type: application/json" -d '{
+    "id": "{template_id}",
+    "params": {
+        "query_string": "文本"
+    }
+}'
+
+
+# 4 使用模板进行查询
+curl -XGET http://{es_path}/{index_name}/_search/template?pretty -H "Content-Type: application/json" -d '{
+    "id":"{template_id}",
+    "params":{
+        "query_string":"卫衣"
+    }
+}'
+```
