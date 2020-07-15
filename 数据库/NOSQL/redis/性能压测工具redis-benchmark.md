@@ -87,3 +87,52 @@ redis-cli -a 密码 info keyspace
 ## redis没有根据key前缀批量删除的功能, 下面的命令是目前比较好的批量删除数据的命令, 网上搜索的很多命令有问题, 会提示删除的keys过多, 无法删除
 redis-cli -a 密码 --scan --pattern "name*" | xargs redis-cli -a 密码 del --pipe
 ```
+
+#### 用geohash添加经纬度数据，模拟搜索最近的人
+```
+tee insert-redis-location-data.sh <<-'EOF'
+#!/bin/sh
+
+rm -rf redis-location-data.txt
+echo "del test-location" >> redis-location-data.txt
+for i in `seq 0 9`
+do
+  for j in `seq 0 9`
+  do
+    for k in `seq 0 9`
+    do
+      echo "geoadd test-location 108.3${i}42${j}80${k}23 34.3${i}42${j}80${k}23 person$i$j$k" >> redis-location-data.txt
+    done
+  done
+done
+EOF
+
+chmod a+x insert-redis-location-data.sh
+./insert-redis-location-data.sh
+
+## 通过redis-cli的pipeline插入大量数据, 性能比较高, 可以达到每秒十万条数据的插入
+cat redis-location-data.txt | redis-cli -a 密码 --pipe
+```
+
+```
+# 添加数据
+geoadd test-location 108.9554882246 34.3342280323 EE
+geoadd test-location 108.9466419137 34.2227812254 Xiao
+geoadd test-location 108.5805748823 34.8018916942 Chui
+geoadd test-location 13.361389 38.115556 "Palermo" 15.087269 37.502669 "Catania"
+
+# 查两个点之间的直线距离
+geodist test-location EE Xiao km
+geodist test-location EE Xiao m
+geodist test-location EE Xiao mi
+geodist test-location EE Xiao ft
+
+# 与EE相隔20km的3个点, 按照距离先后顺序排序, 返回点的名称，不返回点的经纬度
+georadiusbymember test-location EE 20 km count 3 asc
+# 与EE相隔20km的3个点, 按照距离先后顺序排序, 返回点的名称和经纬度
+georadiusbymember test-location EE 20 km count 3 asc WITHDIST WITHCOORD
+
+# 查询指定经纬度坐标10公里附近存在的点，返回点的名称和经纬度
+georadius test-location 116.9416419137 39.2217812254 10 km WITHDIST WITHCOORD ASC COUNT 5
+georadius test-location 108.9416419137 34.2217812254 20 km count 3 asc WITHDIST WITHCOORD
+```
