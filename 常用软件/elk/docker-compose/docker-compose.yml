@@ -29,6 +29,7 @@ services:
       - IPC_LOCK
     volumes:
       - /etc/localtime:/etc/localtime:ro
+#     - ./config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
 #     - ./data/esdata:/usr/share/elasticsearch/data
 
   logstash:
@@ -48,6 +49,7 @@ services:
       - xpack.monitoring.elasticsearch.hosts=http://elasticsearch:9200
     volumes:
       - /etc/localtime:/etc/localtime:ro
+#     - ./config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
     links:
       - elasticsearch:elasticsearch
 
@@ -66,7 +68,7 @@ services:
       - ELASTICSEARCH_PASSWORD=changeme
     volumes:
       - /etc/localtime:/etc/localtime:ro
+#     - ./config/kibana.yml:/usr/share/kibana/config/kibana.yml:ro
     links:
       - elasticsearch:elasticsearch
-# 我被官方的 kibana:7.7.1 气到七孔流血，气到痛不欲生，kibana启动老是不成功，我绝望啊，我绝望啊
-# elasticsearch.password and elasticsearch.username that should be ELASTICSEARCH_PASSWORD and ELASTICSEARCH_USERNAME instead 
+# 官方的 kibana:7.7.1 镜像的环境变量 elasticsearch.password and elasticsearch.username that should be ELASTICSEARCH_PASSWORD and ELASTICSEARCH_USERNAME instead 
