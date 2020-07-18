@@ -1,4 +1,7 @@
-### k3s集群搭建
+### k3s单节点server
+* 没使用--datastore-endpoint时，k3s都是单server模式的
+* 亲测，发现所有博客的命令都是有问题的，官方文档也是不完整的，会坑尽所有入门的开发人员，搭建集群，原本很简单的，却遇到无数坑
+
 #### 在用centos的centos-1907的vagrant镜像创建虚拟机，然后搭建k3s集群
 * 搭建k3s集群的底层容器有两种，一种是docker，一种是container
 * * k3s默认用 container 容器，install.sh脚本不要做任何修改，直接运行，出错之后安装依赖再重新运行，container所有离线包加起来 11MB 左右
@@ -73,12 +76,12 @@ chmod a+x install.sh k3s
 # --docker --no-deploy traefik 参数会自动拼接到 k3s.service 的 ExecStart 的命令参数
 export INSTALL_K3S_BIN_DIR=/usr/local/bin
 export INSTALL_K3S_SKIP_DOWNLOAD=true
-export INSTALL_K3S_EXEC="--docker --no-deploy traefik"
+export INSTALL_K3S_EXEC="--docker --no-deploy traefik "
 bash install.sh
 
+# 查看集群的节点信息
+kubectl get node
+# K3S_TOKEN是server端的，位于/var/lib/rancher/k3s/server/node-token下
+cat /var/lib/rancher/k3s/server/node-token
 ```
 
-#### 查看集群的节点信息
-```
-kubectl get node
-```
