@@ -20,6 +20,8 @@
             * [docker-machine创建docker-swarm集群](docker,compose,swarm的安装/docker-machine搭建swarm集群/docker-machine创建docker-swarm集群.md)
             * [vagrant制作docker的虚拟机模板](vagrant/制作vagrant系统镜像/虚拟机vagrant模板的制作.md)
             * [docker-swarm集群的讲解](docker,compose,swarm的安装/docker-swarm集群的讲解.md)
+        * [搭建k3s集群]
+            * [搭建k3s集群](docker,compose,swarm的安装/k3s集群搭建.md)
     * [vagrant]
         * [使用说明](vagrant/使用说明.md)
         * [常用命令](vagrant/vagrantvagrant常用命令.md)

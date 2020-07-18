@@ -154,11 +154,11 @@ docker run -itd --name redis6 --net redis-network --ip 10.10.57.106 --restart al
 --cluster-node-timeout 5000
 docker logs redis6
 
- docker exec -it redis1 sh
- # 停止复制粘贴，后面命令粘贴进去，导致命令错行，人眼看起来很费劲，虽然命令能被正确识别和执行
- 
- # 最后面加 -a 参数表示配置密码
- # redis-cli --cluster create --cluster-replicas 1 10.10.57.101:6379 10.10.57.102:6379 10.10.57.103:6379 10.10.57.104:6379 10.10.57.105:6379 10.10.57.106:6379  -a 密码
+docker exec -it redis1 sh
+# 停止复制粘贴，后面命令粘贴进去，导致命令错行，人眼看起来很费劲，虽然命令能被正确识别和执行
+
+# 最后面加 -a 参数表示配置密码
+# redis-cli --cluster create --cluster-replicas 1 10.10.57.101:6379 10.10.57.102:6379 10.10.57.103:6379 10.10.57.104:6379 10.10.57.105:6379 10.10.57.106:6379  -a 密码
 redis-cli --cluster create --cluster-replicas 1 10.10.57.101:6379 10.10.57.102:6379 10.10.57.103:6379 10.10.57.104:6379 10.10.57.105:6379 10.10.57.106:6379  -a admin
 
 ```

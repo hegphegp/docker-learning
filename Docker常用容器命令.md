@@ -107,7 +107,7 @@ docker inspect -f '{{.Name}} - {{.NetworkSettings.IPAddress }}' $(docker ps -aq)
 # docker run -itd --restart always --name redis --hostname=redis -p 6379:6379 redis:4.0.9-alpine
 docker run -itd --restart always --name redis --hostname redis -p 6379:6379 redis:5.0.5-alpine redis-server --port 6379 --protected-mode no --pidfile redis.pid --appendonly yes --bind 0.0.0.0 --requirepass $redisPassword --bind 0.0.0.0
 
-docker run -itd --restart always --name redis --hostname redis -p 6379:6379 redis:5.0.5-alpine redis-server --port 6379 --protected-mode no --pidfile redis.pid --appendonly yes --bind 0.0.0.0 --requirepass 'icityRedis!@#' --bind 0.0.0.0
+docker run -itd --restart always --name redis --hostname redis -p 6379:6379 redis:5.0.5-alpine redis-server --port 6379 --protected-mode no --pidfile redis.pid --appendonly yes --bind 0.0.0.0 --requirepass 'admin' --bind 0.0.0.0
 ```
 
 #### 往容器的/etc/hosts里添加hosts
