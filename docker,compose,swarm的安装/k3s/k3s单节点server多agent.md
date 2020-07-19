@@ -1,8 +1,26 @@
 ### k3s单节点server多agent
 * 没使用--datastore-endpoint时，k3s都是单server模式的
 
-##### 环境搭建，先用vagrant创建两台服务器，然后每个节点的/root/k3s/all-rpms准备好所有安装包，/root/k3s目录准备好k3s文件，
+##### 环境搭建，先用vagrant创建两台服务器，然后每个节点的/root/k3s/all-rpms准备好所有rpm安装包（找台全新的虚拟机，使用yum下载离线安装包），/root/k3s目录准备好k3s安装文件
 
+##### 下载离线安装包
+```
+curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
+sed -i "/mirrors.cloud.aliyuncs.com/d"  /etc/yum.repos.d/CentOS-Base.repo
+yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+yum clean all && yum makecache
+yum list docker-ce --showduplicates | sort -r
+mkdir -p all-rpms
+yum install --downloadonly --downloaddir=all-rpms docker-ce-19.03.12
+rpm -i https://rpm.rancher.io/k3s-selinux-0.1.1-rc1.el7.noarch.rpm
+yum install --downloadonly --downloaddir=all-rpms container-selinux selinux-policy-base
+
+```
+[install.sh安装脚本的下载地址 https://docs.rancher.cn/k3s/k3s-install.sh](https://docs.rancher.cn/k3s/k3s-install.sh)  
+[k3s二进制文件的下载地址 https://github.com/rancher/k3s/releases](https://github.com/rancher/k3s/releases)  
+[k3s依赖镜像的下载地址 https://github.com/rancher/k3s/releases](https://github.com/rancher/k3s/releases)  
+
+#### 
 ```
 sed -i '/k3s-master1/d' /etc/hosts
 sed -i '/k3s-agent1/d' /etc/hosts
