@@ -14,6 +14,9 @@ services:
       - ELASTIC_PASSWORD=changeme
       - discovery.type=single-node
 #      environment的每个变量前加横线 - ，这个 - ES_JAVA_OPTS="-Xms256m -Xmx512m" 导致服务启不启来， 但是 docker run却没事，docker run -itd --restart always -p 9200:9200 -p 9300:9300 -e ES_JAVA_OPTS="-Xms256m -Xmx512m" -e "discovery.type=single-node" --name elasticsearch elasticsearch:7.7.1
+#     - ES_JAVA_OPTS="-Xms256m -Xmx256"    # 教训，这样子写，启动直接抛错
+#     - ES_JAVA_OPTS=-Xms256m -Xmx256m     # 正确，这样子写，启动不抛错
+#     - "ES_JAVA_OPTS=-Xms256m -Xmx512m"   # 正确，这样子写，启动不抛错
       - "ES_JAVA_OPTS=-Xms256m -Xmx512m"
       - xpack.security.enabled=true
       # Use single node discovery in order to disable production mode and avoid bootstrap checks

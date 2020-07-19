@@ -1,5 +1,6 @@
 version: '3.3'
 
+# 参考博客 docker安装Elasticsearch7.6集群并设置密码   https://www.cnblogs.com/woshimrf/p/docker-es7.html
 services:
   elasticsearch01:
     image: elasticsearch:7.7.1
@@ -8,23 +9,25 @@ services:
     privileged: true
     environment:
       - cluster.name=elasticsearch-cluster
-      - node.name=node1
+      - node.name=node01
       - node.master=true
       - node.data=true
-      - bootstrap.memory_lock=true
+#     - bootstrap.memory_lock=true
       - search.max_buckets=100000000
       - http.cors.enabled=true
       - http.cors.allow-origin=*
-      - cluster.initial_master_nodes=node1
-      - ES_JAVA_OPTS=-Xms256m -Xmx512m
+      - cluster.initial_master_nodes=node01,node02,node03
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m" # 集群模式，Xms和Xmx要相等，否则抛错 initial heap size [268435456] not equal to maximum heap size [536870912]; this can cause resize pauses and prevents mlockall from locking the entire heap
 #     # 如果是拆分版，这里必须填写宿主机ip
-#     - discovery.zen.ping.unicast.hosts=172.16.16.11,172.16.16.12,172.16.16.13 # ip地址配置方式
+#     - discovery.zen.ping.unicast.hosts=192.168.27.11,192.168.27.12,192.168.27.13 # ip地址配置方式
       - discovery.zen.ping.unicast.hosts=elasticsearch01,elasticsearch02,elasticsearch03
       - discovery.zen.minimum_master_nodes=2
       - discovery.zen.ping_timeout=120s
       - client.transport.ping_timeout=60s
       # 如果是拆分版，这条配置必须加上，指定当前节点访问的ip
-      #- network.publish_host=172.16.16.11
+      #- network.publish_host=192.168.27.11
+      - xpack.security.enabled=true
+      - ELASTIC_PASSWORD=changeme
     ulimits:
       memlock:
         soft: -1
@@ -44,7 +47,7 @@ services:
 #     - 9301:9300
     networks:
       elk-network:
-        ipv4_address: 172.16.16.11
+        ipv4_address: 192.168.27.11
 
 
   elasticsearch02:
@@ -54,23 +57,25 @@ services:
     privileged: true
     environment:
       - cluster.name=elasticsearch-cluster
-      - node.name=node2
+      - node.name=node02
       - node.master=true
       - node.data=true
-      - bootstrap.memory_lock=true
+#     - bootstrap.memory_lock=true
       - search.max_buckets=100000000
       - http.cors.enabled=true
       - http.cors.allow-origin=*
-      - cluster.initial_master_nodes=node1
-      - ES_JAVA_OPTS=-Xms256m -Xmx512m
+      - cluster.initial_master_nodes=node01,node02,node03
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
       - discovery.zen.ping.unicast.hosts=elasticsearch01,elasticsearch02,elasticsearch03
       # 如果是拆分版，这里必须填写宿主机ip
-      #- discovery.zen.ping.unicast.hosts=172.16.16.11,172.16.16.12,172.16.16.13
+      #- discovery.zen.ping.unicast.hosts=192.168.27.11,192.168.27.12,192.168.27.13
       - discovery.zen.minimum_master_nodes=2
       - discovery.zen.ping_timeout=120s
       - client.transport.ping_timeout=60s
       # 如果是拆分版，这条配置必须加上，指定当前节点访问的ip
-      #- network.publish_host=172.16.16.12
+      #- network.publish_host=192.168.27.12
+      - xpack.security.enabled=true
+      - ELASTIC_PASSWORD=changeme
     ulimits:
       memlock:
         soft: -1
@@ -90,7 +95,7 @@ services:
 #     - 9302:9300
     networks:
       elk-network:
-        ipv4_address: 172.16.16.12
+        ipv4_address: 192.168.27.12
 
 
   elasticsearch03:
@@ -100,23 +105,25 @@ services:
     privileged: true
     environment:
       - cluster.name=elasticsearch-cluster
-      - node.name=node3
+      - node.name=node03
       - node.master=true
       - node.data=true
-      - bootstrap.memory_lock=true
+#     - bootstrap.memory_lock=true
       - search.max_buckets=100000000
       - http.cors.enabled=true
       - http.cors.allow-origin=*
-      - cluster.initial_master_nodes=node1
-      - ES_JAVA_OPTS=-Xms256m -Xmx512m
+      - cluster.initial_master_nodes=node01,node02,node03
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
       - discovery.zen.ping.unicast.hosts=elasticsearch01,elasticsearch02,elasticsearch03
       # 如果是拆分版，这里必须填写宿主机ip
-      #- discovery.zen.ping.unicast.hosts=172.16.16.11,172.16.16.12,172.16.16.13
+      #- discovery.zen.ping.unicast.hosts=192.168.27.11,192.168.27.12,192.168.27.13
       - discovery.zen.minimum_master_nodes=3
       - discovery.zen.ping_timeout=120s
       - client.transport.ping_timeout=60s
       # 如果是拆分版，这条配置必须加上，指定当前节点访问的ip
-      #- network.publish_host=172.16.16.13
+      #- network.publish_host=192.168.27.13
+      - xpack.security.enabled=true
+      - ELASTIC_PASSWORD=changeme
     ulimits:
       memlock:
         soft: -1
@@ -136,7 +143,7 @@ services:
 #     - 9303:9300
     networks:
       elk-network:
-        ipv4_address: 172.16.16.13
+        ipv4_address: 192.168.27.13
 
 
   # kibana:
@@ -158,5 +165,5 @@ networks:
     driver: bridge
     ipam:
       config:
-       - subnet: 172.16.16.0/24
+       - subnet: 192.168.27.0/24
 
