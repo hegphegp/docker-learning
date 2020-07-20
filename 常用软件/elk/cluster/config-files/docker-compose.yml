@@ -1,0 +1,139 @@
+version: '3.3'
+
+
+####################  提供部分命令测试集群  #####################
+# 查看Elasticsearch节点情况
+# curl -u elastic:changeme http://192.168.28.11:9200/_cat/nodes?v
+# 查看ES集群健康状态
+# curl -u elastic:changeme http://192.168.28.11:9200/_cluster/health?pretty
+# 查看集群状态，别人说，下面的命令有显示内容，说明集群搭建成功
+# curl -u elastic:changeme http://192.168.28.11:9200/_cat/health?v
+# 查看集群信息
+# curl -u elastic:changeme 'http://192.168.28.11:9200/_cluster/stats?human&pretty'
+# 查看es信息
+# curl -u elastic:changeme http://192.168.28.11:9200?pretty
+# 查看Elasticsearch索引状态
+# curl -u elastic:changeme http://192.168.28.11:9200/_cat/indices?v
+# curl -u elastic:changeme 'http://192.168.28.11:9200/_cat/shards?h=index,shard,prirep,state,unassigned.reason&pretty'
+# curl -u elastic:changeme 'http://192.168.28.11:9200/_cluster/health?level=indices&pretty'
+####################  提供部分命令测试集群  #####################
+
+
+# docker中的elasticsearch是以elasticsearch用户运行的，docker挂载并创建的目录属于root，elasticsearch用户没有写权限，需要对目录进行授权 
+# groupadd elasticsearch
+# useradd elasticsearch -g elasticsearch -p elasticsearch
+# chown -R elasticsearch.elasticsearch ./data/es-data             # 给es的数据目录授权, 否则es服务启动报错
+# chown -R elasticsearch.elasticsearch ./var/log/elasticsearch    # 给es的日志目录授权, 否则es服务启动报错
+
+services:
+  elasticsearch01:
+    image: elasticsearch:7.7.1
+    restart: always
+    container_name: elasticsearch01
+    privileged: true
+    environment:
+      - "ES_JAVA_OPTS=-Xms768m -Xmx768m"
+      - ELASTIC_PASSWORD=changeme
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    cap_add:
+      - IPC_LOCK
+    volumes:
+      - /etc/localtime:/etc/localtime
+      - ./config/es01.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+#     - ./data/es/node1:/usr/share/elasticsearch/data
+#     - ./logs/es/node1:/usr/share/elasticsearch/logs
+#   ports:
+#     - 9201:9200
+#     - 9301:9300
+    networks:
+      elk-network:
+        ipv4_address: 192.168.28.11
+
+
+  elasticsearch02:
+    image: elasticsearch:7.7.1
+    restart: always
+    container_name: elasticsearch02
+    privileged: true
+    environment:
+      - "ES_JAVA_OPTS=-Xms768m -Xmx768m"
+      - ELASTIC_PASSWORD=changeme
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    cap_add:
+      - IPC_LOCK
+    volumes:
+      - /etc/localtime:/etc/localtime
+      - ./config/es02.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+#     - ./data/es/node1:/usr/share/elasticsearch/data
+#     - ./logs/es/node1:/usr/share/elasticsearch/logs
+#   ports:
+#     - 9202:9200
+#     - 9302:9300
+    networks:
+      elk-network:
+        ipv4_address: 192.168.28.12
+
+
+  elasticsearch03:
+    image: elasticsearch:7.7.1
+    restart: always
+    container_name: elasticsearch03
+    privileged: true
+    environment:
+      - "ES_JAVA_OPTS=-Xms768m -Xmx768m"
+      - ELASTIC_PASSWORD=changeme
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    cap_add:
+      - IPC_LOCK
+    volumes:
+      - /etc/localtime:/etc/localtime      
+      - ./config/es03.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+#     - ./data/es/node1:/usr/share/elasticsearch/data
+#     - ./logs/es/node1:/usr/share/elasticsearch/logs
+#   ports:
+#     - 9203:9200
+#     - 9303:9300
+    networks:
+      elk-network:
+        ipv4_address: 192.168.28.13
+
+
+  # kibana:
+  #   image: kibana:7.2.0
+  #   container_name: kibana
+  #   ports:
+  #     - 5601:5601
+  #   volumes:
+  #     - /etc/localtime:/etc/localtime
+  #     - ./kibana/kibana.yml:/usr/share/kibana/config/kibana.yml:rw
+  #   depends_on:
+  #     - elasticsearch_n0
+  #   networks:
+  #     percona-xtradb-cluster-network:
+  #       ipv4_address: 172.16.17.15
+
+networks:
+  elk-network:
+    driver: bridge
+    ipam:
+      config:
+       - subnet: 192.168.28.0/24
+

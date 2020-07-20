@@ -1,0 +1,36 @@
+---
+## Default Elasticsearch configuration from Elasticsearch base image.
+## https://github.com/elastic/elasticsearch/blob/master/distribution/docker/src/docker/config/elasticsearch.yml
+#
+cluster.name: elasticsearch-cluster
+node.name: node01
+node.master: true  # 是否是master节点
+node.data: true    # 是否是数据节点
+network.host: 0.0.0.0
+network.publish_host: 192.168.28.11
+
+cluster.initial_master_nodes: node01,node02,node03
+# discovery.zen.ping.unicast.hosts=192.168.28.11,192.168.28.12,192.168.28.13 # ip地址配置方式
+discovery.zen.ping.unicast.hosts: elasticsearch01,elasticsearch02,elasticsearch03
+discovery.zen.minimum_master_nodes: 2
+discovery.zen.ping_timeout: 120s
+client.transport.ping_timeout: 60s
+
+
+## X-Pack settings
+## see https://www.elastic.co/guide/en/elasticsearch/reference/current/setup-xpack.html
+#
+xpack.license.self_generated.type: trial
+xpack.security.enabled: true
+xpack.monitoring.collection.enabled: true
+
+bootstrap.memory_lock: true   # 设置为true锁住内存，当服务混合部署了多个组件及服务时，应开启此操作，允许es占用足够多的内存
+indices.breaker.request.limit: 10%  # 设置单个request请求的内存熔断限制，默认是jvm堆的60%（es7.0引入了新的内存熔断机制，会智能判断，规避OOM）
+indices.queries.cache.size: 20%     # query请求可使用的jvm内存限制，默认是10%
+indices.requests.cache.size: 2%     # 查询request请求的DSL语句缓存，被缓存的DSL语句下次请求时不会被二次解析，可提升检索性能，默认值是1%
+indices.fielddata.cache.size: 30%   # 设置字段缓存的最大值，默认无限制
+
+node.attr.box_type: hot             # 用来对索引数据进行冷热分离，需要注意的是 setting 中也要进行相关配置 "index.routing.allocation.require.box_type": "hot"
+search.max_buckets: 100000000
+http.cors.enabled: true
+http.cors.allow-origin: "*"

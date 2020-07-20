@@ -1,0 +1,173 @@
+version: '3.3'
+
+
+####################  提供部分命令测试集群  #####################
+# 查看Elasticsearch节点情况
+# curl -u elastic:changeme http://192.168.29.11:9200/_cat/nodes?v
+# 查看ES集群健康状态
+# curl -u elastic:changeme http://192.168.29.11:9200/_cluster/health?pretty
+# 查看集群状态，别人说，下面的命令有显示内容，说明集群搭建成功
+# curl -u elastic:changeme http://192.168.29.11:9200/_cat/health?v
+# 查看集群信息
+# curl -u elastic:changeme 'http://192.168.29.11:9200/_cluster/stats?human&pretty'
+# 查看es信息
+# curl -u elastic:changeme http://192.168.29.11:9200?pretty
+# 查看Elasticsearch索引状态
+# curl -u elastic:changeme http://192.168.29.11:9200/_cat/indices?v
+# curl -u elastic:changeme 'http://192.168.29.11:9200/_cat/shards?h=index,shard,prirep,state,unassigned.reason&pretty'
+# curl -u elastic:changeme 'http://192.168.29.11:9200/_cluster/health?level=indices&pretty'
+####################  提供部分命令测试集群  #####################
+
+
+# docker中的elasticsearch是以elasticsearch用户运行的，docker挂载并创建的目录属于root，elasticsearch用户没有写权限，需要对目录进行授权 
+# groupadd elasticsearch
+# useradd elasticsearch -g elasticsearch -p elasticsearch
+# chown -R elasticsearch.elasticsearch ./data/es-data             # 给es的数据目录授权, 否则es服务启动报错
+# chown -R elasticsearch.elasticsearch ./var/log/elasticsearch    # 给es的日志目录授权, 否则es服务启动报错
+
+services:
+  elasticsearch01:
+    image: elasticsearch:7.7.1
+    restart: always
+    container_name: elasticsearch01
+    privileged: true
+    environment:
+      - cluster.name=elasticsearch-cluster
+      - node.name=node01
+      - node.master=true  # 是否是master节点
+      - node.data=true    # 是否是数据节点
+      - cluster.initial_master_nodes=node01,node02,node03
+      - "ES_JAVA_OPTS=-Xms768m -Xmx768m" # 集群模式，Xms和Xmx要相等，否则抛错 initial heap size [268435456] not equal to maximum heap size [536870912]; this can cause resize pauses and prevents mlockall from locking the entire heap
+#     - discovery.zen.ping.unicast.hosts=192.168.29.11,192.168.29.12,192.168.29.13 # ip地址配置方式
+      - discovery.zen.ping.unicast.hosts=elasticsearch01,elasticsearch02,elasticsearch03
+      - discovery.zen.minimum_master_nodes=2
+      - discovery.zen.ping_timeout=120s
+      - client.transport.ping_timeout=60s
+      - network.publish_host=192.168.29.11
+      - xpack.security.enabled=true
+      - ELASTIC_PASSWORD=changeme
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    cap_add:
+      - IPC_LOCK
+    volumes:
+      - /etc/localtime:/etc/localtime
+#     - ./data/es/node1:/usr/share/elasticsearch/data
+#     - ./logs/es/node1:/usr/share/elasticsearch/logs
+#   ports:
+#     - 9201:9200
+#     - 9301:9300
+    networks:
+      elk-network:
+        ipv4_address: 192.168.29.11
+
+
+  elasticsearch02:
+    image: elasticsearch:7.7.1
+    restart: always
+    container_name: elasticsearch02
+    privileged: true
+    environment:
+      - cluster.name=elasticsearch-cluster
+      - node.name=node02
+      - node.master=true  # 是否是master节点
+      - node.data=true    # 是否是数据节点
+      - cluster.initial_master_nodes=node01,node02,node03
+      - "ES_JAVA_OPTS=-Xms768m -Xmx768m"
+      - discovery.zen.ping.unicast.hosts=elasticsearch01,elasticsearch02,elasticsearch03
+      #- discovery.zen.ping.unicast.hosts=192.168.29.11,192.168.29.12,192.168.29.13
+      - discovery.zen.minimum_master_nodes=2
+      - discovery.zen.ping_timeout=120s
+      - client.transport.ping_timeout=60s
+      # 如果是拆分版，这条配置必须加上，指定当前节点访问的ip
+      - network.publish_host=192.168.29.12
+      - xpack.security.enabled=true
+      - ELASTIC_PASSWORD=changeme
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    cap_add:
+      - IPC_LOCK
+    volumes:
+      - /etc/localtime:/etc/localtime
+#     - ./data/es/node1:/usr/share/elasticsearch/data
+#     - ./logs/es/node1:/usr/share/elasticsearch/logs
+#   ports:
+#     - 9202:9200
+#     - 9302:9300
+    networks:
+      elk-network:
+        ipv4_address: 192.168.29.12
+
+
+  elasticsearch03:
+    image: elasticsearch:7.7.1
+    restart: always
+    container_name: elasticsearch03
+    privileged: true
+    environment:
+      - cluster.name=elasticsearch-cluster
+      - node.name=node03
+      - node.master=true  # 是否是master节点
+      - node.data=true    # 是否是数据节点
+      - cluster.initial_master_nodes=node01,node02,node03
+      - "ES_JAVA_OPTS=-Xms768m -Xmx768m"
+      - discovery.zen.ping.unicast.hosts=elasticsearch01,elasticsearch02,elasticsearch03
+      #- discovery.zen.ping.unicast.hosts=192.168.29.11,192.168.29.12,192.168.29.13
+      - discovery.zen.minimum_master_nodes=2
+      - discovery.zen.ping_timeout=120s
+      - client.transport.ping_timeout=60s
+      - network.publish_host=192.168.29.13
+      - xpack.security.enabled=true
+      - ELASTIC_PASSWORD=changeme
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    cap_add:
+      - IPC_LOCK
+    volumes:
+      - /etc/localtime:/etc/localtime      
+#     - ./data/es/node1:/usr/share/elasticsearch/data
+#     - ./logs/es/node1:/usr/share/elasticsearch/logs
+#   ports:
+#     - 9203:9200
+#     - 9303:9300
+    networks:
+      elk-network:
+        ipv4_address: 192.168.29.13
+
+
+  # kibana:
+  #   image: kibana:7.2.0
+  #   container_name: kibana
+  #   ports:
+  #     - 5601:5601
+  #   volumes:
+  #     - /etc/localtime:/etc/localtime
+  #     - ./kibana/kibana.yml:/usr/share/kibana/config/kibana.yml:rw
+  #   depends_on:
+  #     - elasticsearch_n0
+  #   networks:
+  #     percona-xtradb-cluster-network:
+  #       ipv4_address: 172.16.17.15
+
+networks:
+  elk-network:
+    driver: bridge
+    ipam:
+      config:
+       - subnet: 192.168.29.0/24
+
