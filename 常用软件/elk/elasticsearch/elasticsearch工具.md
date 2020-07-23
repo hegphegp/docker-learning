@@ -1,6 +1,6 @@
-# elasticsearch备份工具
+### elasticsearch工具
 
-##### [该工具的github仓库https://github.com/taskrabbit/elasticsearch-dump](https://github.com/taskrabbit/elasticsearch-dump)
+##### [备份工具的github仓库https://github.com/taskrabbit/elasticsearch-dump](https://github.com/taskrabbit/elasticsearch-dump)
 ```
 # Copy an index from production to staging with analyzer and mapping:
 elasticdump \
@@ -55,4 +55,12 @@ elasticdump \
   --input=./alias.json \
   --output=http://es.com:9200 \
   --type=alias
+```
+
+
+##### 集成Head插件
+```
+# 在elasticsearch 5.x版本以后不再支持直接安装head插件，而是通过访问http://ip:9200获取集群监控信息
+# 使用插件之前，必须在elasticsearch的配置文件(config/elasticsearch.yml)添加允许跨域参数 http.cors.enabled: true 和 http.cors.allow-origin: "*"
+docker run -itd --restart always --name elasticsearch-head -p 9100:9100 mobz/elasticsearch-head:5-alpine
 ```
