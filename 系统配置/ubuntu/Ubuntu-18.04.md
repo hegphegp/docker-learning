@@ -10,6 +10,13 @@ echo "source /etc/profile" >> ~/.bashrc
 ```
 sudo apt remove -y libreoffice-calc libreoffice-draw libreoffice-impress libreoffice-writer libreoffice*
 ```
+
+### 禁止 apt-daily 服务
+```
+systemctl disable apt-daily.service
+systemctl disable apt-daily.timer
+```
+
 ### 配置阿里云加速器
 ```
 echo "deb http://mirrors.aliyun.com/ubuntu/ $(lsb_release -cs) main restricted universe multiverse" > /etc/apt/sources.list
@@ -99,30 +106,18 @@ chmod +x /usr/local/bin/docker-compose
 
 ```
 
-#### 多线程下载工具 axel , 下载国外资源时比较快
+#### buntu系统自带的 vi 不完整导致键盘上下左右键显示为字符的问题
 ```
-sudo apt-get install -y axel
-#  使用方法
-#  限速使用：加上 -s 参数，如 -s 10240，即每秒下载的字节数，这里是 10 Kb
-#  限制连接数：加上 -n 参数，如 -n 5，即打开 5 个连接
-axel -a -n 10 http://downloadUrl
+sudo apt-get install -y vim-gtk
 ```
 
 #### 在网上使用 sublime-text_build-3207_amd64.deb 安装包安装, 拒绝使用在线安装sublime-text, 因为不支持中文数据, 要到github下载某个仓库编译, 太麻烦
 
-
-### 卸载gedit(被gedit坑死过很多次，几十行的文件替换后，再撤销回退，电脑直接卡死，只能拔电源线强制关机，害死人了，打开大文件直接卡死了)，安装notepadqq
+### 卸载gedit(被gedit坑死过很多次，几十行的文件替换后，再撤销回退，电脑直接卡死，只能拔电源线强制关机，害死人了，打开大文件直接卡死了)
 ```
 # 用root用户执行命令
 # 卸载 gedit
 apt-get remove gedit
-add-apt-repository ppa:notepadqq-team/notepadqq
-apt-get update
-apt-get install notepadqq
-
-# 卸载 notepadqq
-apt-get remove notepadqq
-add-apt-repository --remove ppa:notepadqq-team/notepadqq
 ```
 
 ### 上官网下载VSCode的deb安装包安装
@@ -155,6 +150,53 @@ sudo dpkg -i sogoupinyin_2.2.0.0108_amd64.deb
 # 然后直接重启系统
 ```
 
+### 安装 12.X 版本的nodejs，然后切换回普通用户安装插件
+```
+# 下面这句一定要运行，否则会认为国内node加速下载地址是不可信，导致不在国内加速器下载最新版本
+curl -s https://deb.nodesource.com/gpgkey/nodesource.gpg.key | sudo apt-key add -
+
+echo "deb https://mirrors.tuna.tsinghua.edu.cn/nodesource/deb_12.x $(lsb_release -cs) main" > /etc/apt/sources.list.d/nodesource.list
+echo "deb-src https://mirrors.tuna.tsinghua.edu.cn/nodesource/deb_12.x $(lsb_release -cs) main" >> /etc/apt/sources.list.d/nodesource.list
+apt-get update
+apt-get install -y nodejs
+
+mkdir -p /etc/profile.d
+echo "#set npm environment" > /etc/profile.d/npm-config.sh
+echo 'export PATH=~/.npm-global/bin:$PATH' >> /etc/profile.d/npm-config.sh
+chmod 755 /etc/profile.d/npm-config.sh
+
+
+# 修改 npm 安装插件的目录是 当前用户的 ~/.npm-global目录
+npm config set prefix '~/.npm-global'
+
+# 配置国内加速器
+source /etc/profile
+npm config set registry https://registry.npm.taobao.org --verbose
+npm install -g cnpm --registry=https://registry.npm.taobao.org --verbose
+npm install -g yarn --verbose
+yarn config set registry https://registry.npm.taobao.org/
+
+# 部分软件单独设置加速地址
+npm config set registry https://registry.npm.taobao.org
+npm config set sass_binary_site https://npm.taobao.org/mirrors/node-sass/
+npm config set phantomjs_cdnurl https://npm.taobao.org/mirrors/phantomjs/
+npm config set electron_mirror https://npm.taobao.org/mirrors/electron/
+npm config set sqlite3_binary_host_mirror https://npm.taobao.org/mirrors/sqlite3/
+npm config set profiler_binary_host_mirror https://npm.taobao.org/mirrors/node-inspector/
+npm config set chromedriver_cdnurl https://npm.taobao.org/mirrors/chromedriver/
+npm config set puppeteer_download_host=https://npm.taobao.org/mirrors/
+
+
+yarn config set registry https://registry.npm.taobao.org
+yarn config set sass_binary_site https://npm.taobao.org/mirrors/node-sass/
+yarn config set phantomjs_cdnurl https://npm.taobao.org/mirrors/phantomjs/
+yarn config set electron_mirror https://npm.taobao.org/mirrors/electron/
+yarn config set sqlite3_binary_host_mirror https://npm.taobao.org/mirrors/sqlite3/
+yarn config set profiler_binary_host_mirror https://npm.taobao.org/mirrors/node-inspector/
+yarn config set chromedriver_cdnurl https://npm.taobao.org/mirrors/chromedriver/
+yarn config set puppeteer_download_host=https://npm.taobao.org/mirrors/
+
+```
 
 ### 安装virtualbox
 * 必须安装Linux内核头文件依赖，virtualbox用到Linux内核头文件，否则无法创建网卡或者其他一大堆错误
@@ -224,12 +266,12 @@ reboot
 
 ### 安装filezilla
 ```
-sudo apt-get install filezilla
+sudo apt-get install -y filezilla
 ```
 
 ### ubuntu18.04 没声音解决方案
 ```
-sudo apt install pavucontrol
+sudo apt install -y pavucontrol
 sudo pavucontrol
 ```
 * 配置步骤，图片演示  
@@ -248,14 +290,14 @@ sudo apt-get install -y vlc
 
 ### 安装kazam录屏软件
 ```
-sudo apt-get install kazam
+sudo apt-get install -y kazam
 # 启动软件
 kazam
 ```
 
 ### 安装 audacious 音乐播放器
 ```
-sudo apt-get install audacious
+sudo apt-get install -y audacious
 # 解决乱码的操作，在导航菜单依次点击  文件 -> 设置 -> 播放列表 -> 自动检测下拉编码 -> 选中汉语
 # 解决乱码的操作，在导航菜单依次点击  文件 -> 设置 -> 播放列表 -> 备用字符编码 -> 输入 GBK
 ```
@@ -272,7 +314,7 @@ ServerAliveCountMax 999
 
 ### 安装Ubuntu远程连接windows的软件rdesktop
 ```
-sudo apt-get install rdesktop
+sudo apt-get install -y rdesktop
 ```
 
 ### 安装shadowsocks，Ubuntu-18.04(2019年4月2号，此时还没有Ubuntu-18.04-bionic的版本，只能用Ubuntu-16.04-xenial版本)，适用于Ubuntu-16.04
@@ -288,7 +330,7 @@ sudo apt-get install -y --allow-unauthenticated shadowsocks-qt5
 ```
 # 以root用户运行下面的命令，如果运行有错，复制粘贴重新运行几遍，直到成功为止
 sudo dpkg --add-architecture i386
-sudo apt install wine-development
+sudo apt install -y wine-development
 wine --version     #如果出现wine的版本则说明安装成功
 sudo apt install winbind
 ```
@@ -298,9 +340,8 @@ sudo apt install winbind
 
 ### Ubuntu-18.04试了几十次登录，输入正确密码后，直接卡死在红色的界面，进入不了系统，一动不能动，只能强制按电源键断电
 ```
-sudo apt-get remove plymouth
-sudo apt-get remove xserver-xorg-video-intel
-sudo apt-get install lightdm
+sudo apt-get remove -y plymouth xserver-xorg-video-intel
+sudo apt-get install -y lightdm
 sudo dpkg-reconfigure lightdm
 # 弹出一个命令行窗口选择项，把  gdm3  改成  lightdm
 sudo apt-get install ubuntu-desktop
@@ -310,7 +351,7 @@ reboot
 
 ### Ubuntu-18.04鼠标移动卡顿，有时候不能移动
 ```
-sudo apt-get install xserver-xorg-input-all
+sudo apt-get install -y xserver-xorg-input-all
 sudo apt-get install --reinstall xserver-xorg-input-all
 ```
 

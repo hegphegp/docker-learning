@@ -3,7 +3,7 @@
 ##### 全库备份还原
 ```
 # mongo备份还原
-docker run -itd --restart always -e TZ=Asia/Shanghai -v /etc/localtime:/etc/localtime:ro --name mongo -p 27017:27017 mongo:4.1.11-bionic --wiredTigerCacheSizeGB 0.8
+docker run -itd --restart always -e TZ=Asia/Shanghai -v /etc/localtime:/etc/localtime:ro --name mongo -p 27017:27017 mongo:4.4.0-bionic --wiredTigerCacheSizeGB 0.8
 docker exec -it mongo sh
 mkdir -p /mongo-backup
 # 备份命令 mongodump --host IP地址 --port 27017 -o 目录

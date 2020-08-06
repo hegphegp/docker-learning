@@ -21,7 +21,7 @@ Regular expression | 正则表达式类型。用于存储正则表达式。
 
 #### 启动mongo
 ```
-docker run -itd --restart always -e TZ=Asia/Shanghai -v /etc/localtime:/etc/localtime:ro --name mongo -v /opt/data/mongo/data:/data/db -p 27017:27017 -d mongo:3.4.5
+docker run -itd --restart always -e TZ=Asia/Shanghai -v /etc/localtime:/etc/localtime:ro --name mongo -v /opt/data/mongo/data:/data/db -p 27017:27017 -d mongo:4.4.0-bionic
 ```
 #### 命令行终端进入mongo
 ```

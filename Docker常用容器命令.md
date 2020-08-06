@@ -40,7 +40,7 @@ docker inspect --format='{{.Name}} {{.NetworkSettings.IPAddress}} {{.HostConfig.
 
 ```
 # postgre启动命令，并且设置连接数
-docker run -itd --name postgresql --restart always -e TZ=Asia/Shanghai -v /etc/localtime:/etc/localtime:ro -v /opt/data/postgresql:/var/lib/postgresql/data -p 5432:5432 -e POSTGRES_USER=sde -e POSTGRES_PASSWORD=postgres postgres:9.6.1 postgres -c max_connections=500
+docker run -itd --name postgresql --restart always -e TZ=Asia/Shanghai -v /etc/localtime:/etc/localtime:ro -v /opt/data/postgresql:/var/lib/postgresql/data -p 5432:5432 -e POSTGRES_USER=sde -e POSTGRES_PASSWORD=postgres postgres:11.8-alpine postgres -c max_connections=500
 
 # mongo启动命令
 docker run -itd --restart always -e TZ=Asia/Shanghai -v /etc/localtime:/etc/localtime:ro --name mongo -p 27017:27017 -e MONGO_INITDB_ROOT_USERNAME=mongoadmin -e MONGO_INITDB_ROOT_PASSWORD=mongopasswd mongo:4.1.11-bionic --wiredTigerCacheSizeGB 0.8
@@ -80,7 +80,7 @@ docker run -itd --restart always --name swagger-ui -p 80:8080 -e API_URL=http://
 docker run -itd --restart always -e TZ=Asia/Shanghai -v /etc/localtime:/etc/localtime:ro --name neo4j -e NEO4J_AUTH=neo4j/admin123 -e NEO4J_dbms_tx__log_rotation_retention__policy=true -e NEO4J_dbms_memory_pagecache_size=128M -e NEO4J_dbms_memory_heap_initial__size=128M -e NEO4J_dbms_memory_heap_max__size=256M -p 7474:7474 -p 7473:7473 -p 7687:7687 neo4j:3.4.5
 
 
-docker run -itd --restart always -e TZ=Asia/Shanghai -v /etc/localtime:/etc/localtime:ro -p 5432:5432 -v /cityworks/postgresql:/var/lib/postgresql/data --name postgres -e POSTGRES_USER=sde -e POSTGRES_PASSWORD=postgres postgres:9.6.1
+docker run -itd --restart always -e TZ=Asia/Shanghai -v /etc/localtime:/etc/localtime:ro -p 5432:5432 -v /cityworks/postgresql:/var/lib/postgresql/data --name postgres -e POSTGRES_USER=sde -e POSTGRES_PASSWORD=postgres postgres:11.8-alpine
 # MySQL启动命令
 docker run -itd --restart always -e TZ=Asia/Shanghai -v /etc/localtime:/etc/localtime:ro --name mysql -e MYSQL_ROOT_PASSWORD=root -p 3306:3306 mysql:5.7.3
 
