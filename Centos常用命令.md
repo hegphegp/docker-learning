@@ -202,6 +202,21 @@ grep -R -ni --include="*.java" "netty" /opt/soft
 grep --exclude-dir="node_modules" -rni "netty" .
 ```
 
+### 按文件大小分割
+* 比如我想将一个aaa.txt文件切割成每个10M大小，后缀是2位数字结尾的分片文件，分片文件名称以child开头
+* split -a 2 -d -b 10M 原文件名称 分片后的名称前缀
+* -a 2  后缀是2位
+* -d  后缀是数字
+* -b 10M 每个文件最大01M
+```
+split -a 2 -d -b 10M aaa.txt child
+```
+
+### 合并split分割的文件
+```
+cat 前缀名* > 合并后的文件名
+```
+
 ### 查找子子孙孙的文件名
 ```
 find /home/hgp -name hgp

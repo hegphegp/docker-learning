@@ -1,0 +1,16 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  config.vm.define :ubuntu1804 do |ubuntu1804|
+    ubuntu1804.vm.box = "ubuntu-1804-template"
+    ubuntu1804.vm.hostname = "ubuntu-18.04"
+    ubuntu1804.vm.synced_folder ".", "/vagrant", disabled: true
+    ubuntu1804.vm.network :private_network, ip: "192.168.35.11"
+    ubuntu1804.ssh.username = "root"
+    ubuntu1804.ssh.password = "vagrant"
+    ubuntu1804.vm.provider "virtualbox" do |vb|
+      vb.customize [ "modifyvm", :id, "--name", "ubuntu-18.04", "--memory", "1024", "--cpus", "2", "--uartmode1", "disconnected" ]
+    end
+  end
+end
