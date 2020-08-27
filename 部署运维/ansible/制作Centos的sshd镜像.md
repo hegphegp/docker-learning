@@ -21,9 +21,7 @@ RUN curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Cen
     sed -i 's/UsePAM yes/UsePAM no/g' /etc/ssh/sshd_config; \
     sed -i 's/#UseDNS yes/UseDNS no/g' /etc/ssh/sshd_config; \
     sed -i 's/#PermitRootLogin yes/PermitRootLogin yes/' /etc/ssh/sshd_config; \
-    yum clean all  ; \
-    git clone https://www.baidu.com; \
-    
+    yum clean all  ; 
 
 EXPOSE 22
 
