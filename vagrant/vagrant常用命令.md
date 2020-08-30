@@ -2,20 +2,40 @@
 
 #### 必须先安装virtualbox
 #### [vagrant软件下载地址https://releases.hashicorp.com/vagrant](https://releases.hashicorp.com/vagrant)
-#### [Centos的vagrant镜像下载地址http://cloud.centos.org/centos/7/vagrant/x86_64/images/](http://cloud.centos.org/centos/7/vagrant/x86_64/images/)
-#### [Ubuntu的vagrant镜像下载地址https://cloud-images.ubuntu.com/](https://cloud-images.ubuntu.com/)
-#### [CoreOS的vagrant镜像下载地址https://stable.release.core-os.net/](https://stable.release.core-os.net/)
+
 #### 建议：直接下载vagrant_2.1.1_x86_64.deb，用 sudo dpkg -i vagrant_2.1.1_x86_64.deb 命令安装，该安装包会配置好环境并给用户添加该软件的执行权限，而下载vagrant_2.1.1_linux_amd64.zip解压放到/usr/bin/目录，发现只有root和sudo命令才可以调用vagrant命令
 #### 所有官方提供的vagrant镜像都应该有 账号密码 vagrant和vgrant root和vagrant， 默认情况下root和vagrant用户都不允许远程登录的
 
+#### 国内加速下载地址和官方下载地址
+```
+# ubuntu和centos的国内加速下载地址
+https://mirrors.tuna.tsinghua.edu.cn/ubuntu-cloud-images/bionic/current/bionic-server-cloudimg-amd64-vagrant.box
+https://mirrors.tuna.tsinghua.edu.cn/ubuntu-cloud-images/xenial/current/xenial-server-cloudimg-amd64-vagrant.box
+https://mirrors.tuna.tsinghua.edu.cn/ubuntu-cloud-images/focal/current/focal-server-cloudimg-amd64-vagrant.box
+https://mirrors.ustc.edu.cn/centos-cloud/centos/7/vagrant/x86_64/images/
+
+# 国外下载地址
+http://cloud.centos.org/centos/7/vagrant/x86_64/images/
+https://cloud-images.ubuntu.com/
+```
+
 #### 下载vagrant镜像
 ```
-curl -L https://stable.release.core-os.net/amd64-usr/2023.4.0/coreos_production_vagrant_virtualbox.box > coreos_production_vagrant_virtualbox-2023.4.0.box
-curl -L https://stable.release.core-os.net/amd64-usr/2023.5.0/coreos_production_vagrant_virtualbox.box > coreos_production_vagrant_virtualbox-2023.5.0.box
-curl -L http://cloud.centos.org/centos/7/vagrant/x86_64/images/CentOS-7-x86_64-Vagrant-1811_01.VirtualBox.box > CentOS-7-x86_64-Vagrant-1811_01.VirtualBox.box
-curl -L http://cloud.centos.org/centos/7/vagrant/x86_64/images/CentOS-7-x86_64-Vagrant-1809_01.VirtualBox.box > CentOS-7-x86_64-Vagrant-1809_01.VirtualBox.box
-curl -L http://cloud.centos.org/centos/7/vagrant/x86_64/images/CentOS-7-x86_64-Vagrant-1901_01.VirtualBox.box > CentOS-7-x86_64-Vagrant-1901_01.VirtualBox.box
+#curl -L https://stable.release.core-os.net/amd64-usr/2023.4.0/coreos_production_vagrant_virtualbox.box > coreos_production_vagrant_virtualbox-2023.4.0.box
+#curl -L https://stable.release.core-os.net/amd64-usr/2023.5.0/coreos_production_vagrant_virtualbox.box > coreos_production_vagrant_virtualbox-2023.5.0.box
+#curl -L http://cloud.centos.org/centos/7/vagrant/x86_64/images/CentOS-7-x86_64-Vagrant-1811_01.VirtualBox.box > CentOS-7-x86_64-Vagrant-1811_01.VirtualBox.box
+#curl -L http://cloud.centos.org/centos/7/vagrant/x86_64/images/CentOS-7-x86_64-Vagrant-1809_01.VirtualBox.box > CentOS-7-x86_64-Vagrant-1809_01.VirtualBox.box
+#curl -L http://cloud.centos.org/centos/7/vagrant/x86_64/images/CentOS-7-x86_64-Vagrant-1901_01.VirtualBox.box > CentOS-7-x86_64-Vagrant-1901_01.VirtualBox.box
+
+curl -L https://mirrors.tuna.tsinghua.edu.cn/ubuntu-cloud-images/bionic/current/bionic-server-cloudimg-amd64-vagrant.box > 18.04-bionic-server-cloudimg-amd64-vagrant.box
+curl -L https://mirrors.tuna.tsinghua.edu.cn/ubuntu-cloud-images/xenial/current/xenial-server-cloudimg-amd64-vagrant.box > 16.04-xenial-server-cloudimg-amd64-vagrant.box
+curl -L https://mirrors.tuna.tsinghua.edu.cn/ubuntu-cloud-images/focal/current/focal-server-cloudimg-amd64-vagrant.box > 20.04-focal-server-cloudimg-amd64-vagrant.box
+curl -L https://mirrors.ustc.edu.cn/centos-cloud/centos/7/vagrant/x86_64/images/CentOS-7-x86_64-Vagrant-1809_01.VirtualBox.box > CentOS-7-x86_64-Vagrant-1809_01.VirtualBox.box
+curl -L https://mirrors.ustc.edu.cn/centos-cloud/centos/7/vagrant/x86_64/images/CentOS-7-x86_64-Vagrant-1811_01.VirtualBox.box > CentOS-7-x86_64-Vagrant-1811_01.VirtualBox.box
+curl -L https://mirrors.ustc.edu.cn/centos-cloud/centos/7/vagrant/x86_64/images/CentOS-7-x86_64-Vagrant-1901_01.VirtualBox.box > CentOS-7-x86_64-Vagrant-1901_01.VirtualBox.box
+
 ```
+
 ```
 # 添加镜像到本地仓库
 # vagrant box add [box-name] [box镜像文件或镜像名]

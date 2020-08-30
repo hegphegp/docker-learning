@@ -24,7 +24,7 @@ echo "deb http://mirrors.aliyun.com/ubuntu/ $(lsb_release -cs)-security main res
 echo "deb http://mirrors.aliyun.com/ubuntu/ $(lsb_release -cs)-updates main restricted universe multiverse" >> /etc/apt/sources.list
 echo "deb http://mirrors.aliyun.com/ubuntu/ $(lsb_release -cs)-proposed main restricted universe multiverse" >> /etc/apt/sources.list
 echo "deb http://mirrors.aliyun.com/ubuntu/ $(lsb_release -cs)-backports main restricted universe multiverse" >> /etc/apt/sources.list
-apt-get update && apt-get clean && apt-get autoclean && apt-get clean && apt-get autoremove
+apt-get update && apt-get clean && apt-get autoclean
 ```
 
 ### 安装python-3.7 (阿里源仓库有python3.7的安装包)
@@ -205,7 +205,10 @@ yarn config set puppeteer_download_host=https://npm.taobao.org/mirrors/
 # 4.18.0-16-generic
 apt-get install build-essential linux-headers-`uname -r`
 mkdir -p /etc/apt/sources.list.d
-sudo echo "deb http://download.virtualbox.org/virtualbox/debian $(lsb_release -sc) contrib" > /etc/apt/sources.list.d/virtualbox.list
+# 使用腾讯云的软件仓库地址，不用官方的仓库地址
+# sudo echo "deb http://download.virtualbox.org/virtualbox/debian $(lsb_release -sc) contrib" > /etc/apt/sources.list.d/virtualbox.list
+# 使用腾讯云的软件仓库地址
+sudo echo "deb http://mirrors.cloud.tencent.com/virtualbox/apt/ $(lsb_release -sc) contrib" > /etc/apt/sources.list.d/virtualbox.list
 # 添加 Oracle virtualbox 公钥
 wget -q https://www.virtualbox.org/download/oracle_vbox_2016.asc -O- | sudo apt-key add -
 apt-get update
