@@ -7,7 +7,7 @@ cnpm config delete registry
 yarn config delete registry
 ```
 
-### 直接copy运行，不要浪费时间
+### 安装软件用sudo或者root安装, 配置npm的插件下载地址, 要用普通用户, 用开发账号用户
 ```
 echo "deb http://mirrors.aliyun.com/ubuntu/ $(lsb_release -cs) main restricted universe multiverse" > /etc/apt/sources.list
 echo "deb http://mirrors.aliyun.com/ubuntu/ $(lsb_release -cs)-security main restricted universe multiverse" >> /etc/apt/sources.list
@@ -15,8 +15,13 @@ echo "deb http://mirrors.aliyun.com/ubuntu/ $(lsb_release -cs)-updates main rest
 echo "deb http://mirrors.aliyun.com/ubuntu/ $(lsb_release -cs)-proposed main restricted universe multiverse" >> /etc/apt/sources.list
 echo "deb http://mirrors.aliyun.com/ubuntu/ $(lsb_release -cs)-backports main restricted universe multiverse" >> /etc/apt/sources.list
 
-# 下面这句一定要运行，否则会认为国内node加速下载地址是不可信，导致不在国内加速器下载最新版本
+# 下面这句一定要运行，否则会认为nodejs的仓库地址是不可信，导致不能下载安装nodejs软件
 curl -s https://deb.nodesource.com/gpgkey/nodesource.gpg.key | sudo apt-key add -
+
+mkdir -p /etc/profile.d
+echo "#set npm environment" > /etc/profile.d/npm-config.sh
+echo 'export PATH=~/.npm-global/bin:$PATH' >> /etc/profile.d/npm-config.sh
+chmod 755 /etc/profile.d/npm-config.sh
 
 # 安装 10.X版本
 echo "deb https://mirrors.tuna.tsinghua.edu.cn/nodesource/deb_10.x $(lsb_release -cs) main" > /etc/apt/sources.list.d/nodesource.list
@@ -41,6 +46,10 @@ apt-get install -y nodejs
 # echo "deb-src https://mirrors.tuna.tsinghua.edu.cn/nodesource/deb_13.x $(lsb_release -cs) main" >> /etc/apt/sources.list.d/nodesource.list
 # apt-get update
 # apt-get install -y nodejs
+
+
+# 修改 npm 安装插件的目录是 当前用户的 ~/.npm-global目录, 切回普通用户执行下面命令
+npm config set prefix '~/.npm-global'
 
 
 npm config set registry https://registry.npm.taobao.org --verbose

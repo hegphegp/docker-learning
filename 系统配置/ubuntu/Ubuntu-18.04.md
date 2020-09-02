@@ -96,7 +96,9 @@ systemctl enable docker #设置docker服务开机自启动
 systemctl restart docker
 
 # 安装docker-compose
-curl -L https://mirrors.aliyun.com/docker-toolbox/linux/compose/1.21.2/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
+# https://github.com/docker/compose/releases
+# ALL_PROXY=socks5://127.0.0.1:1080 curl -L https://github.com/docker/compose/releases/download/1.25.5/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
+curl -L https://get.daocloud.io/docker/compose/releases/download/1.26.2/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
 chmod +x /usr/local/bin/docker-compose
 
 # groupadd docker
@@ -152,21 +154,20 @@ sudo dpkg -i sogoupinyin_2.2.0.0108_amd64.deb
 
 ### 安装 12.X 版本的nodejs，然后切换回普通用户安装插件
 ```
-# 下面这句一定要运行，否则会认为国内node加速下载地址是不可信，导致不在国内加速器下载最新版本
+# 下面这句一定要运行，否则会认为nodejs的仓库地址是不可信，导致不能下载安装nodejs软件
 curl -s https://deb.nodesource.com/gpgkey/nodesource.gpg.key | sudo apt-key add -
-
-echo "deb https://mirrors.tuna.tsinghua.edu.cn/nodesource/deb_12.x $(lsb_release -cs) main" > /etc/apt/sources.list.d/nodesource.list
-echo "deb-src https://mirrors.tuna.tsinghua.edu.cn/nodesource/deb_12.x $(lsb_release -cs) main" >> /etc/apt/sources.list.d/nodesource.list
-apt-get update
-apt-get install -y nodejs
 
 mkdir -p /etc/profile.d
 echo "#set npm environment" > /etc/profile.d/npm-config.sh
 echo 'export PATH=~/.npm-global/bin:$PATH' >> /etc/profile.d/npm-config.sh
 chmod 755 /etc/profile.d/npm-config.sh
 
+echo "deb https://mirrors.tuna.tsinghua.edu.cn/nodesource/deb_12.x $(lsb_release -cs) main" > /etc/apt/sources.list.d/nodesource.list
+echo "deb-src https://mirrors.tuna.tsinghua.edu.cn/nodesource/deb_12.x $(lsb_release -cs) main" >> /etc/apt/sources.list.d/nodesource.list
+apt-get update
+apt-get install -y nodejs
 
-# 修改 npm 安装插件的目录是 当前用户的 ~/.npm-global目录
+# 修改 npm 安装插件的目录是 当前用户的 ~/.npm-global目录, 切回普通用户执行下面命令
 npm config set prefix '~/.npm-global'
 
 # 配置国内加速器

@@ -128,11 +128,14 @@ yum remove docker docker-common docker-selinux docker-engine
 ```
 mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
 curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
+sed -i "/mirrors.aliyuncs.com/d"  /etc/yum.repos.d/CentOS-Base.repo
 sed -i "/mirrors.cloud.aliyuncs.com/d"  /etc/yum.repos.d/CentOS-Base.repo
+yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
 echo "export LC_ALL=en_US.UTF-8" >> /etc/profile
 source /etc/profile
 yum clean all
 yum makecache
+
 ```
 
 > #### 3.升级内核，并把该内核启动顺序设置为第一
@@ -149,10 +152,11 @@ awk -F\' '$1=="menuentry " {print $2}' /etc/grub2.cfg
 grub2-set-default 0
 ```
 
-> #### 4.安装18.03版本docker，并设置阿里docker加速器
+> #### 4.安装docker，并设置阿里docker加速器
 ```
 yum remove docker docker-client docker-client-latest docker-common docker-latest docker-latest-logrotate docker-logrotate docker-engine docker-ce
-yum install -y https://mirrors.aliyun.com/docker-ce/linux/centos/7/x86_64/stable/Packages/docker-ce-18.03.1.ce-1.el7.centos.x86_64.rpm
+yum install -y docker-ce
+# yum install -y https://mirrors.aliyun.com/docker-ce/linux/centos/7/x86_64/stable/Packages/docker-ce-18.03.1.ce-1.el7.centos.x86_64.rpm
 # yum install -y https://mirrors.aliyun.com/docker-ce/linux/centos/7/x86_64/stable/Packages/docker-ce-cli-18.09.0-3.el7.x86_64.rpm 
 # yum install -y https://mirrors.aliyun.com/docker-ce/linux/centos/7/x86_64/stable/Packages/docker-ce-18.09.0-3.el7.x86_64.rpm 
 
