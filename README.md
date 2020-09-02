@@ -3,6 +3,7 @@
 * [简介]
     * [完整系统的镜像制作](完整系统的镜像制作.md)
     * [常用的docker容器命令](Docker常用容器命令.md)
+    * [国内软件仓库和使用方式](国内软件仓库和使用方式.md)
     * [Centos常用知识](Centos常用命令.md)
     * [charles的https抓包](常用软件/charles/README.md)
     * [部署运维]
