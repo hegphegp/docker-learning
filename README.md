@@ -1,11 +1,8 @@
 ## Docker学习文档
 
 * [简介]
-    * [完整系统的镜像制作](完整系统的镜像制作.md)
     * [常用的docker容器命令](Docker常用容器命令.md)
-    * [国内软件仓库和使用方式](国内软件仓库和使用方式.md)
     * [Centos常用知识](Centos常用命令.md)
-    * [charles的https抓包](常用软件/charles/README.md)
     * [部署运维]
         * [部署打包](部署运维/打包/打包.md)
         * [docker-compose一键部署的脚本](部署运维/服务部署/examples/docker-compose.yml)
@@ -36,7 +33,11 @@
         * [Ubuntu的vagrant模板的制作](vagrant/制作vagrant系统镜像/Ubuntu的vagrant模板的制作.md)
             * [Ubuntu-1804可远程登录的模板](vagrant/制作vagrant系统镜像/Ubuntu/Ubuntu-18.04-bionic-server-cloudimg-amd64-vagrant-直接粘贴就可以运行.md)
             * [Ubuntu-1811可远程登录的模板](vagrant/制作vagrant系统镜像/Ubuntu/Ubuntu-18.10-cosmic-server-cloudimg-amd64-vagrant-直接粘贴就可以运行.md)
+    * [完整系统的镜像制作](完整系统的镜像制作.md)
+    * [国内软件仓库和使用方式](国内软件仓库和使用方式.md)
+    * [Ubuntu的软件离线安装包](软件加速仓库/Ubuntu的软件离线安装包.md)
     * [软件的使用和部分的镜像制作]
+        * [charles的https抓包](常用软件/charles/README.md)
         * [chrony时间同步工具](常用软件/chrony/chrony时间同步工具.md)
         * [calico使用命令](常用软件/calico/calico.md)
         * [node使用命令](常用软件/node/node命令.md)
