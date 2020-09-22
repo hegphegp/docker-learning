@@ -1,0 +1,20 @@
+version: '3.4'
+
+# 必须手动创建 ./storage 目录，然后赋予权限 chown -R 10001:65533 ./storage，否则docker自动创建挂载目录，权限归root用户，Verdaccio在容器内以非root用户身份，导致权限有问题
+# mkdir -p storage
+# 宿主机设置本地仓库
+# npm config set registry http://0.0.0.0:4873 --verbose
+services:
+  verdaccio:
+    restart: always
+    image: verdaccio/verdaccio:4.8
+    container_name: "verdaccio"
+    environment:
+      - VERDACCIO_PORT=4873
+    ports:
+      - "4873:4873"
+    volumes:
+      - "/config/htpasswd:/verdaccio/conf/htpasswd"
+      - "./storage:/verdaccio/storage"
+      - "./config/config.yaml:/verdaccio/conf/config.yaml"
+      - "./plugins:/verdaccio/plugins"
