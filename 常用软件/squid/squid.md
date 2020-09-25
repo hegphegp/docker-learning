@@ -27,7 +27,9 @@ http_access allow localhost manager
 http_access allow manager
 http_access allow localhost
 http_port 3128
-cache_dir ufs /var/spool/squid 100 16 256
+# 8M内存缓存
+cache_mem 8 MB
+cache_dir ufs /var/spool/squid 10000 16 256  #10G 磁盘缓存 目录下分16个级别，每隔级别分256个目录
 coredump_dir /var/spool/squid
 refresh_pattern ^ftp:     1440  20%  10080
 refresh_pattern ^gopher:     1440  0%  1440

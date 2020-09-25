@@ -1,0 +1,39 @@
+version: '3.4'
+
+# 必须手动创建 ./storage 目录，然后赋予权限 chmod 777 storage，否则docker自动创建挂载目录，权限归root用户，Verdaccio在容器内以非root用户身份，导致权限有问题
+# mkdir -p storage config plugins
+# chmod 777 storage
+# 宿主机设置本地仓库
+# npm config set registry http://0.0.0.0:4873 --verbose
+
+# 授权的方式二，单独创建 verdaccio 组和 verdaccio 账号授权，授权的方式二，控制台老是抛错，浪费了两天生命，以后不再浪费，直接给 chmod 777 storage 的权限
+# mkdir -p storage config plugins
+# sudo groupadd verdaccio
+# sudo useradd -s /bin/false -d /dev/null -g verdaccio verdaccio
+# sudo chown -R verdaccio:verdaccio storage
+# sudo chmod -R 755 storage
+
+# 在github的issue搜了，现在 verdaccio 配置不了第三方插件的仓库地址，官方的建议是，把第三方插件下载到开发电脑，在开发电脑手动发布到verdaccio仓库，下面的插件发布的名称是什么
+# yarn config set sass_binary_site https://npm.taobao.org/mirrors/node-sass/
+# yarn config set phantomjs_cdnurl https://npm.taobao.org/mirrors/phantomjs/
+# yarn config set electron_mirror https://npm.taobao.org/mirrors/electron/
+# yarn config set sqlite3_binary_host_mirror https://npm.taobao.org/mirrors/sqlite3/
+# yarn config set profiler_binary_host_mirror https://npm.taobao.org/mirrors/node-inspector/
+# yarn config set chromedriver_cdnurl https://npm.taobao.org/mirrors/chromedriver/
+# yarn config set puppeteer_download_host=https://npm.taobao.org/mirrors/
+
+services:
+  verdaccio:
+    restart: always
+    image: verdaccio/verdaccio:4.8
+    container_name: verdaccio
+    environment:
+      - VERDACCIO_PORT=4873
+    ports:
+      - 4873:4873
+    volumes:
+      - ./config/htpasswd:/verdaccio/conf/htpasswd
+      - ./storage:/verdaccio/storage
+      - ./config/config.yaml:/verdaccio/conf/config.yaml
+      - ./plugins:/verdaccio/plugins
+
