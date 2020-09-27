@@ -30,6 +30,10 @@ web:
 # list of the available translations https://github.com/verdaccio/ui/tree/master/i18n/translations
 #   web: en-US
 
+# maximum size of uploaded json document
+# increase it if you have "request entity too large" errors
+max_body_size: 100mb
+
 auth:
   htpasswd:
     file: /verdaccio/conf/htpasswd

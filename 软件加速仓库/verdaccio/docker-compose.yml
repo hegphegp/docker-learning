@@ -22,6 +22,17 @@ version: '3.4'
 # yarn config set chromedriver_cdnurl https://npm.taobao.org/mirrors/chromedriver/
 # yarn config set puppeteer_download_host=https://npm.taobao.org/mirrors/
 
+# 在 /verdaccio/conf/htpasswd 添加用户账号密码，每个账号单独一行，账号密码是用md5加密，百度一下 htpasswd在线生成
+
+# 使用过程中，遇到几个坑
+# 坑1，把chromedriver发布到仓库，提示 "413 Payload Too Large"，然后修改了 config/config.yaml 的 max_body_size: 100mb 参数就可以了
+
+# 坑2，发布chromedriver到仓库，由于文件过大上传失败，修改文件上传大小后，再发布，提示插件已存在，然后删掉线上的插件就可以了
+# cd node_modules/chromedriver
+# npm unpublish --force chromedriver@2.46.0 --registry http://172.17.0.1:4873
+# npm publish --registry http://172.17.0.1:4873
+
+# 坑3，没解决，自己发布到仓库的chromedriver，安装时签名校验不通过，无法安装，项目跑不起来，npm ERR! Verification failed while extracting chromedriver@2.46.0:
 services:
   verdaccio:
     restart: always
