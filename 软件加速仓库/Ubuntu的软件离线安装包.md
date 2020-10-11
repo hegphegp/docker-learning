@@ -40,3 +40,29 @@ apt-get download $(apt-cache depends --recurse --no-recommends --no-suggests --n
 ```
 ![avatar](apt-get_download_nginx.png)
 
+
+### 获取postgresql-11-citus的离线安装包
+```
+docker pull registry.cn-hangzhou.aliyuncs.com/hegp/ubuntu:18.04.5-20200807
+docker tag registry.cn-hangzhou.aliyuncs.com/hegp/ubuntu:18.04.5-20200807 ubuntu:18.04.5-20200807
+docker rmi registry.cn-hangzhou.aliyuncs.com/hegp/ubuntu:18.04.5-20200807
+docker run --privileged -itd --restart always -v /sys/fs/cgroup:/sys/fs/cgroup:ro -v /opt/soft/repository/ubuntu-18:/repository --name ubuntu-18 ubuntu:18.04.5-20200807 /sbin/init
+docker exec -it ubuntu-18 bash
+echo "deb [trusted=yes] http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list
+apt-get update
+# apt-cache madison postgresql-12
+apt-cache madison postgresql-11
+# apt-cache madison postgresql-10
+# apt-cache madison postgresql-9.6
+# apt-cache madison postgresql-9.5
+# apt install postgresql-10 postgresql-10-postgis-3-scripts postgis postgresql-10-citus
+# 在20201011 18:04:00时刻，postgresql-12-citus版本还没发布，只有postgresql-11-citus版本
+apt-cache madison postgresql-11-citus
+
+cd /repository
+apt-get download $(apt-cache depends --recurse --no-recommends --no-suggests --no-conflicts --no-breaks --no-replaces --no-enhances postgresql-11=11.9-1.pgdg18.04+1 | grep "^\w")
+apt-get download $(apt-cache depends --recurse --no-recommends --no-suggests --no-conflicts --no-breaks --no-replaces --no-enhances postgresql-11-citus=8.0.0.PGDG-2.pgdg18.04+1 | grep "^\w")
+
+exit
+
+```
