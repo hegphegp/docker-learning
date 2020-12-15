@@ -105,6 +105,7 @@
             * [postgresql命令](数据库/SQL/postgresql/postgresql命令.md)
             * [postgresql可视化管理页面](数据库/SQL/postgresql/postgresql命令.md)
             * [postgresql离线安装包](数据库/SQL/postgresql/离线安装包.md)
+            * [postgresql全文检索](数据库/SQL/postgresql/全文检索.md)
             * [docker-entrypoint-initdb.d的postgresql开箱即用的初始化数据库例子](数据库/SQL/postgresql/initdb/docker-compose.yml)
             * [mysql命令](数据库/SQL/mysql/mysql命令.md)
             * [mysql的多主集群Percona-XtraDB-Cluster的介绍](数据库/SQL/mysql/Percona-XtraDB-Cluster/README.md)
