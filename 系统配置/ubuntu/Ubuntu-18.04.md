@@ -208,10 +208,10 @@ apt-get install build-essential linux-headers-`uname -r`
 mkdir -p /etc/apt/sources.list.d
 # 使用腾讯云的软件仓库地址，不用官方的仓库地址
 # sudo echo "deb http://download.virtualbox.org/virtualbox/debian $(lsb_release -sc) contrib" > /etc/apt/sources.list.d/virtualbox.list
-# 使用腾讯云的软件仓库地址
-sudo echo "deb http://mirrors.cloud.tencent.com/virtualbox/apt/ $(lsb_release -sc) contrib" > /etc/apt/sources.list.d/virtualbox.list
 # 添加 Oracle virtualbox 公钥
-wget -q https://www.virtualbox.org/download/oracle_vbox_2016.asc -O- | sudo apt-key add -
+# wget -q https://www.virtualbox.org/download/oracle_vbox_2016.asc -O- | sudo apt-key add -
+# 使用腾讯云的软件仓库地址
+sudo echo "deb [trusted=yes] http://mirrors.cloud.tencent.com/virtualbox/apt/ $(lsb_release -sc) contrib" > /etc/apt/sources.list.d/virtualbox.list
 apt-get update
 apt-get install -y virtualbox-5.2
 # 设置 virtualbox 内核模块开机启动
