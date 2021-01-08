@@ -83,7 +83,12 @@ docker run -itd --restart always --name swagger-ui -p 80:8080 -e API_URL=http://
 docker run -itd --restart always -e TZ=Asia/Shanghai -v /etc/localtime:/etc/localtime:ro --name neo4j -e NEO4J_AUTH=neo4j/admin123 -e NEO4J_dbms_tx__log_rotation_retention__policy=true -e NEO4J_dbms_memory_pagecache_size=128M -e NEO4J_dbms_memory_heap_initial__size=128M -e NEO4J_dbms_memory_heap_max__size=256M -p 7474:7474 -p 7473:7473 -p 7687:7687 neo4j:3.4.5
 
 
-docker run -itd --restart always -e TZ=Asia/Shanghai -v /etc/localtime:/etc/localtime:ro -p 5432:5432 -v /cityworks/postgresql:/var/lib/postgresql/data --name postgres -e POSTGRES_USER=sde -e POSTGRES_PASSWORD=postgres postgres:11.8-alpine
+docker pull registry.cn-hangzhou.aliyuncs.com/hegp/postgres-zhparser:11.10-alpine
+docker tag registry.cn-hangzhou.aliyuncs.com/hegp/postgres-zhparser:11.10-alpine hegp/postgres-zhparser:11.10-alpine
+docker rmi registry.cn-hangzhou.aliyuncs.com/hegp/postgres-zhparser:11.10-alpine
+docker run -itd --restart always -e TZ=Asia/Shanghai -v /etc/localtime:/etc/localtime:ro -p 5432:5432 --name postgres -e POSTGRES_USER=sde -e POSTGRES_PASSWORD=postgres hegp/postgres-zhparser:11.10-alpine
+
+# docker run -itd --restart always -e TZ=Asia/Shanghai -v /etc/localtime:/etc/localtime:ro -p 5432:5432 -v /cityworks/postgresql:/var/lib/postgresql/data --name postgres -e POSTGRES_USER=sde -e POSTGRES_PASSWORD=postgres postgres:11.8-alpine
 # MySQL启动命令
 docker run -itd --restart always -e TZ=Asia/Shanghai -v /etc/localtime:/etc/localtime:ro --name mysql -e MYSQL_ROOT_PASSWORD=root -p 3306:3306 mysql:5.7.3
 
