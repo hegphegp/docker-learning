@@ -38,6 +38,7 @@
     * [Ubuntu的软件离线安装包](软件加速仓库/Ubuntu的软件离线安装包.md)
     * [软件的使用和部分的镜像制作]
         * [charles的https抓包](常用软件/charles/README.md)
+        * [firefox和charles抓取https请求](常用软件/charles/firefox和charles抓取https请求.md)
         * [chrony时间同步工具](常用软件/chrony/chrony时间同步工具.md)
         * [calico使用命令](常用软件/calico/calico.md)
         * [node使用命令](常用软件/node/node命令.md)
