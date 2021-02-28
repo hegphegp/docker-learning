@@ -49,6 +49,7 @@
             * [在阿里云控制台web页面设置域名与公网IP的映射](常用软件/nginx/在阿里云控制台web页面设置域名与公网IP的映射.md)
             * [nginx负载均衡](常用软件/nginx/nginx负载均衡.md)
             * [nginx的ssh流量转发的例子](常用软件/nginx/流量转发/ssh流量转发.md)
+            * [acme.sh自动化生成证书和续期](常用软件/nginx/申请证书/acme.sh申请证书.md)
             * [ssl证书申请](常用软件/nginx/申请证书/Certbot申请ssl证书.md)
             * [Cerbot申请证书实验](常用软件/nginx/申请证书/Cerbot申请证书实验.md)
         * [openresty]
