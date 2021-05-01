@@ -15,7 +15,7 @@ tee Vagrantfile <<-'EOF'
 Vagrant.configure("2") do |config|
   config.vm.define :ubuntu1804 do |ubuntu1804|
     ubuntu1804.vm.box = "Ubuntu-18.04-bionic-server-cloudimg-amd64"
-    ubuntu1804.vm.hostname = "ubuntu-1814"
+    ubuntu1804.vm.hostname = "ubuntu-1804"
 # 官方镜像都不能设置账号密码登录，因为官方原始镜像的/etc/ssh/sshd_config文件配置都是不允许任何账号远程登录的
     ubuntu1804.vm.synced_folder ".", "/vagrant", disabled: true
     ubuntu1804.vm.network :private_network, ip: "192.168.35.11"
@@ -49,15 +49,48 @@ echo "deb http://mirrors.aliyun.com/ubuntu/ $(lsb_release -cs)-proposed main res
 echo "deb http://mirrors.aliyun.com/ubuntu/ $(lsb_release -cs)-backports main restricted universe multiverse" >> /etc/apt/sources.list
 systemctl disable apt-daily.service
 systemctl disable apt-daily.timer
+
+# 步骤05 安装docker
+apt-get update
+apt-get -y install apt-transport-https ca-certificates curl software-properties-common
+
+#######################  停止copy  #############################
+
+# 安装GPG证书
+curl -fsSL https://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | apt-key add -
+# 写入软件源信息
+add-apt-repository "deb [arch=amd64] https://mirrors.aliyun.com/docker-ce/linux/ubuntu $(lsb_release -cs) stable"
+# 更新并安装Docker-CE
+apt-get -y update
+apt-get -y install docker-ce
+
+mkdir -p /etc/docker
+tee /etc/docker/daemon.json <<-'EOF'
+{
+  "registry-mirrors": ["https://kfp63jaj.mirror.aliyuncs.com"]
+}
+EOF
+systemctl enable docker #设置docker服务开机自启动
+systemctl restart docker
+
+# 安装docker-compose，
+curl -L https://get.daocloud.io/docker/compose/releases/download/1.29.1/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
+chmod +x /usr/local/bin/docker-compose
+# curl -L https://github.com/docker/compose/releases/download/1.29.1/docker-compose-Linux-x86_64 > /usr/local/bin/docker-compose
+# ALL_PROXY=socks5://127.0.0.1:1080 curl -L https://github.com/docker/compose/releases/download/1.25.5/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
+
+cd /var/cache/apt/archives
+rm -rf *.deb
+
 shutdown -h now
 
-# 步骤05 在宿主机导出虚拟机
+# 步骤06 在宿主机导出虚拟机
 vagrant package --base=Ubuntu-18.04-bionic-server-cloudimg-amd64 --output=Ubuntu-18.04-bionic-server-cloudimg-amd64-vagrant.box
 vagrant box remove -f ubuntu-1804-template
 vagrant box remove -f Ubuntu-18.04-bionic-server-cloudimg-amd64
 vagrant box add ubuntu-1804-template Ubuntu-18.04-bionic-server-cloudimg-amd64-vagrant.box
 
-# 步骤06 删除virtualbox的ubuntu-1804虚拟机
+# 步骤07 删除virtualbox的ubuntu-1804虚拟机
 vagrant destroy -f ubuntu1804
 cd ..
 rm -rf Ubuntu-18.04-bionic-server-cloudimg-amd64
