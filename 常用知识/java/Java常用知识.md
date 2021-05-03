@@ -145,7 +145,7 @@ grails-core | proxy | RELEASE | https://maven.aliyun.com/repository/grails-core
         <name>aliyun-grails-core</name>
         <url>https://maven.aliyun.com/repository/grails-core</url>
     </mirror>
-  </mirrors>
+</mirrors>
 ```
 
 

@@ -23,6 +23,7 @@
             * [k3s单节点server](docker,compose,swarm的安装/k3s/k3s单节点server.md)
             * [k3s单节点server多agent](docker,compose,swarm的安装/k3s/k3s单节点server多agent.md)
             * [k3s多master节点搭建](docker,compose,swarm的安装/k3s/k3s多master节点搭建.md)
+        * [请求IP地址](常用知识/docker/请求IP地址.md)
     * [vagrant]
         * [使用说明](vagrant/使用说明.md)
         * [常用命令](vagrant/vagrantvagrant常用命令.md)
