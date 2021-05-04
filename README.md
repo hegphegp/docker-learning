@@ -106,6 +106,7 @@
                 * [Redis性能压测工具redis-benchmark](数据库/NOSQL/redis/性能压测工具redis-benchmark.md)
         * [SQL]
             * [postgresql命令](数据库/SQL/postgresql/postgresql命令.md)
+            * [postgresql命令](数据库/SQL/postgresql/主从流复制/同宿主机的postgres主从容器搭建.md)
             * [postgresql可视化管理页面](数据库/SQL/postgresql/postgresql命令.md)
             * [postgresql离线安装包](数据库/SQL/postgresql/离线安装包.md)
             * [postgresql全文检索](数据库/SQL/postgresql/全文检索.md)

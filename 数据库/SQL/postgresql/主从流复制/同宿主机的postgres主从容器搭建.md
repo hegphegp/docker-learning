@@ -1,5 +1,7 @@
 ### 同宿主机的postgres主从容器搭建.md
 
+* 原生的流复制，slave不能自动升级为master节点，slave节点只能读，导致master节点挂掉之后，整个系统只能查询，不能编辑应用
+
 ```
 docker pull registry.cn-hangzhou.aliyuncs.com/hegp/postgres-zhparser:11.10-alpine
 docker tag registry.cn-hangzhou.aliyuncs.com/hegp/postgres-zhparser:11.10-alpine postgres:11.10-alpine
@@ -13,10 +15,9 @@ docker network rm postgres-network
 docker network create --subnet=172.77.0.0/24 postgres-network
 # 在 /opt/soft/postgres/master-slave ，用root账号操作
 rm -rf /opt/soft/postgres/master-slave && mkdir -p /opt/soft/postgres/master-slave
-cd /opt/soft/postgres/master-slave
 
 mkdir -p /opt/soft/postgres/master-slave/master
-mkdir -p /opt/soft/postgres/master-slave/slave-tmp  # 临时使用复制数据，先把主节点的数据复制到这个目录，然后重命名为 slave
+mkdir -p /opt/soft/postgres/master-slave/slave-tmp  # 临时使用的目录，先把主节点的数据复制到这个目录，然后重命名为 slave
 
 #### 步骤01) 创建主节点容器
 # docker run -itd --network postgres-network --ip 172.77.0.101 --name pg-master -e LANG="C.UTF-8" -e 'TZ=Asia/Shanghai' -e "POSTGRES_DB=postgres" -e "POSTGRES_USER=postgres" -e "POSTGRES_PASSWORD=postgres" -v /opt/soft/postgres/master-slave/master:/var/lib/postgresql/data postgres:11.10-alpine
@@ -36,7 +37,7 @@ docker exec -it pg-master psql -U postgres -c "CREATE ROLE repuser WITH LOGIN RE
 # echo "host replication repuser 172.77.0.102/24 trust" >> /opt/soft/postgres/master-slave/master/pg_hba.conf # 后面的参数，表示可以该IP可以免密登录
 echo "host replication repuser 172.77.0.102/24 md5" >> /opt/soft/postgres/master-slave/master/pg_hba.conf
 
-# /opt/soft/postgres/master-slave/master/postgresql.conf文件中以下几个参数，并调整如下，该文件在 pg-11.08版本有将近700行，小心改错参数
+# /opt/soft/postgres/master-slave/master/postgresql.conf文件中以下几个参数，并调整如下，该文件在 pg-11.10版本有将近700行，小心改错参数
 # archive_mode = on
 # archive_command = '/bin/date' # 用该命令来归档logfile segment，这里取消归档。
 # wal_level = replica # 开启热备
@@ -63,16 +64,13 @@ docker restart pg-master
 # 步骤03) 创建从服务器
 docker run -itd --network postgres-network --ip 172.77.0.102 --name pg-slave -e "POSTGRES_USER=postgres" -e "POSTGRES_PASSWORD=postgres" -v /opt/soft/postgres/master-slave/slave-tmp:/slave-data postgres:11.10-alpine
 sleep 10 # 等待从库完成跑起来
-# 进入从库容器，同步初始主库数据到 repl 目录
-docker exec -it pg-slave bash
+# 进入从库容器，同步初始主库数据到 slave-data 目录
 # pg_basebackup -F p --progress -D /slave-data -h 172.77.0.101 -p 5432 -U repuser --password
-pg_basebackup -R -D /slave-data -Fp -Xs -v -P -h 172.77.0.101 -p 5432 -U repuser -W
+docker exec -it pg-slave sh -c "pg_basebackup -R -D /slave-data -Fp -Xs -v -P -h 172.77.0.101 -p 5432 -U repuser -W"
+
 
 ######################### 停止copy，上面的命令要输入密码 ########################
 
-exit
-
-######################### 停止copy，上面的命令要输入密码 ########################
 
 # 步骤04) 删掉pg-slave容器，然后把 /opt/soft/postgres/master-slave/slave-tmp 重名为 /opt/soft/postgres/master-slave/slave，然后修改配置参数
 docker stop pg-slave
@@ -88,7 +86,7 @@ cat recovery.conf
 echo "recovery_target_timeline = 'latest'" >> recovery.conf
 
 
-# /opt/soft/postgres/master-slave/slave/postgresql.conf文件中以下几个参数，并调整如下，该文件在 pg-11.08版本有将近700行，小心改错参数
+# /opt/soft/postgres/master-slave/slave/postgresql.conf文件中以下几个参数，并调整如下，该文件在 pg-11.10版本有将近700行，小心改错参数
 # wal_level = replica # 开启热备
 # hot_standby = on
 # hot_standby_feedback = on
