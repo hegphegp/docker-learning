@@ -158,7 +158,7 @@ touch src/module/app.js
 import { mapGetters } from 'vuex'
 export default {
   computed: mapGetters({
-    'from': 'address', // computed 的属性都是方法，还是属性字段？computed的方法名不能与data的属性同名？
+    'from': 'address', // computed 的属性都是方法，computed的方法名不能与data的属性同名
     'from2': 'addressMore',
     'find': 'findArr'
   }),
