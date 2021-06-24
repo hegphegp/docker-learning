@@ -46,3 +46,14 @@ nginx -t
 nginx -s reload
 
 ```
+
+#### 手动续期
+```
+# 更新 acme.sh
+acme.sh --upgrade
+# 绑定提示邮箱
+acme.sh --register-account -m xxxxx@qq.com
+# 20210622生成的证书，curl:7.58.0-2018-01-24好像不识别https请求，搞到头炸
+acme.sh --issue --dns dns_ali -d *.xxxx.top --key-file /opt/soft/ssl/xxxx.top/privkey.key --fullchain-file /opt/soft/ssl/xxxx.top/fullchain.pem --dnssleep
+
+```
