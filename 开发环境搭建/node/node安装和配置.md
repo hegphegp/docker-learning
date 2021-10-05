@@ -134,7 +134,7 @@ import antDesignVue from 'ant-design-vue'
 Vue.use(antDesignVue)
 
 npm install vue-i18n --save --verbose
-# Vuex 的内脏由五部分组成：State、Getter、Mutation、Action 和 Module。但是一般再怎么简单的 Vuex，也至少会由 State 和 Mutation 构成，否则你就该考虑 Vuex 是否有存在的必要了。
+# Vuex 由五部分组成：State、Getter、Mutation、Action 和 Module。但是一般再怎么简单的 Vuex，也至少会由 State 和 Mutation 构成，否则你就该考虑 Vuex 是否有存在的必要了。
 npm install vuex --save --verbose
 
 mkdir -p src/module
