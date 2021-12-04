@@ -22,20 +22,20 @@
     </appender>
 
     <!-- 按日期和大小区分的滚动日志 -->
-    <appender name="FILE_DEBUG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <appender name="debugLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <!-- 必须指定，否则不会往文件输出内容 -->
         <encoder>
             <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{85} - %msg%n</Pattern>
             <charset>UTF-8</charset>
         </encoder>
-        <!-- 必需要指定rollingPolicy 与 triggeringPolicy 属性   否则不会生成文件-->
+        <!-- 必需要指定rollingPolicy 与 triggeringPolicy 属性 否则不会生成文件-->
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- 后缀名为.log不会压缩分割后的文件，只有后缀名为.gz或者.zip -->
             <fileNamePattern>${log.path}/debug.%d{yyyy-MM-dd}.%i.gz</fileNamePattern>
             <!-- DEBUG日志文件最多保存1天 -->
             <maxHistory>1</maxHistory>
             <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-                <!--文件达到 最大500MB时会被切割 -->
+                <!--文件达到最大500MB时会被切割 -->
                 <maxFileSize>500MB</maxFileSize>
             </timeBasedFileNamingAndTriggeringPolicy>
         </rollingPolicy>
@@ -45,7 +45,7 @@
     </appender>
 
     <!-- 按日期和大小区分的滚动日志 -->
-    <appender name="FILE_INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <appender name="infoLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <encoder>
             <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{85} - %msg%n</Pattern>
             <charset>UTF-8</charset>
@@ -57,30 +57,50 @@
             <!-- 日志文件最大的保存天数-->
             <maxHistory>30</maxHistory>
             <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-                <!--文件达到 最大500MB时会被切割 -->
+                <!--文件达到最大500MB时会被切割 -->
                 <maxFileSize>500MB</maxFileSize>
             </timeBasedFileNamingAndTriggeringPolicy>
         </rollingPolicy>
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <!-- 只输出INFO级别日志，WARN，ERROR级别不输出 -->
             <level>INFO</level>
             <onMatch>ACCEPT</onMatch>
             <onMismatch>DENY</onMismatch>
         </filter>
     </appender>
 
+    <!-- 按日期和大小区分的滚动日志 -->
+    <appender name="warnLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder>
+            <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{85} - %msg%n</Pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 后缀名为.log不会压缩分割后的文件，只有后缀名为.gz或者.zip -->
+            <fileNamePattern>${log.path}/warn.%d{yyyy-MM-dd}.%i.gz</fileNamePattern>
+            <cleanHistoryOnStart>true</cleanHistoryOnStart>
+            <!-- 日志文件最大的保存天数-->
+            <maxHistory>30</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <!--文件达到最大500MB时会被切割 -->
+                <maxFileSize>500MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <!-- 只输出WARN级别日志，ERROR级别不输出 -->
+            <level>WARN</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
     <!-- error级别只按日期滚动生成日志 -->
-    <appender name="FILE_ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <appender name="errorLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <!-- 必须指定，否则不会往文件输出内容 -->
         <encoder>
             <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{85} - %msg%n</Pattern>
             <charset>UTF-8</charset>
         </encoder>
-        <filter class="ch.qos.logback.classic.filter.LevelFilter">
-            <level>ERROR</level>
-            <onMatch>ACCEPT</onMatch>
-            <onMismatch>DENY</onMismatch>
-        </filter>
-
         <!-- 必需要指定rollingPolicy 与 triggeringPolicy 属性   否则不会生成文件-->
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- 后缀名为.log不会压缩分割后的文件，只有后缀名为.gz或者.zip -->
@@ -93,9 +113,16 @@
                 <maxFileSize>500MB</maxFileSize>
             </timeBasedFileNamingAndTriggeringPolicy>
         </rollingPolicy>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <!-- 只输出ERROR级别日志 -->
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
     </appender>
 
     <!-- 只有local环境，才可以输出控制台信息，否则在服务器执行 jar -jar 命令，会输出所有控制台日志，严重影响性能 -->
+    <!-- <springProfile name="local,test"> -->
     <springProfile name="local">
         <root level="DEBUG">
             <appender-ref ref="consoleAppender" />
@@ -103,15 +130,26 @@
     </springProfile>
 
     <logger name="tech.codingfly" level="INFO">
-        <appender-ref ref="FILE_INFO" />
-        <appender-ref ref="FILE_ERROR" />
-        <appender-ref ref="FILE_DEBUG" />
+        <appender-ref ref="debugLog" />
+        <appender-ref ref="infoLog" />
+        <appender-ref ref="warnLog" />
+        <appender-ref ref="errorLog" />
     </logger>
 
 </configuration>
 ```
 
+
+
+
 #### 配置不同环境下日志打印的配置
+```xml
+    <springProfile name="local,test">
+        <root level="DEBUG">
+            <appender-ref ref="consoleAppender" />
+        </root>
+    </springProfile>
+```
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- debug：是否打印日志插件的日志 -->
@@ -193,7 +231,6 @@
     </root>
 </configuration>
 ```
-
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
