@@ -1,5 +1,28 @@
 #### acme.sh自动化生成证书和续期
 
+## 亲测能用的sh命令
+```
+ALL_PROXY=socks5://127.0.0.1:1082 curl https://get.acme.sh | ALL_PROXY=socks5://127.0.0.1:1082 sh
+# 上面的sh脚本，会在当前用户的 ~/.bashrc 写入 ~/.acme.sh/acme.sh.env
+
+source /etc/profile
+export Ali_Key="xxxxxxxx"
+export Ali_Secret="xxxxxxxxxxxxxxxxxxxx"
+
+echo "export DOH_USE=3" >> ~/.acme.sh/acme.sh.env
+
+# 先注册邮箱
+~/.acme.sh/acme.sh --register-account -m 2386824052@qq.com
+
+source ~/.acme.sh/acme.sh.env
+
+## 2021-120-13~14两天亲测，默认方式无法生成证书，还各种网络访问不了，各种问题，人都被搞死，因此设置使用 --server letsencrypt 方式生成证书
+~/.acme.sh/acme.sh --set-default-ca --server letsencrypt
+
+~/.acme.sh/acme.sh --renew --force --issue --dns dns_ali -d *.codingfly.top --key-file /opt/soft/ssl/codingfly.top/privkey.key --fullchain-file /opt/soft/ssl/codingfly.top/fullchain.pem --debug
+
+```
+
 ##### acme.sh安装，安装到~/.acme.sh目录(禁止自作聪明各种百度设置安装路径，我浪费了几个小时在上面都没找到，有多少生命是这样子被糟蹋了)
 ```
 curl https://get.acme.sh | sh       # 会在~/.acme.sh目录安装，会在线拉取github的内容，必须保证器可以访问github，同时脚本会配置环境变量，并添加一个定时任务
