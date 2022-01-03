@@ -6,38 +6,38 @@
     * [部署运维]
         * [部署打包](部署运维/打包/打包.md)
         * [docker-compose一键部署的脚本](部署运维/服务部署/examples/docker-compose.yml)
-    * [Linux系统安装docker]
-        * [Linux各种操作系统安装docker]
-            * [Linux通用脚本在线安装最新版的docker](docker,compose,swarm的安装/linux安装docker/Linux通用脚本在线安装.md)
-            * [Centos7通过安装包安装18.03和18.09版本](docker,compose,swarm的安装/linux安装docker/Centos7通过安装包安装docker.md)
-            * [Ubuntu16.04通过安装包安装18.03和18.09版本](docker,compose,swarm的安装/linux安装docker/Ubuntu通过安装包安装docker.md)
-        * [批量创建虚拟机]
-            * [docker-machine批量创建boot2docker虚拟机](docker,compose,swarm的安装/docker-machine搭建swarm集群/shell/create-wms.sh)
-            * [vagrant批量创建虚拟机的Vagrantfile脚本](vagrant/multi/Vagrantfile.md)
-        * [docker-swarm集群搭建]
-            * [docker镜像搭建docker集群](docker,compose,swarm的安装/docker镜像搭建docker集群/docker镜像搭建docker集群.md)
-            * [docker-machine创建docker-swarm集群](docker,compose,swarm的安装/docker-machine搭建swarm集群/docker-machine创建docker-swarm集群.md)
-            * [vagrant制作docker的虚拟机模板](vagrant/制作vagrant系统镜像/虚拟机vagrant模板的制作.md)
-            * [docker-swarm集群的讲解](docker,compose,swarm的安装/docker-swarm集群的讲解.md)
-        * [搭建k3s集群]
-            * [k3s单节点server](docker,compose,swarm的安装/k3s/k3s单节点server.md)
-            * [k3s单节点server多agent](docker,compose,swarm的安装/k3s/k3s单节点server多agent.md)
-            * [k3s多master节点搭建](docker,compose,swarm的安装/k3s/k3s多master节点搭建.md)
         * [请求IP地址](常用知识/docker/请求IP地址.md)
-    * [vagrant]
-        * [使用说明](vagrant/使用说明.md)
-        * [常用命令](vagrant/vagrantvagrant常用命令.md)
-        * [Centos的vagrant模板的制作](vagrant/制作vagrant系统镜像/Centos的vagrant模板的制作.md)
-            * [Centos-1804可远程登录的模板](vagrant/制作vagrant系统镜像/CentOS/CentOS-7-x86_64-Vagrant-1804_02.VirtualBox-直接粘贴就可以运行.md)
-            * [Centos-1805可远程登录的模板](vagrant/制作vagrant系统镜像/CentOS/CentOS-7-x86_64-Vagrant-1805_01.VirtualBox-直接粘贴就可以运行.md)
-            * [Centos-1811可远程登录的模板](vagrant/制作vagrant系统镜像/CentOS/CentOS-7-x86_64-Vagrant-1811_02.VirtualBox-直接粘贴就可以运行.md)
-        * [Ubuntu的vagrant模板的制作](vagrant/制作vagrant系统镜像/Ubuntu的vagrant模板的制作.md)
-            * [Ubuntu-1804可远程登录的模板](vagrant/制作vagrant系统镜像/Ubuntu/Ubuntu-18.04-bionic-server-cloudimg-amd64-vagrant-直接粘贴就可以运行.md)
-            * [Ubuntu-1811可远程登录的模板](vagrant/制作vagrant系统镜像/Ubuntu/Ubuntu-18.10-cosmic-server-cloudimg-amd64-vagrant-直接粘贴就可以运行.md)
     * [完整系统的镜像制作](完整系统的镜像制作.md)
     * [国内软件仓库和使用方式](国内软件仓库和使用方式.md)
     * [Ubuntu的软件离线安装包](软件加速仓库/Ubuntu的软件离线安装包.md)
-    * [软件的使用和部分的镜像制作]
+    * [常用软件]
+        * [docker安装]
+            * [Linux各种操作系统安装docker]
+                * [Linux通用脚本在线安装最新版的docker](常用软件/docker,compose,swarm的安装/linux安装docker/Linux通用脚本在线安装.md)
+                * [Centos7通过安装包安装18.03和18.09版本](常用软件/docker,compose,swarm的安装/linux安装docker/Centos7通过安装包安装docker.md)
+                * [Ubuntu16.04通过安装包安装18.03和18.09版本](常用软件/docker,compose,swarm的安装/linux安装docker/Ubuntu通过安装包安装docker.md)
+            * [批量创建虚拟机]
+                * [docker-machine批量创建boot2docker虚拟机](常用软件/docker,compose,swarm的安装/docker-machine搭建swarm集群/shell/create-wms.sh)
+                * [vagrant批量创建虚拟机的Vagrantfile脚本](常用软件/vagrant/multi/Vagrantfile.md)
+            * [docker-swarm集群搭建]
+                * [docker镜像搭建docker集群](常用软件/docker,compose,swarm的安装/docker镜像搭建docker集群/docker镜像搭建docker集群.md)
+                * [docker-machine创建docker-swarm集群](常用软件/docker,compose,swarm的安装/docker-machine搭建swarm集群/docker-machine创建docker-swarm集群.md)
+                * [vagrant制作docker的虚拟机模板](常用软件/vagrant/制作vagrant系统镜像/虚拟机vagrant模板的制作.md)
+                * [docker-swarm集群的讲解](常用软件/docker,compose,swarm的安装/docker-swarm集群的讲解.md)
+            * [搭建k3s集群]
+                * [k3s单节点server](常用软件/docker,compose,swarm的安装/k3s/k3s单节点server.md)
+                * [k3s单节点server多agent](常用软件/docker,compose,swarm的安装/k3s/k3s单节点server多agent.md)
+                * [k3s多master节点搭建](常用软件/docker,compose,swarm的安装/k3s/k3s多master节点搭建.md)
+        * [vagrant]
+            * [使用说明](常用软件/vagrant/使用说明.md)
+            * [常用命令](常用软件/vagrant/vagrantvagrant常用命令.md)
+            * [Centos的vagrant模板的制作](常用软件/vagrant/制作vagrant系统镜像/Centos的vagrant模板的制作.md)
+                * [Centos-1804可远程登录的模板](常用软件/vagrant/制作vagrant系统镜像/CentOS/CentOS-7-x86_64-Vagrant-1804_02.VirtualBox-直接粘贴就可以运行.md)
+                * [Centos-1805可远程登录的模板](常用软件/vagrant/制作vagrant系统镜像/CentOS/CentOS-7-x86_64-Vagrant-1805_01.VirtualBox-直接粘贴就可以运行.md)
+                * [Centos-1811可远程登录的模板](常用软件/vagrant/制作vagrant系统镜像/CentOS/CentOS-7-x86_64-Vagrant-1811_02.VirtualBox-直接粘贴就可以运行.md)
+            * [Ubuntu的vagrant模板的制作](常用软件/vagrant/制作vagrant系统镜像/Ubuntu的vagrant模板的制作.md)
+                * [Ubuntu-1804可远程登录的模板](常用软件/vagrant/制作vagrant系统镜像/Ubuntu/Ubuntu-18.04-bionic-server-cloudimg-amd64-vagrant-直接粘贴就可以运行.md)
+                * [Ubuntu-1811可远程登录的模板](常用软件/vagrant/制作vagrant系统镜像/Ubuntu/Ubuntu-18.10-cosmic-server-cloudimg-amd64-vagrant-直接粘贴就可以运行.md)
         * [charles的https抓包](常用软件/charles/README.md)
         * [firefox和charles抓取https请求](常用软件/charles/firefox和charles抓取https请求.md)
         * [chrony时间同步工具](常用软件/chrony/chrony时间同步工具.md)

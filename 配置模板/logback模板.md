@@ -140,8 +140,6 @@
 ```
 
 
-
-
 #### 配置不同环境下日志打印的配置
 ```xml
     <springProfile name="local,test">
