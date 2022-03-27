@@ -73,6 +73,7 @@
         * [consul](常用软件/consul/docker-compose.yml)
         * [jhipster命令](常用软件/jhipster/jhipster命令.md)
         * [rap2接口文档](常用软件/rap2/rap2接口文档.md)
+        * [tinyproxy](常用软件/tinyproxy/README.md)
         * [shadowsocks]()
             * [shadowsocks命令参数](常用软件/shadowsocks/shadowsocks.md)
             * [shadowsocks的真实示例](常用软件/shadowsocks/真实示例.md)
