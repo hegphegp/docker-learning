@@ -157,20 +157,21 @@ sudo dpkg -i sogoupinyin_2.2.0.0108_amd64.deb
 ##### 通过脚本安装nodejs
 ```
 tee install-nodejs.sh <<-'EOF'
-
 #!/bin/bash
-
 
 # 此脚本必须用root用户执行，因为echo $PASSWD | sudo -S 无法修改/etc/profile文件
 # shell脚本必须用bash install.sh运行，因为用sh install.sh命令无法调用source等多条命令，导致source /etc/profile无法执行
-# 请将下载的apache-maven-3.5.3-bin.tar.gz包与此脚本放置到同一目录
 # 授予此脚本可执行权限(chmod +x install.sh)
 
 PASSWD=admin
-curl -L https://mirrors.tuna.tsinghua.edu.cn/nodejs-release/v16.9.1/node-v16.9.1-linux-x64.tar.gz > node-x64.tar.gz
-
 INSTALL_FILE=node-x64.tar.gz
 INSTALL_PATH=/opt/soft/node
+
+# 安装文件不存在就下载
+if [ "$INSTALL_FILE" = "" -o ! -f "$INSTALL_FILE" ]; then
+  curl -L https://mirrors.tuna.tsinghua.edu.cn/nodejs-release/v16.9.1/node-v16.9.1-linux-x64.tar.gz > node-x64.tar.gz
+fi
+
 
 echo $PASSWD | sudo -S rm -rf $INSTALL_PATH
 echo $PASSWD | sudo -S mkdir -p $INSTALL_PATH
