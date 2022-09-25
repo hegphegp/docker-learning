@@ -153,19 +153,64 @@ sudo dpkg -i sogoupinyin_2.2.0.0108_amd64.deb
 ```
 
 ### 安装 12.X 版本的nodejs，然后切换回普通用户安装插件
+* nodesource源更新了协议，似乎不允许镜像了，所以国内所有的镜像站基本都撤掉了nodesource镜像，你只能通过官方仓库的安装
+##### 通过脚本安装nodejs
 ```
+tee install-nodejs.sh <<-'EOF'
+
+#!/bin/bash
+
+
+# 此脚本必须用root用户执行，因为echo $PASSWD | sudo -S 无法修改/etc/profile文件
+# shell脚本必须用bash install.sh运行，因为用sh install.sh命令无法调用source等多条命令，导致source /etc/profile无法执行
+# 请将下载的apache-maven-3.5.3-bin.tar.gz包与此脚本放置到同一目录
+# 授予此脚本可执行权限(chmod +x install.sh)
+
+PASSWD=admin
+curl -L https://mirrors.tuna.tsinghua.edu.cn/nodejs-release/v16.9.1/node-v16.9.1-linux-x64.tar.gz > node-x64.tar.gz
+
+INSTALL_FILE=node-x64.tar.gz
+INSTALL_PATH=/opt/soft/node
+
+echo $PASSWD | sudo -S rm -rf $INSTALL_PATH
+echo $PASSWD | sudo -S mkdir -p $INSTALL_PATH
+echo $PASSWD | sudo -S sudo tar -zxvf $INSTALL_FILE -C $INSTALL_PATH
+DIR_FILE=$(ls $INSTALL_PATH)
+NODE_HOME=$INSTALL_PATH/$DIR_FILE
+echo "开始配置环境变量"
+
+echo $PASSWD | sudo -S echo "#set nodejs environment" > /etc/profile.d/nodejs.sh
+echo $PASSWD | sudo -S echo "export NODE_HOME=$NODE_HOME" >> /etc/profile.d/nodejs.sh
+echo $PASSWD | sudo -S echo "export PATH=\$PATH:\$NODE_HOME/bin" >> /etc/profile.d/nodejs.sh
+echo $PASSWD | sudo -S chmod 755 /etc/profile.d/nodejs.sh
+source /etc/profile
+
+node -v
+echo "配置环境成功"
+
+
+EOF
+
+chmod a+x install-nodejs.sh
+
+```
+
+#### 配置nodejs
+```
+# nodesource源更新了协议，似乎不允许镜像了，所以国内所有的镜像站基本都撤掉了nodesource镜像，你只能通过官方仓库的安装
 # 下面这句一定要运行，否则会认为nodejs的仓库地址是不可信，导致不能下载安装nodejs软件
-curl -s https://deb.nodesource.com/gpgkey/nodesource.gpg.key | sudo apt-key add -
+# curl -s https://deb.nodesource.com/gpgkey/nodesource.gpg.key | sudo apt-key add -
 
 mkdir -p /etc/profile.d
 echo "#set npm environment" > /etc/profile.d/npm-config.sh
 echo 'export PATH=~/.npm-global/bin:$PATH' >> /etc/profile.d/npm-config.sh
 chmod 755 /etc/profile.d/npm-config.sh
 
-echo "deb https://mirrors.tuna.tsinghua.edu.cn/nodesource/deb_12.x $(lsb_release -cs) main" > /etc/apt/sources.list.d/nodesource.list
-echo "deb-src https://mirrors.tuna.tsinghua.edu.cn/nodesource/deb_12.x $(lsb_release -cs) main" >> /etc/apt/sources.list.d/nodesource.list
-apt-get update
-apt-get install -y nodejs
+# echo "deb https://mirrors.tuna.tsinghua.edu.cn/nodesource/deb_12.x $(lsb_release -cs) main" > /etc/apt/sources.list.d/nodesource.list
+# echo "deb-src https://mirrors.tuna.tsinghua.edu.cn/nodesource/deb_12.x $(lsb_release -cs) main" >> /etc/apt/sources.list.d/nodesource.list
+# apt-get update
+# apt-get install -y nodejs
+
 
 # 修改 npm 安装插件的目录是 当前用户的 ~/.npm-global目录, 切回普通用户执行下面命令
 npm config set prefix '~/.npm-global'
