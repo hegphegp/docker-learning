@@ -259,7 +259,7 @@ mkdir -p /etc/apt/sources.list.d
 # 使用腾讯云的软件仓库地址
 sudo echo "deb [trusted=yes] http://mirrors.cloud.tencent.com/virtualbox/apt/ $(lsb_release -sc) contrib" > /etc/apt/sources.list.d/virtualbox.list
 apt-get update
-apt-get install -y virtualbox-5.2
+apt-get install -y virtualbox-6.1
 # 设置 virtualbox 内核模块开机启动
 systemctl enable vboxdrv
 systemctl restart vboxdrv
