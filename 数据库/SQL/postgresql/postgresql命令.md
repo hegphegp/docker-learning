@@ -26,18 +26,18 @@ update 表 set 字段名=replace(字段名,'旧的字符串','新的字符串')
 # 备份数据库
 docker exec -it postgresql sh
 # 忽略某些表来备份全库
-pg_dump -U postgres -T table1 -T table2 -d database -f /var/lib/postgresql/data/database-2018-02-25-1844.sql 数据库名
+pg_dump -U postgres -T table1 -T table2 -d 数据库名 -f /var/lib/postgresql/data/database-2018-02-25-1844.sql
 exit
-pg_dump -U postgres -d database -f /postgres-backup/database-`date "+%Y%m%d-%H%M%S"`.sql 数据库名
-pg_dump -U postgres -d database -f /database-`date "+%Y%m%d-%H%M%S"`.sql cityworks
+pg_dump -U postgres -d 数据库名 -f /postgres-backup/database-`date "+%Y%m%d-%H%M%S"`.sql
+pg_dump -U postgres -d database -f /database-`date "+%Y%m%d-%H%M%S"`.sql
 sudo mv /home/hgp/database/postgres/database-2018-02-25-1844.sql /data
 
 # 备份指定表的结构和数据
-pg_dump -U postgres -t table1 -d database -f /var/lib/postgresql/data/user_event.sql 数据库名
+pg_dump -U postgres -t table1 -d 数据库名 -f /var/lib/postgresql/data/user_event.sql
 sudo mv /home/hgp/database/postgres/user_event.sql /data
 
 # psql导入数据
-psql -h localhost -U postgres -d 数据库名 -f /user_event.sql
+psql -h localhost -U postgres -f /user_event.sql
 
 # 查询字段内容是否包含大小写字母和数字, 用到正则匹配查询
 select * from sys_user where username ~ '[a-zA-Z1-9]';
