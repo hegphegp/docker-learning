@@ -11,80 +11,271 @@ wget https://download.oracle.com/graalvm/17/archive/graalvm-jdk-17.0.10_linux-x6
 
 ```
 
-* 如果ubuntu/centos每个版本都制作一个graalvm镜像，graalvm又区分jdk11,jdk17,jdk21的话，镜像个数会非常多，因此制作一个镜像把jdk17，jdk21加进去，下载镜像就可以把graalvm下载下来，到时候Ubuntu/Centos容器直接挂载对应的graalvm目录，就拥有graalvm配置环境
+#### graalvm打包需要依赖 gcc zlib1g-dev build-essential libz-dev 软件
 
 ```
-
-## 制作graalvm镜像包含多个graalvm
-
-wget https://download.oracle.com/graalvm/21/archive/graalvm-jdk-21.0.2_linux-x64_bin.tar.gz
-wget https://download.oracle.com/graalvm/17/archive/graalvm-jdk-17.0.10_linux-x64_bin.tar.gz
-wget https://dlcdn.apache.org/maven/maven-3/3.9.8/binaries/apache-maven-3.9.8-bin.tar.gz
-
-tee Dockerfile <<-'EOF'
-FROM alpine:3.9.6
-
-RUN mkdir -p /opt/soft/docker-env/graalvm/
-
-ADD graalvm-jdk-21.0.2_linux-x64_bin.tar.gz /opt/soft/docker-env/graalvm/
-
-ADD graalvm-jdk-17.0.10_linux-x64_bin.tar.gz /opt/soft/docker-env/graalvm/
-
-EOF
-
-docker build -t graalvm:17-21 .
-
-docker run -itd --name graalvm graalvm:17-21-20240710 sh
-mkdir -p /opt/soft/docker-env/graalvm/
-docker cp graalvm:/opt/soft/docker-env/graalvm/ /opt/soft/docker-env/graalvm/
-docker stop graalvm
-docker rm graalvm
-
-
-
-
 tee Dockerfile <<-'EOF'
 FROM ubuntu:18.04
-
-RUN mkdir -p /opt/soft/maven && mkdir -p /etc/profile.d/ && mkdir -p /root/.m2/ && \
-    echo "#set maven environment" > /etc/profile.d/maven.sh && \
-    echo "export MAVEN_HOME=/opt/soft/maven/apache-maven-3.9.8" >> /etc/profile.d/maven.sh && \
-    echo "export PATH=\$PATH:\$MAVEN_HOME/bin" >> /etc/profile.d/maven.sh && \
-    chmod 755 /etc/profile.d/maven.sh
-
-ADD apache-maven-3.9.8-bin.tar.gz /opt/soft/maven
-
-ADD settings.xml /root/.m2/
 
 RUN echo "deb http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse" > /etc/apt/sources.list && \
     echo "deb http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse" >> /etc/apt/sources.list && \
     echo "deb http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse" >> /etc/apt/sources.list && \
     echo "deb http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiverse" >> /etc/apt/sources.list && \
     echo "deb http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse" >> /etc/apt/sources.list && \
-    apt-get update && apt-get clean all && apt-get install -y gcc zlib1g-dev build-essential libz-dev
+    apt-get update && apt-get clean all && apt-get install -y gcc zlib1g-dev build-essential libz-dev && apt-get clean && \
+    apt-get autoclean && apt-get autoremove && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 EOF
 
-docker build -t ubuntu:18.04-graalvm .
-
-echo "#set graalvm environment" > java.sh && \
-    echo "export JAVA_HOME=/opt/soft/graalvm/docker/graalvm-jdk-21.0.2+13.1/" >> java.sh && \
-    echo "export PATH=\$PATH:\$JAVA_HOME/bin" >> java.sh && \
-    chmod 755 java.sh
+docker build -t ubuntu:18.04-gcc .
 
 
-docker run -itd --name graalvm -v "$PWD/springboot3-native-test":/springboot3-native-test -v "/root/.m2/repository":/root/.m2/repository ubuntu:18.04-graalvm bash
+#############################################停止COPY#############################################
 
-docker exec -it graalvm bash 
-source /etc/profile
-java -version
+tee Dockerfile <<-'EOF'
+FROM ubuntu:20.04
 
-## 
+RUN echo "deb http://mirrors.aliyun.com/ubuntu/ focal main restricted universe multiverse" > /etc/apt/sources.list && \
+    echo "deb http://mirrors.aliyun.com/ubuntu/ focal-security main restricted universe multiverse" >> /etc/apt/sources.list && \
+    echo "deb http://mirrors.aliyun.com/ubuntu/ focal-updates main restricted universe multiverse" >> /etc/apt/sources.list && \
+    echo "deb http://mirrors.aliyun.com/ubuntu/ focal-proposed main restricted universe multiverse" >> /etc/apt/sources.list && \
+    echo "deb http://mirrors.aliyun.com/ubuntu/ focal-backports main restricted universe multiverse" >> /etc/apt/sources.list && \
+    apt-get update && apt-get clean all && apt-get install -y gcc zlib1g-dev build-essential libz-dev && apt-get clean && \
+    apt-get autoclean && apt-get autoremove && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+EOF
+
+docker build -t ubuntu:20.04-gcc .
+
+
+#############################################停止COPY#############################################
+
+tee Dockerfile <<-'EOF'
+FROM ubuntu:22.04
+
+RUN echo "deb http://mirrors.aliyun.com/ubuntu/ jammy main restricted universe multiverse" > /etc/apt/sources.list && \
+    echo "deb http://mirrors.aliyun.com/ubuntu/ jammy-security main restricted universe multiverse" >> /etc/apt/sources.list && \
+    echo "deb http://mirrors.aliyun.com/ubuntu/ jammy-updates main restricted universe multiverse" >> /etc/apt/sources.list && \
+    echo "deb http://mirrors.aliyun.com/ubuntu/ jammy-proposed main restricted universe multiverse" >> /etc/apt/sources.list && \
+    echo "deb http://mirrors.aliyun.com/ubuntu/ jammy-backports main restricted universe multiverse" >> /etc/apt/sources.list && \
+    apt-get update && apt-get clean all && apt-get install -y gcc zlib1g-dev build-essential libz-dev && apt-get clean && \
+    apt-get autoclean && apt-get autoremove && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+EOF
+
+docker build -t ubuntu:22.04-gcc .
+
+
+#############################################停止COPY#############################################
+
+tee Dockerfile <<-'EOF'
+FROM ubuntu:24.04
+
+RUN echo "deb http://mirrors.aliyun.com/ubuntu/ noble main restricted universe multiverse" > /etc/apt/sources.list && \
+    echo "deb http://mirrors.aliyun.com/ubuntu/ noble-security main restricted universe multiverse" >> /etc/apt/sources.list && \
+    echo "deb http://mirrors.aliyun.com/ubuntu/ noble-updates main restricted universe multiverse" >> /etc/apt/sources.list && \
+    echo "deb http://mirrors.aliyun.com/ubuntu/ noble-proposed main restricted universe multiverse" >> /etc/apt/sources.list && \
+    echo "deb http://mirrors.aliyun.com/ubuntu/ noble-backports main restricted universe multiverse" >> /etc/apt/sources.list && \
+    apt-get update && apt-get clean all && apt-get install -y gcc zlib1g-dev build-essential libz-dev && apt-get clean && \
+    apt-get autoclean && apt-get autoremove && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+EOF
+
+docker build -t ubuntu:24.04-gcc .
+
+```
+
+#### 制作graalvm镜像
+
+```
+
+wget https://download.oracle.com/graalvm/21/archive/graalvm-jdk-21.0.2_linux-x64_bin.tar.gz
+wget https://download.oracle.com/graalvm/17/archive/graalvm-jdk-17.0.10_linux-x64_bin.tar.gz
+wget https://dlcdn.apache.org/maven/maven-3/3.9.8/binaries/apache-maven-3.9.8-bin.tar.gz
+
+# 配置阿里maven加速仓库
+
+tee Dockerfile <<-'EOF'
+FROM ubuntu:18.04-gcc
+
+ENV JAVA_HOME /opt/soft/graalvm/graalvm-jdk-17.0.10+11.1
+ENV MAVEN_HOME /opt/soft/maven/apache-maven-3.9.8
+ENV PATH $JAVA_HOME/bin:$MAVEN_HOME/bin:$PATH
+
+ADD apache-maven-3.9.8-bin.tar.gz /opt/soft/maven
+ADD graalvm-jdk-17.0.10_linux-x64_bin.tar.gz /opt/soft/graalvm/
+ADD settings.xml /opt/soft/maven/apache-maven-3.9.8/conf
+
+EOF
+
+docker build -t graalvm:18.04-graalvm-jdk-17 .
+
+
+#############################################停止COPY#############################################
+
+tee Dockerfile <<-'EOF'
+FROM ubuntu:20.04-gcc
+
+ENV JAVA_HOME /opt/soft/graalvm/graalvm-jdk-17.0.10+11.1
+ENV MAVEN_HOME /opt/soft/maven/apache-maven-3.9.8
+ENV PATH $JAVA_HOME/bin:$MAVEN_HOME/bin:$PATH
+
+ADD apache-maven-3.9.8-bin.tar.gz /opt/soft/maven
+ADD graalvm-jdk-17.0.10_linux-x64_bin.tar.gz /opt/soft/graalvm/
+ADD settings.xml /opt/soft/maven/apache-maven-3.9.8/conf
+
+EOF
+
+docker build -t graalvm:20.04-graalvm-jdk-17 .
+
+
+#############################################停止COPY#############################################
+
+tee Dockerfile <<-'EOF'
+FROM ubuntu:22.04-gcc
+
+ENV JAVA_HOME /opt/soft/graalvm/graalvm-jdk-17.0.10+11.1
+ENV MAVEN_HOME /opt/soft/maven/apache-maven-3.9.8
+ENV PATH $JAVA_HOME/bin:$MAVEN_HOME/bin:$PATH
+
+ADD apache-maven-3.9.8-bin.tar.gz /opt/soft/maven
+ADD graalvm-jdk-17.0.10_linux-x64_bin.tar.gz /opt/soft/graalvm/
+ADD settings.xml /opt/soft/maven/apache-maven-3.9.8/conf
+
+EOF
+
+docker build -t graalvm:22.04-graalvm-jdk-17 .
+
+
+#############################################停止COPY#############################################
+
+tee Dockerfile <<-'EOF'
+FROM ubuntu:24.04-gcc
+
+ENV JAVA_HOME /opt/soft/graalvm/graalvm-jdk-17.0.10+11.1
+ENV MAVEN_HOME /opt/soft/maven/apache-maven-3.9.8
+ENV PATH $JAVA_HOME/bin:$MAVEN_HOME/bin:$PATH
+
+ADD apache-maven-3.9.8-bin.tar.gz /opt/soft/maven
+ADD graalvm-jdk-17.0.10_linux-x64_bin.tar.gz /opt/soft/graalvm/
+ADD settings.xml /opt/soft/maven/apache-maven-3.9.8/conf
+
+EOF
+
+docker build -t graalvm:24.04-graalvm-jdk-17 .
+
+
+#############################################停止COPY#############################################
+
+tee Dockerfile <<-'EOF'
+FROM ubuntu:18.04-gcc
+
+ENV JAVA_HOME /opt/soft/graalvm/graalvm-jdk-21.0.2+13.1
+ENV MAVEN_HOME /opt/soft/maven/apache-maven-3.9.8
+ENV PATH $JAVA_HOME/bin:$MAVEN_HOME/bin:$PATH
+
+ADD apache-maven-3.9.8-bin.tar.gz /opt/soft/maven
+ADD graalvm-jdk-21.0.2_linux-x64_bin.tar.gz /opt/soft/graalvm/
+ADD settings.xml /opt/soft/maven/apache-maven-3.9.8/conf
+
+EOF
+
+docker build -t graalvm:18.04-graalvm-jdk-21 .
+
+
+#############################################停止COPY#############################################
+
+tee Dockerfile <<-'EOF'
+FROM ubuntu:20.04-gcc
+
+ENV JAVA_HOME /opt/soft/graalvm/graalvm-jdk-21.0.2+13.1
+ENV MAVEN_HOME /opt/soft/maven/apache-maven-3.9.8
+ENV PATH $JAVA_HOME/bin:$MAVEN_HOME/bin:$PATH
+
+ADD apache-maven-3.9.8-bin.tar.gz /opt/soft/maven
+ADD graalvm-jdk-21.0.2_linux-x64_bin.tar.gz /opt/soft/graalvm/
+ADD settings.xml /opt/soft/maven/apache-maven-3.9.8/conf
+
+EOF
+
+docker build -t graalvm:20.04-graalvm-jdk-21 .
+
+
+#############################################停止COPY#############################################
+
+tee Dockerfile <<-'EOF'
+FROM ubuntu:22.04-gcc
+
+ENV JAVA_HOME /opt/soft/graalvm/graalvm-jdk-21.0.2+13.1
+ENV MAVEN_HOME /opt/soft/maven/apache-maven-3.9.8
+ENV PATH $JAVA_HOME/bin:$MAVEN_HOME/bin:$PATH
+
+ADD apache-maven-3.9.8-bin.tar.gz /opt/soft/maven
+ADD graalvm-jdk-21.0.2_linux-x64_bin.tar.gz /opt/soft/graalvm/
+ADD settings.xml /opt/soft/maven/apache-maven-3.9.8/conf
+
+EOF
+
+docker build -t graalvm:22.04-graalvm-jdk-21 .
+
+
+#############################################停止COPY#############################################
+
+tee Dockerfile <<-'EOF'
+FROM ubuntu:24.04-gcc
+
+ENV JAVA_HOME /opt/soft/graalvm/graalvm-jdk-21.0.2+13.1
+ENV MAVEN_HOME /opt/soft/maven/apache-maven-3.9.8
+ENV PATH $JAVA_HOME/bin:$MAVEN_HOME/bin:$PATH
+
+ADD apache-maven-3.9.8-bin.tar.gz /opt/soft/maven
+ADD graalvm-jdk-21.0.2_linux-x64_bin.tar.gz /opt/soft/graalvm/
+ADD settings.xml /opt/soft/maven/apache-maven-3.9.8/conf
+
+EOF
+
+docker build -t graalvm:24.04-graalvm-jdk-21 .
+
+
+#############################################停止COPY#############################################
+
+
+docker run -itd --name graalvm -v "$PWD/springboot3-native-test":/springboot3-native-test -v "/root/.m2/repository":/root/.m2/repository graalvm:22.04-graalvm-jdk-21 bash
+
+docker run -itd --name graalvm -v "$PWD/springboot3-native-test":/springboot3-native-test -v "/root/.m2/repository":/root/.m2/repository graalvm:18.04-graalvm-jdk-17 bash
+
+
 ```
 
 #### 推动线上的镜像是
 ```
-docker push registry.cn-hangzhou.aliyuncs.com/hegp/graalvm:17-21-20240710
+docker tag graalvm:18.04-graalvm-jdk-17 registry.cn-hangzhou.aliyuncs.com/hegp/graalvm:18.04-graalvm-jdk-17
+docker tag graalvm:20.04-graalvm-jdk-17 registry.cn-hangzhou.aliyuncs.com/hegp/graalvm:20.04-graalvm-jdk-17
+docker tag graalvm:22.04-graalvm-jdk-17 registry.cn-hangzhou.aliyuncs.com/hegp/graalvm:22.04-graalvm-jdk-17
+docker tag graalvm:24.04-graalvm-jdk-17 registry.cn-hangzhou.aliyuncs.com/hegp/graalvm:24.04-graalvm-jdk-17
+
+docker tag graalvm:18.04-graalvm-jdk-21 registry.cn-hangzhou.aliyuncs.com/hegp/graalvm:18.04-graalvm-jdk-21
+docker tag graalvm:20.04-graalvm-jdk-21 registry.cn-hangzhou.aliyuncs.com/hegp/graalvm:20.04-graalvm-jdk-21
+docker tag graalvm:22.04-graalvm-jdk-21 registry.cn-hangzhou.aliyuncs.com/hegp/graalvm:22.04-graalvm-jdk-21
+docker tag graalvm:24.04-graalvm-jdk-21 registry.cn-hangzhou.aliyuncs.com/hegp/graalvm:24.04-graalvm-jdk-21
+
+
+docker push registry.cn-hangzhou.aliyuncs.com/hegp/graalvm:18.04-graalvm-jdk-17
+
+docker push registry.cn-hangzhou.aliyuncs.com/hegp/graalvm:20.04-graalvm-jdk-17
+
+docker push registry.cn-hangzhou.aliyuncs.com/hegp/graalvm:22.04-graalvm-jdk-17
+
+docker push registry.cn-hangzhou.aliyuncs.com/hegp/graalvm:24.04-graalvm-jdk-17
+
+docker push registry.cn-hangzhou.aliyuncs.com/hegp/graalvm:18.04-graalvm-jdk-21
+
+docker push registry.cn-hangzhou.aliyuncs.com/hegp/graalvm:20.04-graalvm-jdk-21
+
+docker push registry.cn-hangzhou.aliyuncs.com/hegp/graalvm:22.04-graalvm-jdk-21
+
+docker push registry.cn-hangzhou.aliyuncs.com/hegp/graalvm:24.04-graalvm-jdk-21
+
 ```
 
 
