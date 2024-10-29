@@ -44,6 +44,7 @@
         * [calico使用命令](常用软件/calico/calico.md)
         * [node使用命令](常用软件/node/node命令.md)
         * [graalvm的docker镜像](常用软件/graalvm/graalvm.md)
+        * [golang](常用软件/golang/golang.md)
         * [nginx]
             * [参数说明](常用软件/nginx/nginx配置参数.md)
             * [nginx代理访问路径的问题](常用软件/nginx/访问路径的问题.md)
